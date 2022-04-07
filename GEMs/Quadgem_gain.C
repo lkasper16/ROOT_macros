@@ -328,10 +328,10 @@ void Quadgem_gain(){
     h0_2->Draw();
     g_an[2]->Draw("sameL");
     g_cat[2]->Draw("sameL");
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
     Float_t p0_xray_an[N],p0_xray_cat[N], p0_fe55_an[N],p0_fe55_cat[N];
     Float_t IBF[N];
-    //Float_t xray_an_sc[N],xray_cat_sc[N];
+    Float_t xray_an_sc[N],xray_cat_sc[N];
 
 	/////////////////////TODO: Remove fe55 ?
     for(int i = 0; i < 3; i++ ){
@@ -345,8 +345,8 @@ void Quadgem_gain(){
 
     cout << " x-ray anode :" << p0_xray_an[i]  << " x ray cathode " << p0_xray_cat[i] << " fe 55 an " << p0_fe55_an[i]  << " fe 55 cat " << p0_fe55_cat[i] << endl;
     cout << " IBF :" << IBF[i] << endl;
-    //xray_an_sc[i] = 1.0*p0_xray_an[i];
-    //xray_cat_sc[i] = 1.0*p0_xray_cat[i];
+    xray_an_sc[i] = 1.0*p0_xray_an[i];
+    xray_cat_sc[i] = 1.0*p0_xray_cat[i];
     }
     
     cout  << "voltages " << endl;
@@ -362,7 +362,7 @@ void Quadgem_gain(){
     ibf->SetMarkerColor(2);
 
 	/////////////////////Why these odd numbers? Also should probably only be 3 of them here...
-    Float_t XrayI[n] = {5, 7, 9, 11, 13};
+    Float_t XrayI[n] = {5, 7, 9};
     TGraph *xray_an_cur = new TGraph(n , XrayI, xray_an_sc);
     xray_an_cur->SetName("xray_an_cur");
     xray_an_cur->SetMarkerStyle(20);
@@ -405,7 +405,7 @@ void Quadgem_gain(){
 
 	/////////////////////////// Sig ?
     //New HVPS, drift = 1 kV/cm, transfer = induction = 2 kV/cm
-    ///////////////////////////Float_t sig[n] = {228, 360, 480, 720, 986}; // with screen and cathode+screen with HVPS fanout    
+    Float_t sig[n] = {228, 360, 480}; // with screen and cathode+screen with HVPS fanout    
     
     //ArCO2 : 80:20
     const int n3 =7;
@@ -541,17 +541,17 @@ void Quadgem_gain(){
     hist2->Draw("");
     //effgain->Draw("P");
     effgain->Draw("sameP");
-    effgain2->Draw("sameP");
+    //effgain2->Draw("sameP");
 
     TLegend *legend2 = new TLegend(0.35,.80,.55,0.93, NULL, "brNDC");
     legend2->SetFillStyle(0);
     legend2->SetBorderSize(0);
     legend2->SetTextSize(0.05);
     legend2->AddEntry(effgain, "ArCO2(70:30)","P");
-    legend2->AddEntry(effgain2, "ArCO2 (80:20)","p");
+    //legend2->AddEntry(effgain2, "ArCO2 (80:20)","p");
     legend2->Draw();
 
-    TCanvas *c3 = new TCanvas("c3","c3", 800, 600);
+/*    TCanvas *c3 = new TCanvas("c3","c3", 800, 600);
     c3->cd();
     gStyle->SetOptStat(0000000);
     TH1F *hist3 = new TH1F("hist3","",45,-0.1,44.9);
@@ -570,16 +570,15 @@ void Quadgem_gain(){
     legend3->AddEntry(effgain_vs_time, "Verical set up","P");
     legend3->AddEntry(effgain_hor_vs_time, "Horizontal set up","p");
     legend3->Draw();
-    
-    /*
+*/    
   
     //TFile *fout = new TFile("triplegemnew_gain_ibf_arco2_7030.root", "RECREATE");
-    TFile *fout = new TFile("quadgemnew_iter1_xrayconfig4_gain_ibf_arco2_7030.root", "RECREATE");
+    TFile *fout = new TFile("quadgem_gain_ibf_arco2_7030.root", "RECREATE");
     // TFile *fout = new TFile("quadgemnew_iter2_xrayconfig4_gain_ibf_arco2_7030.root", "RECREATE");
     effgain->Write();
     ibf->Write();
     fout->Close();
-    */
+    
     /*
   TFile *fout = new TFile("test_gr.root", "RECREATE");
   for (int i = 1; i < 7; i++){
