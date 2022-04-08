@@ -30,7 +30,6 @@ void Quadgem_gain(){
   TString fe55_cat;
           
   ifstream ifs[N];
-  /////////const char *f[N];
   ostringstream filename[N];
   int N1[N];
 
@@ -40,11 +39,11 @@ void Quadgem_gain(){
   ifs[1].open(filename[1].str());
 
   //filename[2] << "quadgem_effgain_IBF/PA_17-01_quadgem_Fe55_Xray_Vin3375V.txt"; //channel 9 and 10
-  filename[2] << "PA_13-50_dvgem342V.txt";
+  filename[2] << "PA_14-13_dvgem342V.txt";
   ifs[2].open(filename[2].str());
   
   //filename[3] << "quadgem_effgain_IBF/PA_16-05_Vin3600V_2nditer.txt";
-  filename[3] << "PA_13-50_dvgem335V.txt";
+  filename[3] << "PA_14-26_dvgem335V.txt";
   ifs[3].open(filename[3].str());
 
   //filename[4] << "quadgem_effgain_IBF/PA_18-07_newquadgem_Vin3700V.txt";
