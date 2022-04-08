@@ -34,26 +34,22 @@ void Quadgem_gain(){
   int N1[N];
 
   //Quad gem with reverse bias primary measurement
-  //filename[1] << "quadgem_effgain_IBF/PA_16-14_quadgem_cosmic_vin3300V.txt"; // channel 9 and 10
   filename[1] << "PA_13-50_dvgem340V.txt";
   ifs[1].open(filename[1].str());
 
-  //filename[2] << "quadgem_effgain_IBF/PA_17-01_quadgem_Fe55_Xray_Vin3375V.txt"; //channel 9 and 10
   filename[2] << "PA_14-13_dvgem342V.txt";
   ifs[2].open(filename[2].str());
   
-  //filename[3] << "quadgem_effgain_IBF/PA_16-05_Vin3600V_2nditer.txt";
   filename[3] << "PA_14-26_dvgem335V.txt";
   ifs[3].open(filename[3].str());
 
-  //filename[4] << "quadgem_effgain_IBF/PA_18-07_newquadgem_Vin3700V.txt";
   filename[4] << "PA_13-00_PRIMARY.txt";
   ifs[4].open(filename[4].str());
 
-  //8 is cathode, 9 in anode
+  cout << "files open" << endl;
+
+  //8 is cathode, 9 is anode
   Double_t t[N], g1i[N] , g2i[N], g3i[N], g4i[N], g5i[N] , g6i[N], g7i[N], g8i[N], g9i[N], g10i[N];
-  
-  ////////grname->Form("");
                 
   for (int i = 1 ; i < N; i++){
                     
@@ -73,42 +69,21 @@ void Quadgem_gain(){
     temp_cat= Form("gtemp_cat%d", i);
     gtemp_cat[i]->SetName(temp_cat);
 
-    /*
-      filename[1] << "quadgem_effgain_IBF/PA_16-03_Vin3350V_quadgem.txt";
-      ifs[1].open(filename[1].str());
-      filename[2] << "quadgem_effgain_IBF/PA_16-24_Vin3375V_quadgem.txt";
-      ifs[2].open(filename[2].str());
-      filename[3] << "quadgem_effgain_IBF/PA_16-46_Vin3400V_quadgem.txt" ; 
-      ifs[3].open(filename[3].str());
-      filename[4] << "quadgem_effgain_IBF/PA_17-03_Vin3450V_quadgem.txt" ;  
-      ifs[4].open(filename[4].str());
-      filename[5] << "quadgem_effgain_IBF/PA_17-19_Vin3500V_quadgem.txt" ;  
-      ifs[5].open(filename[5].str());
-      filename[6] << "quadgem_effgain_IBF/PA_17-34_Vin3550V_quadgem.txt" ;  
-      ifs[6].open(filename[6].str());
-    */
-    /*
-    ostringstream filename;
-    filename << "quadgem_effgain_IBF/PA_16-03_Vin3350V_quadge"<< i << ".txt";
-    ifs[i].open(filename.str());
-    */
-    /* // when scanning for different gains ch 8 and 9 
+    // when scanning for different gains ch 8 and 9 
     while(ifs[i] >> t[i] >> g1i[i] >> g2i[i] >> g3i[i] >> g4i[i] >> g5i[i] >> g6i[i] >> g7i[i] >> g8i[i] >> g9i[i] >> g10i[i])
       {              
 	gtemp_cat[i]->SetPoint(gtemp_cat[i]->GetN(), t[i] , g8i[i]);
 	gtemp_an[i]->SetPoint(gtemp_an[i]->GetN(), t[i] , g9i[i]);
       }
-    */
 	
-    // when trying to stabilize detector over long run
+/*    // when trying to stabilize detector over long run
     while(ifs[i] >> t[i] >> g1i[i] >> g2i[i] >> g3i[i] >> g4i[i] >> g5i[i] >> g6i[i] >> g7i[i] >> g8i[i] >> g9i[i] >> g10i[i])
       {
-	//Channel 8 and 9 were used as cathode and anode for quadgem w/o screen. Previously in code was 9 & 10
 	//Channel 8 and 9 were used as cathode and anode for quadgem respectively
 	gtemp_cat[i]->SetPoint(gtemp_cat[i]->GetN(), t[i] , g8i[i]);
 	gtemp_an[i]->SetPoint(gtemp_an[i]->GetN(), t[i] , g9i[i]);
       }
-	  
+*/	  
     N1[i] = gtemp_cat[i]->GetN();
     
     cout << "total entries in each graph  :" << i << " " << N1[i] << endl; 
@@ -234,7 +209,6 @@ void Quadgem_gain(){
     legend1_1->SetFillStyle(0);
     legend1_1->SetBorderSize(0);
     legend1_1->SetTextSize(0.05);
-    //legend1_1->AddEntry(g_an[1],"dv GEM = 348 V", "");
     legend1_1->AddEntry(g_an[1],"X ray I = 75 uA, V = 40 kV", "");
 	legend1_1->AddEntry(g_an[1], "Anode current","L");
     legend1_1->AddEntry(g_cat[1], "Cathode current","L");
@@ -262,7 +236,6 @@ void Quadgem_gain(){
     legend1_2->SetFillStyle(0);
     legend1_2->SetBorderSize(0);
     legend1_2->SetTextSize(0.05);
-    //legend1_2->AddEntry(g_an[1],"dv GEM = 352 V", "");
     legend1_2->AddEntry(g_an[1],"X ray I = 75 uA, V = 40 kV", "");
 	legend1_2->AddEntry(g_an[1], "Anode current","L");
     legend1_2->AddEntry(g_cat[1], "Cathode current","L");
@@ -300,7 +273,7 @@ void Quadgem_gain(){
     TCanvas *c0_1 = new TCanvas("c0_1","c0_1", 1200, 800);
     c0_1->cd();
     TH1D *h0_1 = new TH1D("h0_1","h0_1", 5000, -0.1, 4999.9);
-    h0_1->SetTitle("dV_GEM  =  355 V");
+    h0_1->SetTitle("dV_GEM  =  335 V");
     h0_1->GetYaxis()->SetRangeUser(-0.5, 0.05);
     h0_1->GetXaxis()->SetRangeUser(0, 1200);
     h0_1->GetXaxis()->SetTitle("Time [seconds]");
@@ -332,7 +305,6 @@ void Quadgem_gain(){
     Float_t IBF[N];
     Float_t xray_an_sc[N],xray_cat_sc[N];
 
-	/////////////////////TODO: Remove fe55 ?
     for(int i = 0; i < 3; i++ ){
 
     p0_xray_an[i] = fxray_an[i+1]->GetParameter(0);
@@ -570,10 +542,8 @@ void Quadgem_gain(){
     legend3->AddEntry(effgain_hor_vs_time, "Horizontal set up","p");
     legend3->Draw();
 */    
-  
-    //TFile *fout = new TFile("triplegemnew_gain_ibf_arco2_7030.root", "RECREATE");
+
     TFile *fout = new TFile("quadgem_gain_ibf_arco2_7030.root", "RECREATE");
-    // TFile *fout = new TFile("quadgemnew_iter2_xrayconfig4_gain_ibf_arco2_7030.root", "RECREATE");
     effgain->Write();
     ibf->Write();
     fout->Close();
