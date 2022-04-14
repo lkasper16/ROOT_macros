@@ -108,7 +108,7 @@ void Quadgem_gain_1(){
       g_cat[i]->SetLineColor(4);
     }
     
-    xray_an = Form("fxray_an%d", i);
+/*    xray_an = Form("fxray_an%d", i);
     fxray_an[i] = new TF1(xray_an, "pol0", 200, 500);
     fxray_an[i]->SetName(xray_an);
     fxray_an[i]->SetLineColor(2);
@@ -117,7 +117,7 @@ void Quadgem_gain_1(){
     fxray_cat[i] = new TF1(xray_cat, "pol0", 200, 500);
     fxray_cat[i]->SetName(xray_cat);
     fxray_cat[i]->SetLineColor(4);    
-    
+*/    
   }
     
     TCanvas *c0 = new TCanvas("c0","c0", 1200, 800);
@@ -130,14 +130,16 @@ void Quadgem_gain_1(){
     h1->GetXaxis()->SetTitle("Time [seconds]");
     h1->GetYaxis()->SetTitle("current [nA]");
     h1->Draw();
-    /*
-    fxray_an[1] = new TF1("fxray_an[1]", "pol0", 600, 1000);
-    fxray_an[1]->SetName("fxray_an[1]");
-    fxray_cat[1] = new TF1("fxray_cat[1]", "pol0", 600, 1000);
-    fxray_cat[1]->SetName("fxray_cat[1]");
-    */
-    g_an[0]->Fit("fxray_an0","R");
-    g_cat[0]->Fit("fxray_cat0", "R");
+    
+    fxray_an[0] = new TF1("fxray_an[0]", "pol0", 200, 450);
+    fxray_an[0]->SetName("fxray_an[0]");
+    fxray_an[0]->SetLineColor(2);
+    fxray_cat[0] = new TF1("fxray_cat[0]", "pol0", 200, 450);
+    fxray_cat[0]->SetName("fxray_cat[0]");
+    fxray_cat[0]->SetLineColor(4);
+    
+    g_an[0]->Fit("fxray_an[0]","R");
+    g_cat[0]->Fit("fxray_cat[0]", "R");
     g_an[0]->Draw("sameL");
     g_cat[0]->Draw("sameL");
 
@@ -159,14 +161,14 @@ void Quadgem_gain_1(){
     h2->GetXaxis()->SetTitle("Time [seconds]");
     h2->GetYaxis()->SetTitle("current [nA]");
     h2->Draw();
-    /*
-    fxray_an[2] = new TF1("fxray_an[2]", "pol0", 600, 900);
-    fxray_cat[2] = new TF1("fxray_cat[2]", "pol0", 600,900);
-    fxray_an[2]->SetName("fxray_an[2]");
-    fxray_cat[2]->SetName("fxray_cat[2]");
-    */
-    g_an[1]->Fit("fxray_an1","R");
-    g_cat[1]->Fit("fxray_cat1", "R");
+    
+    fxray_an[1] = new TF1("fxray_an[1]", "pol0", 1050, 1250);
+    fxray_cat[1] = new TF1("fxray_cat[1]", "pol0", 1050, 1250);
+    fxray_an[1]->SetName("fxray_an[1]");
+    fxray_cat[1]->SetName("fxray_cat[1]");
+    
+    g_an[1]->Fit("fxray_an[1]","R");
+    g_cat[1]->Fit("fxray_cat[1]", "R");
     g_an[1]->Draw("sameL");
     g_cat[1]->Draw("sameL");
 
@@ -187,14 +189,14 @@ void Quadgem_gain_1(){
     h3->GetXaxis()->SetTitle("Time [seconds]");
     h3->GetYaxis()->SetTitle("current [nA]");
     h3->Draw();
-    /*
-    fxray_an[3] = new TF1("fxray_an[3]", "pol0", 200, 700);
-    fxray_cat[3] = new TF1("fxray_cat[3]", "pol0", 200, 700);
-    fxray_an[3]->SetName("fxray_an[3]");
-    fxray_cat[3]->SetName("fxray_cat[3]");
-    */
-    g_an[2]->Fit("fxray_an2","R");
-    g_cat[2]->Fit("fxray_cat2", "R");
+    
+    fxray_an[2] = new TF1("fxray_an[2]", "pol0", 400, 575);
+    fxray_cat[2] = new TF1("fxray_cat[2]", "pol0", 400, 575);
+    fxray_an[2]->SetName("fxray_an[2]");
+    fxray_cat[2]->SetName("fxray_cat[2]");
+    
+    g_an[2]->Fit("fxray_an[2]","R");
+    g_cat[2]->Fit("fxray_cat[2]", "R");
     g_an[2]->Draw("sameL");
     g_cat[2]->Draw("sameL");
 	
@@ -215,12 +217,12 @@ void Quadgem_gain_1(){
     h4->GetXaxis()->SetTitle("Time [seconds]");
     h4->GetYaxis()->SetTitle("current [nA]");
     h4->Draw();
-    /*
-    fxray_an[4] = new TF1("fxray_an[4]", "pol0", 200, 650);
-    fxray_cat[4] = new TF1("fxray_cat[4]", "pol0", 200, 650);
-    fxray_an[4]->SetName("fxray_an[4]");
-    fxray_cat[4]->SetName("fxray_cat[4]");
-    */
+    
+    fxray_an[3] = new TF1("fxray_an[3]", "pol0", 200, 650);
+    fxray_cat[3] = new TF1("fxray_cat[3]", "pol0", 200, 650);
+    fxray_an[3]->SetName("fxray_an[3]");
+    fxray_cat[3]->SetName("fxray_cat[3]");
+    
     g_an[3]->Fit("fxray_an3","R");
     g_cat[3]->Fit("fxray_cat3", "R");
     g_an[3]->Draw("sameL");
@@ -291,10 +293,30 @@ void Quadgem_gain_1(){
     TLegend *legend2 = new TLegend(0.55,.30,.75,0.5, NULL, "brNDC");
     legend2->SetFillStyle(0);
     legend2->SetBorderSize(0);
-    legend2->SetTextSize(0.03);
+    legend2->SetTextSize(0.05);
     legend2->AddEntry(g_an[2], "Anode current","L");
     legend2->AddEntry(g_cat[2], "Cathode current","L");
     legend2->Draw();
+    
+    TCanvas *c0_3 = new TCanvas("c0_3","c0_3", 1200, 800);
+    c0_3->cd();
+    TH1D *h0_3 = new TH1D("h0_3","h0_3", 5000, -0.1, 4999.9);
+    h0_3->SetTitle("PRIMARY");
+    h0_3->GetYaxis()->SetRangeUser(-0.01, 0.15);
+    h0_3->GetXaxis()->SetRangeUser(0., 800.);
+    h0_3->GetXaxis()->SetTitle("Time [seconds]");
+    h0_3->GetYaxis()->SetTitle("current [nA]");
+    h0_3->Draw();
+    g_an[3]->Draw("sameL");
+    g_cat[3]->Draw("sameL");
+
+    TLegend *legend3 = new TLegend(0.55,.30,.75,0.5, NULL, "brNDC");
+    legend3->SetFillStyle(0);
+    legend3->SetBorderSize(0);
+    legend3->SetTextSize(0.05);
+    legend3->AddEntry(g_an[3], "Anode current","L");
+    legend3->AddEntry(g_cat[3], "Cathode current","L");
+    legend3->Draw();
     
     Float_t p0_xray_an[N],p0_xray_cat[N], p0_fe55_an[N],p0_fe55_cat[N];
     Float_t IBF[N];
