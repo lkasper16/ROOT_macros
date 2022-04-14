@@ -9,7 +9,7 @@
 //Channel 8 & 9 for old set of gems g8i, g9i. 8 is cathode, 9 is anode
 void Quadgem_gain(){
 
-  int N = 4;
+  const int N = 4;
   TGraph *g_an[N] ;
   TGraph *g_cat[N] ;
   TGraph *gtemp_an[N] ;
@@ -34,17 +34,17 @@ void Quadgem_gain(){
   int N1[N];
 
   //Quad gem with reverse bias primary measurement
-  filename[1] << "PA_13-50_dvgem340V.txt";
+  filename[0] << "PA_13-50_dvgem340V.txt";
+  ifs[0].open(filename[0].str());
+
+  filename[1] << "PA_14-13_dvgem342V.txt";
   ifs[1].open(filename[1].str());
-
-  filename[2] << "PA_14-13_dvgem342V.txt";
-  ifs[2].open(filename[2].str());
   
-  filename[3] << "PA_14-26_dvgem335V.txt";
-  ifs[3].open(filename[3].str());
+  filename[2] << "PA_14-26_dvgem335V.txt";
+  ifs[2].open(filename[2].str());
 
-  filename[4] << "PA_13-00_PRIMARY.txt";
-  ifs[4].open(filename[4].str());
+  filename[3] << "PA_13-00_PRIMARY.txt";
+  ifs[3].open(filename[3].str());
 
   cout << "files open" << endl;
 
