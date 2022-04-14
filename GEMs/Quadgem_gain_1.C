@@ -127,7 +127,7 @@ void Quadgem_gain(){
     c0->cd(1);
     TH1D *h1 = new TH1D("h1","h1", 1200, -0.1, 1199.9);
     h1->SetTitle("dV_GEM  =  335 V");
-    h1->GetYaxis()->SetRangeUser(-0.3, 2.0);
+    h1->GetYaxis()->SetRangeUser(-50., 70.);
     h1->GetXaxis()->SetTitle("Time [seconds]");
     h1->GetYaxis()->SetTitle("current [nA]");
     h1->Draw();
@@ -145,7 +145,7 @@ void Quadgem_gain(){
     TLegend *legend1_0 = new TLegend(0.55,.30,.75,0.5, NULL, "brNDC");
     legend1_0->SetFillStyle(0);
     legend1_0->SetBorderSize(0);
-    legend1_0->SetTextSize(0.05);
+    legend1_0->SetTextSize(0.03);
     //legend1_0->AddEntry(g_an[1],"dv GEM = 345 V", "");
     legend1_0->AddEntry(g_an[0],"X ray I = 75 uA, V = 40 kV", "");
     legend1_0->AddEntry(g_an[0], "Anode current","L");
@@ -155,7 +155,7 @@ void Quadgem_gain(){
     c0->cd(2);
     TH1D *h2 = new TH1D("h2","h2", 1000, -0.1, 999.9);
     h2->SetTitle("dV_GEM  =  340 V");
-    h2->GetYaxis()->SetRangeUser(-0.5, 2.0);
+    h2->GetYaxis()->SetRangeUser(-50., 70.);
     h2->GetXaxis()->SetTitle("Time [seconds]");
     h2->GetYaxis()->SetTitle("current [nA]");
     h2->Draw();
@@ -173,7 +173,7 @@ void Quadgem_gain(){
     TLegend *legend1_1 = new TLegend(0.55,.30,.75,0.5, NULL, "brNDC");
     legend1_1->SetFillStyle(0);
     legend1_1->SetBorderSize(0);
-    legend1_1->SetTextSize(0.05);
+    legend1_1->SetTextSize(0.03);
     legend1_1->AddEntry(g_an[1],"X ray I = 75 uA, V = 40 kV", "");
     legend1_1->AddEntry(g_an[1], "Anode current","L");
     legend1_1->AddEntry(g_cat[1], "Cathode current","L");
@@ -182,7 +182,7 @@ void Quadgem_gain(){
     c0->cd(3);
     TH1D *h3 = new TH1D("h3","h3", 1000, -0.1, 999.9);
     h3->SetTitle("dV_GEM  =  342 V");
-    h3->GetYaxis()->SetRangeUser(-0.5, 2.0);
+    h3->GetYaxis()->SetRangeUser(-50., 70.);
     h3->GetXaxis()->SetTitle("Time [seconds]");
     h3->GetYaxis()->SetTitle("current [nA]");
     h3->Draw();
@@ -200,7 +200,7 @@ void Quadgem_gain(){
     TLegend *legend1_2 = new TLegend(0.55,.30,.75,0.5, NULL, "brNDC");
     legend1_2->SetFillStyle(0);
     legend1_2->SetBorderSize(0);
-    legend1_2->SetTextSize(0.05);
+    legend1_2->SetTextSize(0.03);
     legend1_2->AddEntry(g_an[2],"X ray I = 75 uA, V = 40 kV", "");
     legend1_2->AddEntry(g_an[2], "Anode current","L");
     legend1_2->AddEntry(g_cat[2], "Cathode current","L");
@@ -209,7 +209,7 @@ void Quadgem_gain(){
     c0->cd(4);
     TH1D *h4 = new TH1D("h4","h4", 1000, -0.1, 999.9);
     h4->SetTitle("Primary");
-    h4->GetYaxis()->SetRangeUser(-0.5, 3.0);
+    h4->GetYaxis()->SetRangeUser(-0.01, 0.2);
     h4->GetXaxis()->SetTitle("Time [seconds]");
     h4->GetYaxis()->SetTitle("current [nA]");
     h4->Draw();
@@ -227,7 +227,7 @@ void Quadgem_gain(){
     TLegend *legend1_3 = new TLegend(0.55,.30,.75,0.5, NULL, "brNDC");
     legend1_3->SetFillStyle(0);
     legend1_3->SetBorderSize(0);
-    legend1_3->SetTextSize(0.05);
+    legend1_3->SetTextSize(0.03);
     //legend1_3->AddEntry(g_an[1],"dv GEM = 356 V","");
     legend1_3->AddEntry(g_an[3],"X-Ray I = 75 uA, V = 40 kV","");
     legend1_3->AddEntry(g_an[3], "Anode current","L");
@@ -239,8 +239,8 @@ void Quadgem_gain(){
     c0_1->cd();
     TH1D *h0_1 = new TH1D("h0_1","h0_1", 5000, -0.1, 4999.9);
     h0_1->SetTitle("dV_GEM  =  335 V");
-    h0_1->GetYaxis()->SetRangeUser(-0.5, 0.05);
-    h0_1->GetXaxis()->SetRangeUser(0, 1200);
+    h0_1->GetYaxis()->SetRangeUser(-50., 70.);
+    h0_1->GetXaxis()->SetRangeUser(0, 575);
     h0_1->GetXaxis()->SetTitle("Time [seconds]");
     h0_1->GetYaxis()->SetTitle("current [nA]");
     h0_1->Draw();
@@ -257,14 +257,37 @@ void Quadgem_gain(){
 
     TCanvas *c0_2 = new TCanvas("c0_2","c0_2", 1200, 800);
     c0_2->cd();
-    TH1D *h0_2 = new TH1D("h0_2","h0_2", 8000, -0.1, 7999.9);
+    TH1D *h0_2 = new TH1D("h0_2","h0_2", 5000, -0.1, 4999.9);
     h0_2->SetTitle("dV_GEM  =  340 V");
-    h0_2->GetYaxis()->SetRangeUser(-10.4, 100.);
+    h0_2->GetYaxis()->SetRangeUser(-50., 70.);
     h0_2->GetXaxis()->SetTitle("Time [seconds]");
     h0_2->GetYaxis()->SetTitle("current [nA]");
     h0_2->Draw();
     g_an[2]->Draw("sameL");
     g_cat[2]->Draw("sameL");
+    
+    
+    TCanvas *c0_3 = new TCanvas("c0_3","c0_3", 1200, 800);
+    c0_3->cd();
+    TH1D *h0_3 = new TH1D("h0_3","h0_3", 5000, -0.1, 4999.9);
+    h0_3->SetTitle("dV_GEM  =  342 V");
+    h0_3->GetYaxis()->SetRangeUser(-50., 70.);
+    h0_3->GetXaxis()->SetRangeUser(0, 600);
+    h0_3->GetXaxis()->SetTitle("Time [seconds]");
+    h0_3->GetYaxis()->SetTitle("current [nA]");
+    h0_3->Draw();
+    g_an[3]->Draw("sameL");
+    g_cat[3]->Draw("sameL");
+
+    TLegend *legend3 = new TLegend(0.35,.80,.55,0.93, NULL, "brNDC");
+    legend3->SetFillStyle(0);
+    legend3->SetBorderSize(0);
+    legend3->SetTextSize(0.03);
+    legend3->AddEntry(g_an[3], "Anode current","L");
+    legend3->AddEntry(g_cat[3], "Cathode current","L");
+    legend3->Draw();
+    
+    
     
     Float_t p0_xray_an[N],p0_xray_cat[N], p0_fe55_an[N],p0_fe55_cat[N];
     Float_t IBF[N];
