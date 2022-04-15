@@ -143,14 +143,19 @@ void Quadgem_gain_1(){
     g_an[0]->Draw("sameL");
     g_cat[0]->Draw("sameL");
 
+    Float_t anFit0 = fxray_an[0]->GetParameter(0);
+    Float_t catFit0 = fxray_cat[0]->GetParameter(0);
+
     TLegend *legend1_0 = new TLegend(0.55,.30,.75,0.5, NULL, "brNDC");
     legend1_0->SetFillStyle(0);
     legend1_0->SetBorderSize(0);
     legend1_0->SetTextSize(0.04);
-    //legend1_0->AddEntry(g_an[0],"dv GEM = 345 V", "");
-    legend1_0->AddEntry(g_an[0],"X ray I = 75 uA, V = 40 kV", "");
+    legend1_0->AddEntry("","X ray I = 75 uA", "");
+    legend1_0->AddEntry("","X ray V = 40 kV", "");
     legend1_0->AddEntry(g_an[0], "Anode current","L");
     legend1_0->AddEntry(g_cat[0], "Cathode current","L");
+    legend1_0->AddEntry(anFit0, "Annode Value:" + anFit0 + " nA", "");
+    legend1_0->AddEntry(catFit0, "Cathode Value:" + catFit0 + " nA", "");
     legend1_0->Draw();
     
     c0->cd(2);
@@ -166,6 +171,8 @@ void Quadgem_gain_1(){
     fxray_cat[1] = new TF1("fxray_cat[1]", "pol0", 1050, 1250);
     fxray_an[1]->SetName("fxray_an[1]");
     fxray_cat[1]->SetName("fxray_cat[1]");
+    fxray_an[1]->SetLineColor(2);
+    fxray_cat[1]->SetLineColor(4);
     
     g_an[1]->Fit("fxray_an[1]","R");
     g_cat[1]->Fit("fxray_cat[1]", "R");
@@ -176,7 +183,8 @@ void Quadgem_gain_1(){
     legend1_1->SetFillStyle(0);
     legend1_1->SetBorderSize(0);
     legend1_1->SetTextSize(0.04);
-    legend1_1->AddEntry(g_an[1],"X ray I = 75 uA, V = 40 kV", "");
+    legend1_1->AddEntry("","X ray I = 75 uA", "");
+    legend1_1->AddEntry("","X ray V = 40 kV", "");
     legend1_1->AddEntry(g_an[1], "Anode current","L");
     legend1_1->AddEntry(g_cat[1], "Cathode current","L");
     legend1_1->Draw();
@@ -194,6 +202,8 @@ void Quadgem_gain_1(){
     fxray_cat[2] = new TF1("fxray_cat[2]", "pol0", 400, 575);
     fxray_an[2]->SetName("fxray_an[2]");
     fxray_cat[2]->SetName("fxray_cat[2]");
+    fxray_an[2]->SetLineColor(2);
+    fxray_an[2]->SetLineColor(4);
     
     g_an[2]->Fit("fxray_an[2]","R");
     g_cat[2]->Fit("fxray_cat[2]", "R");
@@ -204,7 +214,8 @@ void Quadgem_gain_1(){
     legend1_2->SetFillStyle(0);
     legend1_2->SetBorderSize(0);
     legend1_2->SetTextSize(0.04);
-    legend1_2->AddEntry(g_an[2],"X ray I = 75 uA, V = 40 kV", "");
+    legend1_2->AddEntry("","X ray I = 75 uA", "");
+    legend1_2->AddEntry("","X ray V = 40 kV", "");
     legend1_2->AddEntry(g_an[2], "Anode current","L");
     legend1_2->AddEntry(g_cat[2], "Cathode current","L");
     legend1_2->Draw();
@@ -222,9 +233,11 @@ void Quadgem_gain_1(){
     fxray_cat[3] = new TF1("fxray_cat[3]", "pol0", 200, 650);
     fxray_an[3]->SetName("fxray_an[3]");
     fxray_cat[3]->SetName("fxray_cat[3]");
+    fxray_an[3]->SetLineColor(2);
+    fxray_an[3]->SetLineColor(4);
     
-    g_an[3]->Fit("fxray_an3","R");
-    g_cat[3]->Fit("fxray_cat3", "R");
+    g_an[3]->Fit("fxray_an[3]","R");
+    g_cat[3]->Fit("fxray_cat[3]", "R");
     g_an[3]->Draw("sameL");
     g_cat[3]->Draw("sameL");
     
@@ -233,7 +246,8 @@ void Quadgem_gain_1(){
     legend1_3->SetBorderSize(0);
     legend1_3->SetTextSize(0.04);
     //legend1_3->AddEntry(g_an[1],"dv GEM = 356 V","");
-    legend1_3->AddEntry(g_an[3],"X-Ray I = 75 uA, V = 40 kV","");
+    legend1_3->AddEntry("","X ray I = 75 uA", "");
+    legend1_3->AddEntry("","X ray V = 40 kV", "");
     legend1_3->AddEntry(g_an[3], "Anode current","L");
     legend1_3->AddEntry(g_cat[3], "Cathode current","L");
     legend1_3->Draw();
@@ -247,7 +261,7 @@ void Quadgem_gain_1(){
     h0_0->GetXaxis()->SetRangeUser(0., 500.);
     h0_0->GetXaxis()->SetTitle("Time [seconds]");
     h0_0->GetYaxis()->SetTitle("current [nA]");
-    h0_0->Draw();
+    h0_0->Draw("E");
     g_an[0]->Draw("sameL");
     g_cat[0]->Draw("sameL");
 
