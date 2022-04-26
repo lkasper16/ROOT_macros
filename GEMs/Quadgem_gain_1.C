@@ -154,8 +154,8 @@ void Quadgem_gain_1(){
     legend1_0->AddEntry("","X ray V = 40 kV", "");
     legend1_0->AddEntry(g_an[0], "Anode current","L");
     legend1_0->AddEntry(g_cat[0], "Cathode current","L");
-    legend1_0->AddEntry(anFit0, "Annode Value:" + anFit0 + " nA", "");
-    legend1_0->AddEntry(catFit0, "Cathode Value:" + catFit0 + " nA", "");
+//    legend1_0->AddEntry(anFit0, "Annode Value:" + anFit0 + " nA", "");
+//    legend1_0->AddEntry(catFit0, "Cathode Value:" + catFit0 + " nA", "");
     legend1_0->Draw();
     
     c0->cd(2);
