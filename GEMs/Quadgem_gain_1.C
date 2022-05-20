@@ -21,18 +21,18 @@ void Quadgem_gain_1(){
 
   TF1 *fxray_an[N];
   TF1 *fxray_cat[N];
-  TF1 *ffe55_an[N];
-  TF1 *ffe55_cat[N];
+//  TF1 *ffe55_an[N];
+//  TF1 *ffe55_cat[N];
 
   TString xray_an;
   TString xray_cat;
-  TString fe55_an;
-  TString fe55_cat;
+//  TString fe55_an;
+//  TString fe55_cat;
           
   ifstream ifs[N];
   ostringstream filename[N];
   int N1[N];
-  cout << " read files " << endl;
+  cout << "Read files" << endl;
   //Quad gem with reverse bias primary measurement
   filename[0] << "PA_14-26_dvgem335V.txt";
   ifs[0].open(filename[0].str());
@@ -46,7 +46,7 @@ void Quadgem_gain_1(){
   filename[3] << "PA_13-00_PRIMARY.txt";
   ifs[3].open(filename[3].str());
 
-  cout << "files open" << endl;
+  cout << "Files open" << endl;
 
   //8 is cathode, 9 is anode
   Double_t t[N], g1i[N] , g2i[N], g3i[N], g4i[N], g5i[N] , g6i[N], g7i[N], g8i[N], g9i[N], g10i[N];
@@ -131,10 +131,10 @@ void Quadgem_gain_1(){
     h1->GetYaxis()->SetTitle("current [nA]");
     h1->Draw();
     
-    fxray_an[0] = new TF1("fxray_an[0]", "pol0", 200, 450);
+    fxray_an[0] = new TF1("fxray_an[0]", "pol0", 200, 400);
     fxray_an[0]->SetName("fxray_an[0]");
     fxray_an[0]->SetLineColor(2);
-    fxray_cat[0] = new TF1("fxray_cat[0]", "pol0", 200, 450);
+    fxray_cat[0] = new TF1("fxray_cat[0]", "pol0", 200, 400);
     fxray_cat[0]->SetName("fxray_cat[0]");
     fxray_cat[0]->SetLineColor(4);
     
@@ -154,8 +154,8 @@ void Quadgem_gain_1(){
     legend1_0->AddEntry("","X ray V = 40 kV", "");
     legend1_0->AddEntry(g_an[0], "Anode current","L");
     legend1_0->AddEntry(g_cat[0], "Cathode current","L");
-    legend1_0->AddEntry(anFit0, "Annode Value:" + anFit0 + " nA", "");
-    legend1_0->AddEntry(catFit0, "Cathode Value:" + catFit0 + " nA", "");
+//    legend1_0->AddEntry(anFit0, "Annode Value:" + anFit0 + " nA", "");
+//    legend1_0->AddEntry(catFit0, "Cathode Value:" + catFit0 + " nA", "");
     legend1_0->Draw();
     
     c0->cd(2);
@@ -167,8 +167,8 @@ void Quadgem_gain_1(){
     h2->GetYaxis()->SetTitle("current [nA]");
     h2->Draw();
     
-    fxray_an[1] = new TF1("fxray_an[1]", "pol0", 1050, 1250);
-    fxray_cat[1] = new TF1("fxray_cat[1]", "pol0", 1050, 1250);
+    fxray_an[1] = new TF1("fxray_an[1]", "pol0", 1100, 1210);
+    fxray_cat[1] = new TF1("fxray_cat[1]", "pol0", 1100, 1210);
     fxray_an[1]->SetName("fxray_an[1]");
     fxray_cat[1]->SetName("fxray_cat[1]");
     fxray_an[1]->SetLineColor(2);
@@ -198,12 +198,12 @@ void Quadgem_gain_1(){
     h3->GetYaxis()->SetTitle("current [nA]");
     h3->Draw();
     
-    fxray_an[2] = new TF1("fxray_an[2]", "pol0", 400, 575);
-    fxray_cat[2] = new TF1("fxray_cat[2]", "pol0", 400, 575);
+    fxray_an[2] = new TF1("fxray_an[2]", "pol0", 400, 545);
+    fxray_cat[2] = new TF1("fxray_cat[2]", "pol0", 400, 545);
     fxray_an[2]->SetName("fxray_an[2]");
     fxray_cat[2]->SetName("fxray_cat[2]");
     fxray_an[2]->SetLineColor(2);
-    fxray_an[2]->SetLineColor(4);
+    fxray_cat[2]->SetLineColor(4);
     
     g_an[2]->Fit("fxray_an[2]","R");
     g_cat[2]->Fit("fxray_cat[2]", "R");
@@ -229,12 +229,12 @@ void Quadgem_gain_1(){
     h4->GetYaxis()->SetTitle("current [nA]");
     h4->Draw();
     
-    fxray_an[3] = new TF1("fxray_an[3]", "pol0", 200, 650);
-    fxray_cat[3] = new TF1("fxray_cat[3]", "pol0", 200, 650);
+    fxray_an[3] = new TF1("fxray_an[3]", "pol0", 260, 660);
+    fxray_cat[3] = new TF1("fxray_cat[3]", "pol0", 260, 660);
     fxray_an[3]->SetName("fxray_an[3]");
     fxray_cat[3]->SetName("fxray_cat[3]");
     fxray_an[3]->SetLineColor(2);
-    fxray_an[3]->SetLineColor(4);
+    fxray_cat[3]->SetLineColor(4);
     
     g_an[3]->Fit("fxray_an[3]","R");
     g_cat[3]->Fit("fxray_cat[3]", "R");
@@ -331,6 +331,8 @@ void Quadgem_gain_1(){
     legend3->AddEntry(g_an[3], "Anode current","L");
     legend3->AddEntry(g_cat[3], "Cathode current","L");
     legend3->Draw();
+
+    gStyle->SetOptStat("neMR");
     
     Float_t p0_xray_an[N],p0_xray_cat[N], p0_fe55_an[N],p0_fe55_cat[N];
     Float_t IBF[N];
