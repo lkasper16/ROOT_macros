@@ -8,7 +8,7 @@
             
 //Channel 8 & 9 for old set of gems g8i, g9i. 8 is cathode, 9 is anode
 void Quadgem_gain_1(){
-  cout << "define variables :" << endl;
+  cout << "define variables" << endl;
   const int N = 4;
   TGraph *g_an[N] ;
   TGraph *g_cat[N] ;
@@ -21,13 +21,9 @@ void Quadgem_gain_1(){
 
   TF1 *fxray_an[N];
   TF1 *fxray_cat[N];
-//  TF1 *ffe55_an[N];
-//  TF1 *ffe55_cat[N];
 
   TString xray_an;
   TString xray_cat;
-//  TString fe55_an;
-//  TString fe55_cat;
           
   ifstream ifs[N];
   ostringstream filename[N];
@@ -123,6 +119,7 @@ void Quadgem_gain_1(){
     TCanvas *c0 = new TCanvas("c0","c0", 1200, 800);
     c0->Divide(3,2);
     c0->cd(1);
+    gStyle->SetOptStat("neMR");
     TH1D *h1 = new TH1D("h1","h1", 600, -0.1, 599.9);
     h1->SetTitle("dV_GEM  =  335 V");
     h1->GetYaxis()->SetRangeUser(-40., 80.);
@@ -251,10 +248,10 @@ void Quadgem_gain_1(){
     legend1_3->AddEntry(g_an[3], "Anode current","L");
     legend1_3->AddEntry(g_cat[3], "Cathode current","L");
     legend1_3->Draw();
-    
-	
+    	
     TCanvas *c0_0 = new TCanvas("c0_0","c0_0", 1200, 800);
     c0_0->cd();
+    gStyle->SetOptStat("neMR");
     TH1D *h0_0 = new TH1D("h0_0","h0_0", 5000, -0.1, 4999.9);
     h0_0->SetTitle("dV_GEM  =  335 V");
     h0_0->GetYaxis()->SetRangeUser(-40., 80.);
@@ -275,6 +272,7 @@ void Quadgem_gain_1(){
 
     TCanvas *c0_1 = new TCanvas("c0_1","c0_1", 1200, 800);
     c0_1->cd();
+    gStyle->SetOptStat("neMR");
     TH1D *h0_1 = new TH1D("h0_1","h0_1", 5000, -0.1, 4999.9);
     h0_1->SetTitle("dV_GEM  =  340 V");
     h0_1->GetYaxis()->SetRangeUser(-45., 105.);
@@ -294,6 +292,7 @@ void Quadgem_gain_1(){
     
     TCanvas *c0_2 = new TCanvas("c0_2","c0_2", 1200, 800);
     c0_2->cd();
+    gStyle->SetOptStat("neMR");
     TH1D *h0_2 = new TH1D("h0_2","h0_2", 5000, -0.1, 4999.9);
     h0_2->SetTitle("dV_GEM  =  342 V");
     h0_2->GetYaxis()->SetRangeUser(-60., 135.);
@@ -314,6 +313,7 @@ void Quadgem_gain_1(){
     
     TCanvas *c0_3 = new TCanvas("c0_3","c0_3", 1200, 800);
     c0_3->cd();
+    gStyle->SetOptStat("neMR");
     TH1D *h0_3 = new TH1D("h0_3","h0_3", 5000, -0.1, 4999.9);
     h0_3->SetTitle("PRIMARY");
     h0_3->GetYaxis()->SetRangeUser(-0.01, 0.15);
@@ -331,42 +331,87 @@ void Quadgem_gain_1(){
     legend3->AddEntry(g_an[3], "Anode current","L");
     legend3->AddEntry(g_cat[3], "Cathode current","L");
     legend3->Draw();
-
-    gStyle->SetOptStat("neMR");
     
-    Float_t p0_xray_an[N],p0_xray_cat[N], p0_fe55_an[N],p0_fe55_cat[N];
+    Float_t p0_xray_an[N],p0_xray_cat[N];
     Float_t IBF[N];
-    Float_t xray_an_sc[N],xray_cat_sc[N];
     cout << "calculate IBF : " << endl;
     
     for(int i = 0; i < N; i++ ){
-
     p0_xray_an[i] = fxray_an[i]->GetParameter(0);
     p0_xray_cat[i] = fxray_cat[i]->GetParameter(0);
-    //p0_fe55_an[i] = ffe55_an[i]->GetParameter(0);
-    //p0_fe55_cat[i] = ffe55_cat[i]->GetParameter(0);
 
     IBF[i] = ((p0_xray_cat[i]) / (p0_xray_an[i]))*100.*(-1.0) ;
 
-    cout << " x-ray anode :" << p0_xray_an[i]  << " x ray cathode " << p0_xray_cat[i] << " fe 55 an " << p0_fe55_an[i]  << " fe 55 cat " << p0_fe55_cat[i] << endl;
+    cout << " x-ray anode :" << p0_xray_an[i]  << " x ray cathode " << p0_xray_cat[i] << endl;
     cout << " IBF :" << IBF[i] << endl;
-    xray_an_sc[i] = 1.0*p0_xray_an[i];
-    xray_cat_sc[i] = 1.0*p0_xray_cat[i];
     }
     
-    cout  << "voltages " << endl;
-    //const int n = 3;
+    const int n = 3;
     //drift = 1 kV/cm, transfer = induction = 2 kV/cm
-    Float_t V[N] = {335, 340, 342, 0};
+    Float_t V[n] = {335, 340, 342};
+//    cout << "Voltages: " << V[n] << endl;    
+
+    //////////////////////////
+    //Effective Gain
+    const int slope_pA = 3397; // charge per mV
+    const int primary_arco2_70_30 = 217;
+    const int primary_arco2_80_20 = 223;
+    Float_t eff_gain[n];
     
-    TGraph *ibf = new TGraph(N, V, IBF);
+    //ArCO2 (70:30)
+    for (int i =0 ; i < n; i++) {
+    eff_gain[i] = (p0_xray_an[i])/(p0_xray_cat[3]);
+    }
+
+    TGraph *effgain =  new TGraph(n, V , eff_gain);
+    effgain->SetName("effgain");
+    effgain->SetMarkerStyle(20);
+    effgain->SetMarkerSize(2.0);
+    effgain->SetMarkerColor(4);
+
+    TGraph *ibf = new TGraph(n, V, IBF);
     ibf->SetName("ibf");
     ibf->SetMarkerStyle(20);
     ibf->SetMarkerSize(2.0);
     ibf->SetMarkerColor(2);
 
+    TCanvas *c1 = new TCanvas("c1","c1", 1200, 800);
+    c1->cd();
+    TH1F *hist0 = new TH1F("hist0","",30,330,350);
+    hist0->SetTitle("Effective Gain");
+    hist0->GetYaxis()->SetRangeUser(0, 1600.);
+    hist0->GetYaxis()->SetTitle("(I_an)/(I_PRIMARY)");
+    hist0->GetXaxis()->SetTitle("dV GEM [V]");
+    hist0->Draw("");
+    effgain->Draw("sameP");
+
+    TLegend *legendh0 = new TLegend(0.35,.80,.55,0.93, NULL, "brNDC");
+    legendh0->SetFillStyle(0);
+    legendh0->SetBorderSize(0);
+    legendh0->SetTextSize(0.05);
+    legendh0->AddEntry(effgain, "ArCO2(70:30)","P");
+    legendh0->Draw();
+
+    TCanvas *c2 = new TCanvas("c2","c2", 1200, 800);
+    c2->cd();
+    gStyle->SetOptStat("000000");
+    TH1F *hist1 = new TH1F("hist1","",30,325,350);
+    hist1->SetTitle("IBF");
+    hist1->GetYaxis()->SetTitle("IBF");
+    hist1->GetXaxis()->SetTitle("dV GEM [V]");
+    hist1->GetYaxis()->SetRangeUser(20, 60);
+    hist1->Draw("");
+    ibf->Draw("SameP");
+
+    TLegend *legendh1 = new TLegend(0.35,.80,.55,0.93, NULL, "brNDC");
+    legendh1->SetFillStyle(0);
+    legendh1->SetBorderSize(0);
+    legendh1->SetTextSize(0.05);
+    legendh1->AddEntry(ibf, "ArCO2(70:30)","P");
+    legendh1->Draw();
+
     TFile *fout = new TFile("quadgem_gain_ibf_arco2_7030.root", "RECREATE");
-    //effgain->Write();
+    effgain->Write();
     ibf->Write();
     fout->Close();
     
