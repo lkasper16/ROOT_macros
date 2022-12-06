@@ -26,7 +26,8 @@
 #include <TLegend.h>
 #include <TProfile.h>
 
-using namespace std;
+//using namespace std;
+using namespace ROOT;
 
 void fdcTest_merge(){
   /*  
@@ -34,11 +35,18 @@ void fdcTest_merge(){
     TTree *ntp_track = (TTree*)fin->Get("ntp_track");
   */
 
-  TChain ch("fdctest");
+  //Use RDataFrame for a single file - All constructors are equivalent
+  TFile *fin = TFile::Open("~TRDPrototype/disprootFiles/hd_rawdata_002039.evio.disproot");
+  TTree *fdcFeTree = fin.Get<TTree>("fdctest");
+  RDataFrame d1("fdctest", fin);
   
-//  ch.Add("/sphenix/user/isibf5y/ECCE_defmac/macros/detectors/EICDetector/barrel_mRwell_pim/midrap_mRWell_pim_eval_*.root"); // 5 pi- per event , stupid , kept the same file name as for MMG but indeed its for mRwell as depicted in the mother folder !
-  
+  auto h_channels = d1.Histo2D("dch", "w2ch");
+  h_channels->Draw();
+
+  //Use TChain for multiple files - All constructors are equivalent
+  TChain ch("combined_fdctest");
   ch.Add("hd_rawdata_002039.evio.disproot");
+//  ch.Add("...disproot");
   
   int EVENT;
   int trig=0;
@@ -210,6 +218,11 @@ void fdcTest_merge(){
   ch.SetBranchAddress("w2ahit", &w2ahit);
   ch.SetBranchAddress("w2mhit", &w2mhit);
   ch.SetBranchAddress("w2chit", &w2chit);
+  ch.SetBranchAddress("dnhit", &dnhit);
+  ch.SetBranchAddress("dthit", &dthit);
+  ch.SetBranchAddress("dahit", &dahit);
+  ch.SetBranchAddress("dmhit", &dmhit);
+  ch.SetBranchAddress("dchit", &dchit);
   ch.SetBranchAddress("unhit", &unhit);
   ch.SetBranchAddress("uthit", &uthit);
   ch.SetBranchAddress("uahit", &uahit);
