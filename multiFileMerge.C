@@ -30,31 +30,30 @@ using namespace std;
 //using namespace ROOT;
 
 void multiFileMerge(){
-  /*  
-    TFile *fin = new TFile("/Users/souravtarafdar/sPHENIX/G4sim/svtx_pix_maps_pion/g4svtx_eval_50pionevt.root");
-    TTree *ntp_track = (TTree*)fin->Get("ntp_track");
-  */
+  
+  TStopwatch timer;
+  timer.Start();
   
   //A chain is a collection of files containg TTree objects
   //Use TChain for multiple files - All constructors are equivalent
   TChain ch("fdctest");
   //ArCO2 files
-  ch.Add("~TRDPrototype/disprootFiles/hd_rawdata_002019.evio.disproot");
-  ch.Add("~TRDPrototype/disprootFiles/hd_rawdata_002024.evio.disproot");
-  ch.Add("~TRDPrototype/disprootFiles/hd_rawdata_002039.evio.disproot");
-  ch.Add("~TRDPrototype/disprootFiles/hd_rawdata_002057.evio.disproot");
-  ch.Add("~TRDPrototype/disprootFiles/hd_rawdata_002062.evio.disproot");
+  ch.Add("~/TRDPrototype/disprootFiles/hd_rawdata_002019.evio.disproot");
+  ch.Add("~/TRDPrototype/disprootFiles/hd_rawdata_002024.evio.disproot");
+  ch.Add("~/TRDPrototype/disprootFiles/hd_rawdata_002039.evio.disproot");
+  ch.Add("~/TRDPrototype/disprootFiles/hd_rawdata_002057.evio.disproot");
+  ch.Add("~/TRDPrototype/disprootFiles/hd_rawdata_002062.evio.disproot");
   
   //XeCO2 files
-  ch.Add("~TRDPrototype/disprootFiles/hd_rawdata_002036.evio.disproot");
-  ch.Add("~TRDPrototype/disprootFiles/hd_rawdata_002037.evio.disproot");
-  ch.Add("~TRDPrototype/disprootFiles/hd_rawdata_002038.evio.disproot");
-//  ch.Add("~TRDPrototype/disprootFiles/hd_rawdata_002060.evio.disproot"); //Bad run
-//  ch.Add("~TRDPrototype/disprootFiles/hd_rawdata_002031.evio.disproot"); //Bad run
-  ch.Add("~TRDPrototype/disprootFiles/hd_rawdata_002053.evio.disproot");
+  ch.Add("~/TRDPrototype/disprootFiles/hd_rawdata_002036.evio.disproot");
+  ch.Add("~/TRDPrototype/disprootFiles/hd_rawdata_002037.evio.disproot");
+  ch.Add("~/TRDPrototype/disprootFiles/hd_rawdata_002038.evio.disproot");
+//  ch.Add("~/TRDPrototype/disprootFiles/hd_rawdata_002060.evio.disproot"); //Bad run
+//  ch.Add("~/TRDPrototype/disprootFiles/hd_rawdata_002031.evio.disproot"); //Bad run
+  ch.Add("~/TRDPrototype/disprootFiles/hd_rawdata_002053.evio.disproot");
   
   char buffer[21];
-  int nTrees = GetNtrees();
+  int nTrees = ch.GetNtrees();
   sprintf(buffer, "%d", nTrees);
   
   int EVENT;
@@ -89,6 +88,24 @@ void multiFileMerge(){
   int dsize=0;
   int wsize=0;
   int w2size=0;
+  int wnhit;
+  float wthit[1000];
+  float wahit[1000];
+  float wmhit[1000];
+  int wchit[1000];
+  int unhit;
+  float uthit[1000];
+  float uahit[1000];
+  int w2nhit;
+  float w2thit[1000];
+  float w2ahit[1000];
+  float w2mhit[1000];
+  int w2chit[1000];
+  int dnhit;
+  float dthit[1000];
+  float dahit[1000];
+  float dmhit[1000];
+  int dchit[1000];
 
   ch.SetBranchAddress("ev", &EVENT);
   ch.SetBranchAddress( "runNumber", &RunNumber);
@@ -141,10 +158,11 @@ void multiFileMerge(){
   ch.SetBranchAddress("dmhit", &dmhit);
   ch.SetBranchAddress("dchit", &dchit);
   
-  
-  ch.Merge(combined_fdctest.root); //Merge all entries in the chain to a new tree in this new file
-  //ch.MakeClass("treeAnalyzer");
-  ch.ls
+//  TFile* outputFile = TFile::Open("combined_fdctest.root","RECREATE");
+//  outputFile->mkdir("~/TRDPrototype/")->cd();
+  ch.Merge("combined_fdctest.root"); //Merge all entries in the chain to a new tree in this new file
+  ch.MakeClass("treeAnalyzer");
+  ch.ls();
   
   
   //// GEM Histos ////
@@ -218,7 +236,10 @@ void multiFileMerge(){
   yaxis->SetTitle("Channel");
   
   //// 1D Comparisons ////
+ 
   
+  timer.Stop();
+  timer.Print(); 
   
 }
 
