@@ -52,9 +52,12 @@ void multiFileMerge(){
 //  ch.Add("~/TRDPrototype/disprootFiles/hd_rawdata_002031.evio.disproot"); //Bad run
   ch.Add("~/TRDPrototype/disprootFiles/hd_rawdata_002053.evio.disproot");
   
-  char buffer[21];
+  //char buffer[21];
   int nTrees = ch.GetNtrees();
-  sprintf(buffer, "%d", nTrees);
+  //sprintf(buffer, "%d", nTrees);
+  int nEnts = ch.GetEntries();
+  cout << "# of trees: " << nTrees <<  endl;
+  cout << "# of entries: " << nEnts <<  endl;
   
   int EVENT;
   int RunNumber;
