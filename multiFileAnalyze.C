@@ -172,7 +172,7 @@ void multiFileAnalyze(){
   
   
   // Each chain element has a tree named 'fdctest' and is titled by the file name the tree came from
-  TObjArray *fileElements=ch->GetListOfFiles();
+  TObjArray *fileElements=ch.GetListOfFiles();
   TIter next(fileElements);
   TChainElement *chEl=0;
   while (( chEl=(TChainElement*)next() )) {
@@ -203,9 +203,9 @@ void multiFileAnalyze(){
 	 	} 
 */
 	 int nTreeEnts(chEl->GetEntries());
-	 cout<<"# Entries in "<<f<<": "<<nTreeEnts<<endl;
+ 	 cout<<"# Entries in "<<chEl->GetTitle()<<": "<<nTreeEnts<<endl;
   	 f.Draw("qm_d>>h1_qm");
-	 f.Draw("qm_w2>>h1_qm","","same")
+	 f.Draw("qm_w2>>h1_qm");
      
  	 
    }
