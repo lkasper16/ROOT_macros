@@ -1,3 +1,5 @@
 .DS_Store
 singleFileMerge.C
 multiFileMerge_PLAY.C
+*.root
+plot_trk_quality.C
