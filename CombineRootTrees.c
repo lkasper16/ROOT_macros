@@ -33,56 +33,24 @@
 
 using namespace std;
 
-void rootFileMerge(){
+void CombineRootTrees(){
   
   TStopwatch timer;
   timer.Start();
   
-  //A chain is a collection of files containg TTree objects
   //Use TChain for multiple files - All constructors are equivalent
   TChain fChain("events");
   fChain.Add("~/eic/output_trd_testing_pion.edm4hep.root");
-  //fChain.Add("~/eic/output_trd_testing_pion_low.edm4hep.root");
+  fChain.Add("~/eic/output_trd_testing_pion_low.edm4hep.root");
   fChain.Add("~/eic/output_trd_testing_electron.edm4hep.root");
-  //fChain.Add("~/eic/output_trd_testing_electron_low.edm4hep.root");
+  fChain.Add("~/eic/output_trd_testing_electron_low.edm4hep.root");
   fChain.Add("~/eic/output_trd_testing_muon.edm4hep.root");
-  //fChain.Add("~/eic/output_trd_testing_muon_low.edm4hep.root");
+  fChain.Add("~/eic/output_trd_testing_muon_low.edm4hep.root");
   
   int nTrees = fChain.GetNtrees();
   int nEnts = fChain.GetEntries();
   cout << "# of trees: " << nTrees <<  endl;
   cout << "# of entries: " << nEnts <<  endl;
-/*  
-  int EVENT;
-  int RunNumber;
-  int trig=0;
-  float dped=0.;
-  int dchmax=0;
-  float dsig=0;
-  int dwid=0;
-  int dsmax=0;
-  float w2ped=0.;
-  int w2chmax=0;
-  float w2sig=0;
-  int w2wid=0;
-  int w2smax=0;
-  float dcharge=0.;
-  float w2charge=0.;
-  float dmcharge=0.;
-  float w2mcharge=0.;
-  int dsize=0;
-  int w2size=0;
-  int w2nhit;
-  float w2thit[1000];
-  float w2ahit[1000];
-  float w2mhit[1000];
-  int w2chit[1000];
-  int dnhit;
-  float dthit[1000];
-  float dahit[1000];
-  float dmhit[1000];
-  int dchit[1000];
-*/
   
   static constexpr Int_t kMaxMCParticles = 2;
   static constexpr Int_t kMaxEventHeader = 1;
@@ -135,7 +103,7 @@ void rootFileMerge(){
   Float_t         MPGDTRDEndcapHits_momentum_y[kMaxMPGDTRDEndcapHits];   //[MPGDTRDEndcapHits_]
   Float_t         MPGDTRDEndcapHits_momentum_z[kMaxMPGDTRDEndcapHits];   //[MPGDTRDEndcapHits_]
   
-  // List of branches
+/*  // List of branches
   //TBranch        *b_MCParticles_;   //!
   TBranch        *b_MCParticles_PDG;   //!
   TBranch        *b_MCParticles_generatorStatus;   //!
@@ -181,10 +149,10 @@ void rootFileMerge(){
   TBranch        *b_MPGDTRDEndcapHits_momentum_x;   //!
   TBranch        *b_MPGDTRDEndcapHits_momentum_y;   //!
   TBranch        *b_MPGDTRDEndcapHits_momentum_z;   //!
-  
+*/  
   //fChain.SetBranchAddress("MCParticles", &MCParticles_, &b_MCParticles_);
-  fChain.SetBranchAddress("MCParticles.PDG", MCParticles_PDG, &b_MCParticles_PDG);
-  fChain.SetBranchAddress("MCParticles.generatorStatus", MCParticles_generatorStatus, &b_MCParticles_generatorStatus);
+  fChain.SetBranchAddress("MCParticles.PDG", &MCParticles_PDG);
+/*  fChain.SetBranchAddress("MCParticles.generatorStatus", MCParticles_generatorStatus, &b_MCParticles_generatorStatus);
   fChain.SetBranchAddress("MCParticles.simulatorStatus", MCParticles_simulatorStatus, &b_MCParticles_simulatorStatus);
   fChain.SetBranchAddress("MCParticles.charge", MCParticles_charge, &b_MCParticles_charge);
   fChain.SetBranchAddress("MCParticles.time", MCParticles_time, &b_MCParticles_time);
@@ -197,8 +165,9 @@ void rootFileMerge(){
   fChain.SetBranchAddress("MCParticles.endpoint.z", MCParticles_endpoint_z, &b_MCParticles_endpoint_z);
   fChain.SetBranchAddress("MCParticles.momentum.x", MCParticles_momentum_x, &b_MCParticles_momentum_x);
   fChain.SetBranchAddress("MCParticles.momentum.y", MCParticles_momentum_y, &b_MCParticles_momentum_y);
-  fChain.SetBranchAddress("MCParticles.momentum.z", MCParticles_momentum_z, &b_MCParticles_momentum_z);
-  fChain.SetBranchAddress("MCParticles.momentumAtEndpoint.x", MCParticles_momentumAtEndpoint_x, &b_MCParticles_momentumAtEndpoint_x);
+*/
+  fChain.SetBranchAddress("MCParticles.momentum.z", &MCParticles_momentum_z);
+/*  fChain.SetBranchAddress("MCParticles.momentumAtEndpoint.x", MCParticles_momentumAtEndpoint_x, &b_MCParticles_momentumAtEndpoint_x);
   fChain.SetBranchAddress("MCParticles.momentumAtEndpoint.y", MCParticles_momentumAtEndpoint_y, &b_MCParticles_momentumAtEndpoint_y);
   fChain.SetBranchAddress("MCParticles.momentumAtEndpoint.z", MCParticles_momentumAtEndpoint_z, &b_MCParticles_momentumAtEndpoint_z);
   fChain.SetBranchAddress("MCParticles.spin.x", MCParticles_spin_x, &b_MCParticles_spin_x);
@@ -226,42 +195,17 @@ void rootFileMerge(){
   fChain.SetBranchAddress("MPGDTRDEndcapHits.position.z", MPGDTRDEndcapHits_position_z, &b_MPGDTRDEndcapHits_position_z);
   fChain.SetBranchAddress("MPGDTRDEndcapHits.momentum.x", MPGDTRDEndcapHits_momentum_x, &b_MPGDTRDEndcapHits_momentum_x);
   fChain.SetBranchAddress("MPGDTRDEndcapHits.momentum.y", MPGDTRDEndcapHits_momentum_y, &b_MPGDTRDEndcapHits_momentum_y);
-  fChain.SetBranchAddress("MPGDTRDEndcapHits.momentum.z", MPGDTRDEndcapHits_momentum_z, &b_MPGDTRDEndcapHits_momentum_z);  
-/*  
-  ch.SetBranchAddress("ev", &EVENT);
-  ch.SetBranchAddress( "runNumber", &RunNumber);
-  ch.SetBranchAddress("ped_d", &dped);
-  ch.SetBranchAddress("ped_w2", &w2ped); 
-  ch.SetBranchAddress("q_d", &dcharge);
-  ch.SetBranchAddress("q_w2", &w2charge);
-  ch.SetBranchAddress("qm_d", &dmcharge);
-  ch.SetBranchAddress("qm_w2", &w2mcharge);
-  ch.SetBranchAddress("dsig", &dsig);
-  ch.SetBranchAddress("dwid", &dwid);
-  ch.SetBranchAddress("w2sig", &w2sig);
-  ch.SetBranchAddress("w2wid", &w2wid);
-  ch.SetBranchAddress("t_d", &dsmax);
-  ch.SetBranchAddress("t_w2", &w2smax);
-  ch.SetBranchAddress("dch", &dchmax);
-  ch.SetBranchAddress("w2ch", &w2chmax);
-  ch.SetBranchAddress("dsz", &dsize);
-  ch.SetBranchAddress("w2sz", &w2size);
-  ch.SetBranchAddress("trig", &trig);
-  ch.SetBranchAddress("w2nhit", &w2nhit);
-  ch.SetBranchAddress("w2thit", &w2thit);
-  ch.SetBranchAddress("w2ahit", &w2ahit);
-  ch.SetBranchAddress("w2mhit", &w2mhit);
-  ch.SetBranchAddress("w2chit", &w2chit);
-  ch.SetBranchAddress("dnhit", &dnhit);
-  ch.SetBranchAddress("dthit", &dthit);
-  ch.SetBranchAddress("dahit", &dahit);
-  ch.SetBranchAddress("dmhit", &dmhit);
-  ch.SetBranchAddress("dchit", &dchit);
-*/  
-  TFile* outputFile = TFile::Open("combined_events.root","RECREATE");
+*/
+  fChain.SetBranchAddress("MPGDTRDEndcapHits.momentum.z", &MPGDTRDEndcapHits_momentum_z);
+  
+  //TFile* outputFile = TFile::Open("combined_events.root","RECREATE");
+  TFile* outputFile = new TFile("combined_events.root","RECREATE");
   //outputFile->mkdir("~/TRDPrototype/")->cd();
-  fChain.Merge(outputFile, 0); //Merge all entries in the chain to a new tree in this new file
-  fChain.MakeClass("chainAnalyzer");
+  TTree* outputTree = fChain.CloneTree(-1, "fast");
+  outputTree->Write();
+  outputFile->Close();
+  //fChain.Merge(outputFile, 0); //Merge all entries in the chain to a new tree in this new file
+  //fChain.MakeClass("chainAnalyzer");
   fChain.ls();
   
   timer.Stop();
