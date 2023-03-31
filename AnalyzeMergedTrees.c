@@ -1,20 +1,12 @@
 #include <iostream>
 #include <vector>
 #include "vector"
-#include <fstream>
-#include <string>
 #include <TTree.h>
 #include <TMath.h>
-#include <TRandom3.h>
-#include <TRandom2.h>
-#include <TRandom.h>
 #include <TStopwatch.h>
 #include <TStyle.h>
 #include <TCanvas.h>
-#include <TPaveLabel.h>
-#include <TPaveText.h>
 #include <TList.h>
-#include <TPaveStats.h>
 #include <TChain.h>
 #include <TH1D.h>
 #include <TH2D.h>
@@ -23,42 +15,19 @@
 #include <TGraph.h>
 #include <TGraphErrors.h>
 #include <TFile.h>
-#include <TLine.h>
-#include <TBox.h>
 #include <TObject.h>
 #include <TLegend.h>
 #include <TProfile.h>
 #include <TROOT.h>
-#include <TTreeReader.h>
-#include <TTreeReaderValue.h>
-#include <TTreeReaderArray.h>
 
 using namespace std;
-//using namespace ROOT;
-
-bool CheckValue(ROOT::Internal::TTreeReaderValueBase& value) {
-	if (value.GetSetupStatus() < 0) {
-    	std::cerr << "Error " << value.GetSetupStatus()
-                << "setting up reader for " << value.GetBranchName() << '\n';
-    	return false;
-   	}
-   	return true;
-}
 
 void AnalyzeMergedTrees(){
   
 	TStopwatch timer;
   	timer.Start();
 	
-	//TChain ch("events");
-	//ch.Add("~/eic/output_trd_testing_pion.edm4hep.root");
-	//ch.Add("~/eic/output_trd_testing_pion_low.edm4hep.root");
-	//ch.Add("~/eic/output_trd_testing_electron.edm4hep.root");
-	//ch.Add("~/eic/output_trd_testing_electron_low.edm4hep.root");
-	//ch.Add("~/eic/output_trd_testing_muon.edm4hep.root");
-	//ch.Add("~/eic/output_trd_testing_muon_low.edm4hep.root");
-	
-	TFile *inputFile = TFile::Open("combined_events.root");
+	TFile *inputFile = TFile::Open("combined_events.edm4hep.root");
 	if (!inputFile || inputFile->IsZombie()) {
 		std::cerr <<"Cannot open input file - exiting..."<< std::endl;
 		return;
@@ -73,12 +42,12 @@ void AnalyzeMergedTrees(){
   	cout << "Total # of entries: " << nEnts <<  endl;
 	
 	//// Define Histos ////
-	TH1F *pz_pion_low = new TH1F("pz_pion_low","Pz Distribution 1-10 GeV/c",200,0.,11);
-	TH1F *pz_electron_low = new TH1F("pz_electron_low","Pz Distribution 1-10 GeV/c",200,0.,11);
-	TH1F *pz_muon_low = new TH1F("pz_muon_low","Pz Distribution 1-10 GeV/c",200,10,51);
-    TH1F *pz_pion_low_truth = new TH1F("pz_pion_low_truth","Pz Distribution 1-10 GeV/c",200,0.,11);
-    TH1F *pz_electron_low_truth = new TH1F("pz_electron_low_truth","Pz Distribution 1-10 GeV/c",200,0.,11);
-	TH1F *pz_muon_low_truth = new TH1F("pz_muon_low_truth","Pz Distribution 1-10 GeV/c",200,10,51);
+	//TH1F *pz_pion_low = new TH1F("pz_pion_low","Pz Distribution 1-10 GeV/c",200,0.,11);
+	//TH1F *pz_electron_low = new TH1F("pz_electron_low","Pz Distribution 1-10 GeV/c",200,0.,11);
+	//TH1F *pz_muon_low = new TH1F("pz_muon_low","Pz Distribution 1-10 GeV/c",200,10,51);
+    //TH1F *pz_pion_low_truth = new TH1F("pz_pion_low_truth","Pz Distribution 1-10 GeV/c",200,0.,11);
+    //TH1F *pz_electron_low_truth = new TH1F("pz_electron_low_truth","Pz Distribution 1-10 GeV/c",200,0.,11);
+	//TH1F *pz_muon_low_truth = new TH1F("pz_muon_low_truth","Pz Distribution 1-10 GeV/c",200,10,51);
 	
 	TH1F *pz_pion = new TH1F("pz_pion","Pz Distribution 10-50 GeV/c",200,10,51);
 	TH1F *pz_electron = new TH1F("pz_electron","Pz Distribution 10-50 GeV/c",200,10,51);
@@ -111,72 +80,48 @@ void AnalyzeMergedTrees(){
     Float_t MCParticles_momentum_z;   		//[MCParticles_]
 	Float_t MPGDTRDEndcapHits_momentum_z;   //[MPGDTRDEndcapHits_]
 	
-	//// List of branches ////
-    //TBranch *b_MCParticles_;   //!
-    TBranch *b_MCParticles_PDG = eventsTree->GetBranch("MCParticles.PDG");
-	if (!b_MCParticles_PDG) {
-		std::cerr <<"Cannot find MCParticles.PDG in Tree 'events'"<<std::endl;
-	}
-    //TBranch *b_MCParticles_generatorStatus;   //!
-    //TBranch *b_MCParticles_simulatorStatus;   //!
-    //TBranch *b_MCParticles_charge;   //!
-    //TBranch *b_MCParticles_time;   //!
-    //TBranch *b_MCParticles_mass;   //!
-    //TBranch *b_MCParticles_momentum_x;   //!
-    //TBranch *b_MCParticles_momentum_y;   //!
-	//TBranch *b_EventHeader_;   //!
-    //TBranch *b_EventHeader_eventNumber;   //!
-    //TBranch *b_EventHeader_runNumber;   //!
-    //TBranch *b_EventHeader_timeStamp;   //!
-    //TBranch *b_EventHeader_weight;   //!
-    //TBranch *b_MPGDTRDEndcapHits_;   //!
-    TBranch *b_MCParticles_momentum_z = eventsTree->GetBranch("MCParticles.momentum.z");   //!
-    TBranch *b_MPGDTRDEndcapHits_momentum_z = eventsTree->GetBranch("MPGDTRDEndcapHits.momentum.z");   //!
-	
 	//// Assign branches to respective leaf values ////
-	//.SetAddress("MCParticles", &MCParticles_, &b_MCParticles_);
-    b_MCParticles_PDG->SetAddress(&MCParticles_PDG);
-	b_MCParticles_momentum_z->SetAddress(&MCParticles_momentum_z);
-	b_MPGDTRDEndcapHits_momentum_z->SetAddress(&MPGDTRDEndcapHits_momentum_z);
+	eventsTree->SetBranchAddress("MCParticles.PDG", &MCParticles_PDG);
+	eventsTree->SetBranchAddress("MCParticles.momentum.z", &MCParticles_momentum_z);
+	eventsTree->SetBranchAddress("MPGDTRDEndcapHits.momentum.z", &MPGDTRDEndcapHits_momentum_z);
 	
 	//// Read TTree ////
-	for(Long64_t i=0; i<5; i++) {
+	for(Long64_t i=0; i<15; i++) {
 		
 		eventsTree->GetEntry(i);
-		//MCParticles_PDG[i] = b_MCParticles_PDG->GetEntry(i);
-		//MCParticles_momentum_z[i] = b_MCParticles_momentum_z->GetEntry(i);
-		//MPGDTRDEndcapHits_momentum_z[i] = b_MPGDTRDEndcapHits_momentum_z->GetEntry(i);
 		cout<<"Event #: "<<i<<endl;
 		cout<<"Without PID: "<<MCParticles_momentum_z<<endl;
+		cout<<"MCParticles_PDG: "<<MCParticles_PDG<<endl;
+		
 		if (MCParticles_PDG == -211) {
 			if (MCParticles_momentum_z != 0) {
 				pz_pion_truth->Fill(MCParticles_momentum_z);
-				cout<<"With PID: "<<MCParticles_momentum_z<<endl;
-				//pz_pion_low_truth->Fill(truthMom_z);
+				//cout<<"With PID: "<<MCParticles_momentum_z<<endl;
+				//pz_pion_low_truth->Fill(MCParticles_momentum_z);
 			}
 			if (MPGDTRDEndcapHits_momentum_z != 0) {
 				pz_pion->Fill(MPGDTRDEndcapHits_momentum_z);
-				//pz_pion_low->Fill(hitMom_z);
+				//pz_pion_low->Fill(MPGDTRDEndcapHits_momentum_z);
 			}
 		}
 		if (MCParticles_PDG == 11) {
 			if (MCParticles_momentum_z != 0) {
                 pz_electron_truth->Fill(MCParticles_momentum_z);
-				//pz_electron_low_truth->Fill(truthMom_z);
+				//pz_electron_low_truth->Fill(MCParticles_momentum_z);
             }
             if (MPGDTRDEndcapHits_momentum_z != 0) {
                 pz_electron->Fill(MPGDTRDEndcapHits_momentum_z);
-				//pz_electron_low->Fill(hitMom_z);
+				//pz_electron_low->Fill(MPGDTRDEndcapHits_momentum_z);
             }
 		}
 		if (MCParticles_PDG == 13) {
             if (MCParticles_momentum_z != 0) {
                 pz_muon_truth->Fill(MCParticles_momentum_z);
-                //pz_muon_low_truth->Fill(truthMom_z);
+                //pz_muon_low_truth->Fill(MCParticles_momentum_z);
             }
             if (MPGDTRDEndcapHits_momentum_z != 0) {
                 pz_muon->Fill(MPGDTRDEndcapHits_momentum_z);
-                //pz_muon_low->Fill(hitMom_z);
+                //pz_muon_low->Fill(MPGDTRDEndcapHits_momentum_z);
             }
         }
 		
@@ -260,10 +205,10 @@ void AnalyzeMergedTrees(){
     TLegend *l2 = new TLegend(0.5, 0.8, 0.9, 0.9);
     l2->SetNColumns(2);
     l2->AddEntry(pz_electron_low, "e-", "L");
+	l2->AddEntry(pz_electron_truth_low, "e- [truth]", "L");
     l2->AddEntry(pz_pion_low, "pi-", "L");
+	l2->AddEntry(pz_pion_truth_low, "pi- [truth]", "L");
     l2->AddEntry(pz_muon_low, "mu-", "L");
-    l2->AddEntry(pz_electron_truth_low, "e- [truth]", "L");
-    l2->AddEntry(pz_pion_truth_low, "pi- [truth]", "L");
     l2->AddEntry(pz_muon_truth_low, "mu- [truth]", "L");
     l2->Draw();
 */	
