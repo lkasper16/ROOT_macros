@@ -78,10 +78,14 @@ void multiFileAnalyze(){
   	
 	//// Define Histograms ////
   	//TH1D *h1_qm = new TH1D("h1_qm","Max Amplitude Distribution", 4300, -1, 4299);
-  	TH2D *w2AvsT = new TH2D("w2AvsT","GEM Amplitude vs Time",300,-0.5,299.5,240,-0.5,239.5);
-  	w2AvsT->Sumw2();
-  	TH2D *dAvsT = new TH2D("dAvsT","MMG Amplitude vs Time",300,-0.5,299.5,200,-0.5,199.5);
-  	dAvsT->Sumw2();
+  	TH2D *w2AvsTXe = new TH2D("w2AvsTXe","GEM Amplitude vs Time in Xe",300,-0.5,299.5,240,-0.5,239.5);
+  	w2AvsTXe->Sumw2();
+  	TH2D *dAvsTXe = new TH2D("dAvsTXe","MMG Amplitude vs Time in Xe",300,-0.5,299.5,200,-0.5,199.5);
+  	dAvsTXe->Sumw2();
+	TH2D *w2AvsTAr = new TH2D("w2AvsTAr","GEM Amplitude vs Time in Ar",300,-0.5,299.5,240,-0.5,239.5);
+    w2AvsTAr->Sumw2();
+    TH2D *dAvsTAr = new TH2D("dAvsTAr","MMG Amplitude vs Time in Ar",300,-0.5,299.5,200,-0.5,199.5);
+    dAvsTAr->Sumw2();
  	
 	TH1D *qm_d_XeCO2 = new TH1D("qm_d_XeCO2","Max Amplitude Distribution - Half Fleece Rad",1000,0.,4500);
 	TH1D *qm_w2_XeCO2 = new TH1D("qm_w2_XeCO2","Max Amplitude Distribution - Half Fleece Rad",1000,0.,5000);
@@ -207,6 +211,9 @@ void multiFileAnalyze(){
 			if(w2mcharge > 0) {
 			    qm_w2_XeCO2->Fill(w2mcharge);  
 			}
+			
+			w2AvsTXe->Fill(w2smax,w2chmax);
+			dAvsTXe->Fill (dsmax,dchmax);
 		}	
 		if (RunNumber == 2039) {
 			
@@ -216,12 +223,28 @@ void multiFileAnalyze(){
 			if(w2mcharge > 0){
                 qm_w2_ArCO2->Fill(w2mcharge);
             }
+			
+			w2AvsTAr->Fill(w2smax,w2chmax);
+            dAvsTAr->Fill (dsmax,dchmax);
 		}
  	} // End loop over TChain entries
 	
 	TCanvas *c1 = new TCanvas("c1","c1", 1200, 800);
 	gStyle->SetOptStat(00000);
-	c1->cd();
+	//c1->cd();
+	
+	TPad *pad1 = new TPad("pad1","qm plot",0.01,0.49,0.51,0.92);
+	TPad *pad2 = new TPad("pad2","dAvsT Xe plot",0.52,0.92,0.51,0.92);
+    TPad *pad3 = new TPad("pad3","dAvsT Ar plot",0.02,0.50,0.2,0.5);
+	TPad *pad4 = new TPad("pad4","w2AvsT Xe plot",0.52,0.92,0.21,0.5);
+    TPad *pad5 = new TPad("pad5","w2AvsT Ar plot",0.03,0.51,0.001,0.2);
+	pad1->Draw();
+	pad2->Draw();
+	pad3->Draw();
+	pad4->Draw();
+	pad5->Draw();
+	
+	pad1->cd();
 	gPad->SetLogy();
 	
 	qm_d_XeCO2->SetLineColor(2);
@@ -251,31 +274,42 @@ void multiFileAnalyze(){
 	l1->AddEntry(qm_w2_ArCO2, "GEM ArCO2", "L");
 	l1->AddEntry(qm_d_ArCO2, "MMG ArCO2", "L");
 	l1->Draw();
-
+	
+	pad4->cd();
+	
+	w2AvsTXe->Draw("colz");
+    TAxis *xaxis = (TAxis*)w2AvsTXe->GetXaxis();
+    xaxis->SetTitle("Time (*8 ns)");
+    TAxis *yaxis = (TAxis*)w2AvsTXe->GetYaxis();
+    yaxis->SetTitle("Channel");
+	
+	pad2->cd();
+	
+	dAvsTXe->Draw("colz");
+	xaxis = (TAxis*)dAvsTXe->GetXaxis();
+    xaxis->SetTitle("Time (*8 ns)");
+    yaxis = (TAxis*)dAvsTXe->GetYaxis();
+    yaxis->SetTitle("Channel");
+	
+	pad5->cd();
+	
+ 	w2AvsTAr->Draw("colz");
+	xaxis = (TAxis*)w2AvsTAr->GetXaxis();
+    xaxis->SetTitle("Time (*8 ns)");
+    yaxis = (TAxis*)w2AvsTAr->GetYaxis();
+    yaxis->SetTitle("Channel");
+	
+	pad4->cd();
+	
+    dAvsTAr->Draw("colz");
+	xaxis = (TAxis*)dAvsTAr->GetXaxis();
+    xaxis->SetTitle("Time (*8 ns)");
+    yaxis = (TAxis*)dAvsTAr->GetYaxis();
+    yaxis->SetTitle("Channel");
+	
+	c1->Update();
+	
 	timer.Stop();
     timer.Print();
-
+	
 }
-
-
-
-  //// GEM Histos ////
-/*  TH2D *w2AvsT = new TH2D("w2AvsT","GEM Amplitude vs Time",300,-0.5,299.5,240,-0.5,239.5);
-  w2AvsT->Sumw2();
-  TAxis *xaxis = (TAxis*)w2AvsT->GetXaxis();
-  xaxis->SetTitle("Time (*8 ns)");
-  TAxis *yaxis = (TAxis*)w2AvsT->GetYaxis();
-  yaxis->SetTitle("Channel");
-  
-  //// MMG Histos ////
-  TH2D *dAvsT = new TH2D("dAvsT","MMG Amplitude vs Time",300,-0.5,299.5,200,-0.5,199.5);
-  dAvsT->Sumw2();
-  xaxis = (TAxis*)dAvsT->GetXaxis();
-  xaxis->SetTitle("Time (*8 ns)");
-  yaxis = (TAxis*)dAvsT->GetYaxis();
-  yaxis->SetTitle("Channel");
-  
-  timer.Stop();
-  timer.Print(); 
-*/
-
