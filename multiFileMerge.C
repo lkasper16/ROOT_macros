@@ -41,8 +41,9 @@ void multiFileMerge(){
   TChain ch("events");
   
   //// XeCO2 files ////
-  ch.Add("/store/user/kaspel1/FNAL2023_Data/ROOTData/Run_003287.root");
-  ch.Add("/store/user/kaspel1/FNAL2023_Data/ROOTData/Run_003288.root");
+  ch.Add("/store/user/kaspel1/FNAL2023_Data/ROOTData/Run_003135.root");
+  ch.Add("/store/user/kaspel1/FNAL2023_Data/ROOTData/Run_003136.root");
+  ch.Add("/store/user/kaspel1/FNAL2023_Data/ROOTData/Run_003137.root");
   
   
   int nTrees = ch.GetNtrees();
@@ -318,10 +319,18 @@ void multiFileMerge(){
    ch.SetBranchAddress("srs_prerecon_y", &srs_prerecon_y);
    ch.SetBranchAddress("srs_prerecon_x", &srs_prerecon_x);
    
-   TFile* outputFile = TFile::Open("eventsTree_3287_3288.root","RECREATE");
-   //outputFile->mkdir("~/TRDPrototype/")->cd();
-   ch.Merge(outputFile, 0); //Merge all entries in the chain to a new tree in this new file
-   //ch.MakeClass("treeAnalyze");
+   TFile* outputFile;
+   char outputFileName[256];
+   sprintf(outputFileName, "/store/user/kaspel1/FNAL2023_Data/ROOT/eventsTree_%01dTrees_%06dEntries.root", nTrees, nEnts);
+   outputFile = new TFile(outputFileName, "RECREATE");
+   //const char *outputDir="/store/user/kaspel1/FNAL2023_Data/ROOT";
+   //sprintf(G_DIR,"%s/Run_%06d",outputDir,RunNum);
+   //TFile* outputFile = TFile::Open("eventsTree_3287_3288.root","RECREATE");
+   printf("Creating new root file %s \n",outputFileName);
+   //outputFile->mkdir("/store/user/kaspel1/FNAL2023_Data/ROOT")->cd();
+   cout<<"Merging "<<nTrees<<" trees into this file..."<<endl;
+   ch.Merge(outputFile, 0);
+   cout<<"Merge complete"<<endl;
    ch.ls();
    
    timer.Stop();
