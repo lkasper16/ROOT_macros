@@ -55,7 +55,7 @@ void mmg_HistMerge(){
 	_file0->cd();
 	
 	////////Plot Electron distributions/////////
-	TCanvas *c1 = new TCanvas("c1","Electron ADC Distributions", 1200, 800);
+	TCanvas *c1 = new TCanvas("c1","MMG-1 ADC Distributions", 1200, 800);
 	gStyle->SetOptStat(00000);
 	c1->cd();
 	gPad->SetLogy();
@@ -65,33 +65,33 @@ void mmg_HistMerge(){
 	mmg1_f125_el_675->SetTitle("MMG1-TRD ADC Distributions in XeCO2 for Varied HV");
 	mmg1_f125_el_675->SetLineWidth(2);
 	mmg1_f125_el_675->SetLineColor(4);
-	mmg1_f125_el_675->Scale(211417/513789.);
+	mmg1_f125_el_675->Scale(1./125329);
 	mmg1_f125_el_675->Draw();
 	
 	mmg1_f125_el_670->SetLineColor(209);
 	mmg1_f125_el_670->SetLineWidth(2);
-	mmg1_f125_el_670->Scale(19742/513789.);
+	mmg1_f125_el_670->Scale(1./11732);
 	mmg1_f125_el_670->Draw("same");
 	
 	mmg1_f125_el_655->SetLineColor(51);
 	mmg1_f125_el_655->SetLineWidth(2);
-	mmg1_f125_el_655->Scale(35304/513789.);
+	mmg1_f125_el_655->Scale(1./20404);
 	mmg1_f125_el_655->Draw("same");
 	
 	mmg1_f125_el_645->SetLineColor(7);
 	mmg1_f125_el_645->SetLineWidth(2);
-	mmg1_f125_el_645->Scale(14987/513789.);
+	mmg1_f125_el_645->Scale(1./8633);
 	mmg1_f125_el_645->Draw("same");
 	
 	mmg1_f125_el_635->SetLineColor(2);
 	mmg1_f125_el_635->SetLineWidth(2);
-	mmg1_f125_el_635->Scale(23473/513789.);
+	mmg1_f125_el_635->Scale(1./13494);
 	mmg1_f125_el_635->Draw("same");
 	
 	mmg1_f125_el_625->SetLineColor(94);
 	mmg1_f125_el_625->SetLineWidth(2);
 	mmg1_f125_el_625->Draw("same");
-	mmg1_f125_el_625->Scale(513789/513789.);
+	mmg1_f125_el_625->Scale(1./302858);
 
 /*	TLegend *l1 = new TLegend(0.75, 0.65, 0.9, 0.9);
 	l1->AddEntry(mmg1_f125_el_675, "4800V/675V", "L");
@@ -119,7 +119,7 @@ void mmg_HistMerge(){
 	mmg1_f125_pi_675->SetLineStyle(3);
 	mmg1_f125_pi_675->SetMarkerStyle(3);
 	mmg1_f125_pi_675->SetMarkerColor(4);
-	mmg1_f125_pi_675->Scale(211417/513789.);
+	mmg1_f125_pi_675->Scale(1./86088);
 	//mmg1_f125_pi_675->Draw();
 	mmg1_f125_pi_675->Draw("same");
 	
@@ -128,7 +128,7 @@ void mmg_HistMerge(){
 	mmg1_f125_pi_670->SetLineStyle(3);
 	mmg1_f125_pi_670->SetMarkerStyle(3);
 	mmg1_f125_pi_670->SetMarkerColor(209);
-	mmg1_f125_pi_670->Scale(19742/513789.);
+	mmg1_f125_pi_670->Scale(1./8010);
 	mmg1_f125_pi_670->Draw("same");
 	
 	mmg1_f125_pi_655->SetLineColor(51);
@@ -136,7 +136,7 @@ void mmg_HistMerge(){
 	mmg1_f125_pi_655->SetLineStyle(3);
 	mmg1_f125_pi_655->SetMarkerStyle(3);
 	mmg1_f125_pi_655->SetMarkerColor(51);
-	mmg1_f125_pi_655->Scale(35304/513789.);
+	mmg1_f125_pi_655->Scale(1./14900);
 	mmg1_f125_pi_655->Draw("same");
 	
 	mmg1_f125_pi_645->SetLineColor(7);
@@ -144,7 +144,7 @@ void mmg_HistMerge(){
 	mmg1_f125_pi_645->SetLineStyle(3);
 	mmg1_f125_pi_645->SetMarkerStyle(3);
 	mmg1_f125_pi_645->SetMarkerColor(7);
-	mmg1_f125_pi_645->Scale(14987/513789.);
+	mmg1_f125_pi_645->Scale(1./6354);
 	mmg1_f125_pi_645->Draw("same");
 	
 	mmg1_f125_pi_635->SetLineColor(2);
@@ -152,7 +152,7 @@ void mmg_HistMerge(){
 	mmg1_f125_pi_635->SetLineStyle(3);
 	mmg1_f125_pi_635->SetMarkerStyle(3);
 	mmg1_f125_pi_635->SetMarkerColor(2);
-	mmg1_f125_pi_635->Scale(23473/513789.);
+	mmg1_f125_pi_635->Scale(1./9979);
 	mmg1_f125_pi_635->Draw("same");
 	
 	mmg1_f125_pi_625->SetLineColor(94);
@@ -160,7 +160,7 @@ void mmg_HistMerge(){
 	mmg1_f125_pi_625->SetLineStyle(3);
 	mmg1_f125_pi_625->SetMarkerStyle(3);
 	mmg1_f125_pi_625->SetMarkerColor(94);
-	mmg1_f125_pi_625->Scale(513789/513789.);
+	mmg1_f125_pi_625->Scale(1./210931);
 	mmg1_f125_pi_625->Draw("same");
 	
 	//mmg1_f125_el_675->SetLineColor(1);
