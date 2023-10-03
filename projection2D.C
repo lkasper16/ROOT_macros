@@ -28,12 +28,12 @@
 void projection2D(){
 	
 	//TString inputDir = "../fermiDataAnalysis/cherDownUpNoBoxOutput/RootOutput";
-	TString rootFiles[] = {"Run003202_Output.root","Run003203_Output.root"};
+	TString rootFiles[] = {"Run003200_Output.root","Run003203_Output.root"};
 	TList *mmg1List = new TList;
 	TList *gemList = new TList;
 	TList *mmg2List = new TList;
 	TList *urwList = new TList;
-	TString legendList[] = {"Foil Radiator (Electrons)","Foil Radiator (Pions)","No Radiator (Electrons)","No Radiator (Pions)"};
+	TString legendList[] = {"Fleece Radiator (Electrons)","Fleece Radiator (Pions)","No Radiator (Electrons)","No Radiator (Pions)"};
 	TLegend *l1 = new TLegend(0.75, 0.65, 0.9, 0.9);
 	TLegend *l2 = new TLegend(0.75, 0.65, 0.9, 0.9);
 	TLegend *l3 = new TLegend(0.75, 0.65, 0.9, 0.9);
@@ -199,7 +199,7 @@ void projection2D(){
     }
 	mmg1List->Draw("same");
     l1->Draw();
-	c1->SaveAs("PNGs/Run_003202_003203_2DProjection_mmg1.png");
+	c1->SaveAs("PNGs/Run_003200_003203_2DProjection_mmg1.png");
 	
     c2->cd();
 	if (!gemList) {
@@ -219,7 +219,7 @@ void projection2D(){
     }
 	gemList->Draw("same");
 	l2->Draw();
-	c2->SaveAs("PNGs/Run_003202_003203_2DProjection_gem.png");
+	c2->SaveAs("PNGs/Run_003200_003203_2DProjection_gem.png");
 	
 	c3->cd();
 	if (!mmg2List) {
@@ -259,6 +259,6 @@ void projection2D(){
     }
     urwList->Draw("same");
     l4->Draw();
-	c4->SaveAs("PNGs/Run_003202_003203_2DProjection_urw.png");
+	c4->SaveAs("PNGs/Run_003200_003203_2DProjection_urw.png");
 	
 }
