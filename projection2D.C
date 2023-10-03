@@ -147,6 +147,7 @@ void projection2D(){
     }
 	mmg1List->Draw("same");
     l1->Draw();
+	c1->SaveAs("PNGs/Run_003288_2DProjection_mmg1.png");
 	
     c2->cd();
 	if (!gemList) {
@@ -166,14 +167,15 @@ void projection2D(){
     }
 	gemList->Draw("same");
 	l2->Draw();
+	c2->SaveAs("PNGs/Run_003288_2DProjection_gem.png");
 	
 	c3->cd();
-	if (!gemList) {
-        std::cerr<<"gemList is NULL"<<std::endl;
+	if (!mmg2List) {
+        std::cerr<<"mmg2List is NULL"<<std::endl;
         return;
     }
-    if (gemList->IsEmpty()) {
-        std::cerr<<"gemList is empty"<<std::endl;
+    if (mmg2List->IsEmpty()) {
+        std::cerr<<"mmg2List is empty"<<std::endl;
         return;
     }
 	
@@ -185,8 +187,6 @@ void projection2D(){
     }
     mmg2List->Draw("same");
     l3->Draw();
-	
-	c1->SaveAs("PNGs/Run_003288_2DProjection_mmg1.png");
-	c2->SaveAs("PNGs/Run_003288_2DProjection_gem.png");
 	c3->SaveAs("PNGs/Run_003288_2DProjection_mmg2.png");
+	
 }
