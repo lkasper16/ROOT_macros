@@ -72,6 +72,7 @@ void mmg_HistMerge(){
  	        	readObject->SetMarkerStyle(3);
           		readObject->SetMarkerColor(colorList[i]);
           		readObject->SetLineColor(colorList[i]);
+				readObject->SetLineWidth(2);
           		double piScaleFactor = 1./readObject->GetEntries();
           		readObject->Scale(piScaleFactor);
          		//l1->AddEntry(readObject, legendList[i], "l");
