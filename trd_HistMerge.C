@@ -45,7 +45,7 @@ void trd_HistMerge(){
 //  }
 	
 	//TString rootFiles[] = {"Run_003202_Output.root", "Run_003286_Output.root", "Run_003218_Output.root"};
-	TString rootFiles[] = {"Run_003210_Output.root"};
+	TString rootFiles[] = {"Run_003182_Output.root"};
 	TList *histList = new TList;
 	TString name1 = "f125_el";
     TString name2 = "f125_pi";
@@ -54,7 +54,7 @@ void trd_HistMerge(){
 	TString name5 = "urw_f125_el";
 	TString name6 = "urw_f125_pi";
 	int colorList[] = {94,51,209};
-	TString legendList[] = {"GEM 6000V/3000V","MMG-1 4300V/580V","uRWell 4500V/495V"};
+	TString legendList[] = {"GEM 6000V/3000V","MMG-1 4800V/585V","uRWell 4500V/485V"};
 	TLegend *l1 = new TLegend(0.75, 0.65, 0.9, 0.9);
 	
 	for (int i=0; i<sizeof(rootFiles)/sizeof(rootFiles[0]); i++) {
@@ -134,5 +134,5 @@ void trd_HistMerge(){
 	
 	histList->Draw("same");
     l1->Draw();
-	c1->SaveAs("TRD_ADC_Comparison.png");
+	c1->SaveAs("TRD_ADC_Comparison_v2.png");
 }
