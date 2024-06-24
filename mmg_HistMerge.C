@@ -44,12 +44,12 @@ void mmg_HistMerge(){
 //        return;
 //  }
 	
-	TString rootFiles[] = {"Run_003202_Output.root", "Run_003216_Output.root","Run_003277_Output.root", "Run_003286_Output.root", "Run_003288_Output.root"};
+	TString rootFiles[] = {"Run_003227_Output.root","Run_003182_Output.root", "Run_003171_Output.root"};
 	TList *histList = new TList;
 	TString name1 = "mmg1_f125_el";
 	TString name2 = "mmg1_f125_pi";
-	int colorList[] = {1,94,51,209,4};
-	TString legendList[] = {"4825V/625V","4800V/625V (3 GeV)","4800V/655V","4800V/670V","4800V/675V"};
+	int colorList[] = {94,51,209,4};
+	TString legendList[] = {"4000V/575V","4800V/585V","4800V/385V"};
 	TLegend *l1 = new TLegend(0.75, 0.65, 0.9, 0.9);
 	
 	for (int i=0; i<sizeof(rootFiles)/sizeof(rootFiles[0]); i++) {
@@ -93,10 +93,10 @@ void mmg_HistMerge(){
     if (firstHist) {
         firstHist->GetXaxis()->SetTitle("ADC amplitude");
         firstHist->GetYaxis()->SetTitle("Counts / numEntries");
-        firstHist->SetTitle("MMG1-TRD ADC Distributions in XeCO2 for Varied HV");
+        firstHist->SetTitle("MMG1-TRD ADC Distributions in ArCO2 for 10 GeV");
     }
 	
 	histList->Draw("same");
     l1->Draw();
-	
+	c1->SaveAs("mmg_ADC_Comparison_v1.png");
 }

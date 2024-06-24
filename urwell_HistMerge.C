@@ -37,19 +37,19 @@
 void urwell_HistMerge(){
 	
 	//TString inputDir = "~fermiDataAnalysis/cherDownUpNoBoxOutput/RootOutput";
-	TString inputDir = "../fermiDataAnalysis/patternRecognitionTracks/v5/RootOutput";
+	TString inputDir = "../fermiDataAnalysis/juneReport/RootOutput";
 	
 //	if (!changeToDirectory(inputDir)) {
 //        std::cerr << "Error: Directory '" << inputDir << "' does not exist or cannot be accessed." << std::endl;
 //        return;
 //  }
 	
-	TString rootFiles[] = {"Run_003196_Output.root", "Run_003199_Output.root", "Run_003218_Output.root"};
+	TString rootFiles[] = {"Run_003182_Output.root", "Run_003210_Output.root", "Run_003227_Output.root"};
 	TList *histList = new TList;
 	TString name1 = "urw_f125_el";
 	TString name2 = "urw_f125_pi";
 	int colorList[] = {94,51,209};
-	TString legendList[] = {"4500V/490V (10 GeV)","4500V/495V (10 GeV)","4500V/540V (3 GeV)"};
+	TString legendList[] = {"4500V/485V","4500V/495V","4500V/520V"};
 	TLegend *l1 = new TLegend(0.75, 0.65, 0.9, 0.9);
 	
 	for (int i=0; i<sizeof(rootFiles)/sizeof(rootFiles[0]); i++) {
@@ -93,10 +93,10 @@ void urwell_HistMerge(){
     if (firstHist) {
         firstHist->GetXaxis()->SetTitle("ADC amplitude");
         firstHist->GetYaxis()->SetTitle("Counts / numEntries");
-        firstHist->SetTitle("uRWell-TRD ADC Distributions in XeCO2");
+        firstHist->SetTitle("uRWell-TRD ADC Distributions in ArCO2 for 10 GeV");
     }
 	
 	histList->Draw("same");
     l1->Draw();
-	
+	c1->SaveAs("urw_ADC_Comparison_v1.png");
 }
