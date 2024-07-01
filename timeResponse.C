@@ -18,6 +18,9 @@ void timeResponse() {
 	double elScaleFactor_urw = -1.;
 	double piScaleFactor_urw = -1.;
 	
+	//=======================================
+	//GEMTRD No Rad
+	
 	TFile *file0 = TFile::Open("Run_003203_Output.root");
 	HistDQM = (TList *)file0->Get("HistDQM");
 	TObject *obj0 = HistDQM->FindObject("f125_el_amp2ds");
@@ -63,6 +66,7 @@ void timeResponse() {
 	gem_n_e->SaveAs("gem_drift_noRad.png");
 	
 	//=======================================
+	//GEMTRD Double Foil Rad
 	
 	TFile *file1 = TFile::Open("Run_003196_Output.root");
 	HistDQM = (TList *)file1->Get("HistDQM");
@@ -106,6 +110,7 @@ void timeResponse() {
 	gem_rad_e->SaveAs("gem_drift_doubleFoilRad.png");
 	
 	//=======================================
+	//All Prototypes, No Rad, Electrons
 	
 	TFile *file2 = TFile::Open("Run_003203_Output.root");
 	HistDQM = (TList *)file2->Get("HistDQM");
@@ -160,6 +165,7 @@ void timeResponse() {
 	l2->Draw();
 	gem_e->SaveAs("all_drift_noRad_e.png");
 	
+	//All Prototypes, No Rad, Pions
 	
 	TObject *obj7 = HistDQM->FindObject("f125_pi_amp2ds");
 	TH2 *f125_pi_amp2ds_n = (TH2 *)obj7;
@@ -213,6 +219,255 @@ void timeResponse() {
 	gem_pi->SaveAs("all_drift_noRad_pi.png");
 	
 	//=======================================
+	//uRWell-TRD, XeCO2
+	
+	TFile *file3 = TFile::Open("Run_003196_Output.root");
+	HistDQM = (TList *)file3->Get("HistDQM");
+	TObject *obj10 = HistDQM->FindObject("urw_f125_pi_amp2ds");
+	urw_f125_pi_amp2ds = (TH2 *)obj10;
+	piScaleFactor_urw = 1./urw_f125_pi_amp2ds->GetEntries();
+    urw_f125_pi_amp2ds->Scale(piScaleFactor_urw);
+	urw_f125_pi_amp2ds->RebinX(8);
+	urw_f125_pi_amp2ds->ProjectionX("URW 490",30,120);
+	
+	TFile *file4 = TFile::Open("Run_003199_Output.root");
+	HistDQM = (TList *)file4->Get("HistDQM");
+	TObject *obj11 = HistDQM->FindObject("urw_f125_pi_amp2ds");
+	urw_f125_pi_amp2ds = (TH2 *)obj11;
+	piScaleFactor_urw = 1./urw_f125_pi_amp2ds->GetEntries();
+    urw_f125_pi_amp2ds->Scale(piScaleFactor_urw);
+	urw_f125_pi_amp2ds->RebinX(8);
+	urw_f125_pi_amp2ds->ProjectionX("URW 495",30,120);
+	
+	TFile *file5 = TFile::Open("Run_003218_Output.root");
+	HistDQM = (TList *)file5->Get("HistDQM");
+	TObject *obj12 = HistDQM->FindObject("urw_f125_pi_amp2ds");
+	urw_f125_pi_amp2ds = (TH2 *)obj12;
+	piScaleFactor_urw = 1./urw_f125_pi_amp2ds->GetEntries();
+    urw_f125_pi_amp2ds->Scale(piScaleFactor_urw);
+	urw_f125_pi_amp2ds->RebinX(8);
+	urw_f125_pi_amp2ds->ProjectionX("URW 540",30,120);
+	
+	TCanvas *c4 = new TCanvas("c4","", 1200, 800);
+	c4->cd();
+ 	gPad->SetGridy();
+ 	
+ 	TH1F *urw_490 = (TH1F*)file3->Get("URW 490");
+	TH1F *urw_495 = (TH1F*)file4->Get("URW 495");
+	TH1F *urw_540 = (TH1F*)file5->Get("URW 540");
+	urw_490->SetLineColor(51); //purple
+	urw_490->SetMarkerStyle(21); //filled square
+	urw_490->SetMarkerColor(51);
+	urw_495->SetLineColor(209); //green
+	urw_495->SetMarkerStyle(21);
+	urw_495->SetMarkerColor(209);
+	urw_540->SetLineColor(94); //orange
+	urw_540->SetMarkerStyle(21);
+	urw_540->SetMarkerColor(94);
+	
+ 	TLegend *l4 = new TLegend(0.7,0.7,0.9,0.9);
+	l4->AddEntry(urw_490,"Pions, 490V amp","lp");
+	l4->AddEntry(urw_495,"Pions, 495V amp","lp");
+	l4->AddEntry(urw_540,"Pions, 540V amp","lp");
+	
+	urw_540->GetYaxis()->SetTitle("ADC Amplitude (Counts / numEntries)");
+	urw_540->GetYaxis()->SetNdivisions(520);
+	urw_540->GetXaxis()->SetRangeUser(50,220);
+	urw_540->SetTitle("uRWELL-TRD ADC Responses in Time With 15cm Fleece Radiator for 10 GeV Pions");
+	urw_540->Draw("");
+	urw_490->Draw("same");
+	urw_495->Draw("same");
+	l4->Draw();
+	urw_540->SaveAs("urwell_drift_pi.png");
+	
+	//=======================================
+	//uRWell-TRD, XeCO2
+	
+	TFile *file6 = TFile::Open("Run_003196_Output.root");
+	HistDQM = (TList *)file6->Get("HistDQM");
+	TObject *obj13 = HistDQM->FindObject("urw_f125_el_amp2ds");
+	urw_f125_el_amp2ds = (TH2 *)obj13;
+	elScaleFactor_urw = 1./urw_f125_el_amp2ds->GetEntries();
+    urw_f125_el_amp2ds->Scale(elScaleFactor_urw);
+	urw_f125_el_amp2ds->RebinX(8);
+	urw_f125_el_amp2ds->ProjectionX("URW 490 e",30,120);
+	
+	TFile *file7 = TFile::Open("Run_003199_Output.root");
+	HistDQM = (TList *)file7->Get("HistDQM");
+	TObject *obj14 = HistDQM->FindObject("urw_f125_el_amp2ds");
+	urw_f125_el_amp2ds = (TH2 *)obj14;
+	elScaleFactor_urw = 1./urw_f125_el_amp2ds->GetEntries();
+    urw_f125_el_amp2ds->Scale(elScaleFactor_urw);
+	urw_f125_el_amp2ds->RebinX(8);
+	urw_f125_el_amp2ds->ProjectionX("URW 495 e",30,120);
+	
+	TFile *file8 = TFile::Open("Run_003218_Output.root");
+	HistDQM = (TList *)file8->Get("HistDQM");
+	TObject *obj15 = HistDQM->FindObject("urw_f125_el_amp2ds");
+	urw_f125_el_amp2ds = (TH2 *)obj15;
+	elScaleFactor_urw = 1./urw_f125_el_amp2ds->GetEntries();
+    urw_f125_el_amp2ds->Scale(elScaleFactor_urw);
+	urw_f125_el_amp2ds->RebinX(8);
+	urw_f125_el_amp2ds->ProjectionX("URW 540 e",30,120);
+	
+	TCanvas *c5 = new TCanvas("c5","", 1200, 800);
+	c5->cd();
+ 	gPad->SetGridy();
+ 	
+ 	TH1F *urw_490_e = (TH1F*)file6->Get("URW 490 e");
+	TH1F *urw_495_e = (TH1F*)file7->Get("URW 495 e");
+	TH1F *urw_540_e = (TH1F*)file8->Get("URW 540 e");
+	urw_490_e->SetLineColor(51); //purple
+	urw_490_e->SetMarkerStyle(21); //filled square
+	urw_490_e->SetMarkerColor(51);
+	urw_495_e->SetLineColor(209); //green
+	urw_495_e->SetMarkerStyle(21);
+	urw_495_e->SetMarkerColor(209);
+	urw_540_e->SetLineColor(94); //orange
+	urw_540_e->SetMarkerStyle(21);
+	urw_540_e->SetMarkerColor(94);
+	
+ 	TLegend *l5 = new TLegend(0.7,0.7,0.9,0.9);
+	l5->AddEntry(urw_490_e,"Electrons, 490V amp","lp");
+	l5->AddEntry(urw_495_e,"Electrons, 495V amp","lp");
+	l5->AddEntry(urw_540_e,"Electrons, 540V amp","lp");
+	
+	urw_540_e->GetYaxis()->SetTitle("ADC Amplitude (Counts / numEntries)");
+	urw_540_e->GetYaxis()->SetNdivisions(520);
+	urw_540_e->GetXaxis()->SetRangeUser(50,220);
+	urw_540_e->SetTitle("uRWELL-TRD ADC Responses in Time With 15cm Fleece Radiator for 10 GeV Electrons");
+	urw_540_e->Draw("");
+	urw_490_e->Draw("same");
+	urw_495_e->Draw("same");
+	l5->Draw();
+	urw_540_e->SaveAs("urwell_drift_el.png");
+	
+	//=======================================
+	//MMG1-TRD, XeCO2
+	
+	TFile *file9 = TFile::Open("Run_003196_Output.root");
+	HistDQM = (TList *)file9->Get("HistDQM");
+	TObject *obj16 = HistDQM->FindObject("mmg1_f125_pi_amp2ds");
+	mmg1_f125_pi_amp2ds = (TH2 *)obj16;
+	piScaleFactor_mmg1 = 1./mmg1_f125_pi_amp2ds->GetEntries();
+    mmg1_f125_pi_amp2ds->Scale(piScaleFactor_mmg1);
+	mmg1_f125_pi_amp2ds->RebinX(8);
+	mmg1_f125_pi_amp2ds->ProjectionX("MMG 595",120,210);
+	
+	TFile *file10 = TFile::Open("Run_003216_Output.root");
+	HistDQM = (TList *)file10->Get("HistDQM");
+	TObject *obj17 = HistDQM->FindObject("mmg1_f125_pi_amp2ds");
+	mmg1_f125_pi_amp2ds = (TH2 *)obj17;
+	piScaleFactor_mmg1 = 1./mmg1_f125_pi_amp2ds->GetEntries();
+    mmg1_f125_pi_amp2ds->Scale(piScaleFactor_mmg1);
+	mmg1_f125_pi_amp2ds->RebinX(8);
+	mmg1_f125_pi_amp2ds->ProjectionX("MMG 625",120,210);
+	
+	TFile *file11 = TFile::Open("Run_003287_Output.root");
+	HistDQM = (TList *)file11->Get("HistDQM");
+	TObject *obj18 = HistDQM->FindObject("mmg1_f125_pi_amp2ds");
+	mmg1_f125_pi_amp2ds = (TH2 *)obj18;
+	piScaleFactor_mmg1 = 1./mmg1_f125_pi_amp2ds->GetEntries();
+    mmg1_f125_pi_amp2ds->Scale(piScaleFactor_mmg1);
+	mmg1_f125_pi_amp2ds->RebinX(8);
+	mmg1_f125_pi_amp2ds->ProjectionX("MMG 675",120,210);
+	
+	TCanvas *c6 = new TCanvas("c6","", 1200, 800);
+	c6->cd();
+ 	gPad->SetGridy();
+ 	
+ 	TH1F *mmg_595 = (TH1F*)file9->Get("MMG 595");
+	TH1F *mmg_625 = (TH1F*)file10->Get("MMG 625");
+	TH1F *mmg_675 = (TH1F*)file11->Get("MMG 675");
+	mmg_595->SetLineColor(51); //purple
+	mmg_595->SetMarkerStyle(21); //filled square
+	mmg_595->SetMarkerColor(51);
+	mmg_625->SetLineColor(209); //green
+	mmg_625->SetMarkerStyle(21);
+	mmg_625->SetMarkerColor(209);
+	mmg_675->SetLineColor(94); //orange
+	mmg_675->SetMarkerStyle(21);
+	mmg_675->SetMarkerColor(94);
+	
+ 	TLegend *l6 = new TLegend(0.7,0.7,0.9,0.9);
+	l6->AddEntry(mmg_595,"Pions, 595V amp","lp");
+	l6->AddEntry(mmg_625,"Pions, 625V amp","lp");
+	l6->AddEntry(mmg_675,"Pions, 675V amp","lp");
+	
+	mmg_675->GetYaxis()->SetTitle("ADC Amplitude (Counts / numEntries)");
+	mmg_675->GetYaxis()->SetNdivisions(520);
+	mmg_675->GetXaxis()->SetRangeUser(50,220);
+	mmg_675->SetTitle("MMG1-TRD ADC Responses in Time With Radiator for Pions");
+	mmg_675->Draw("");
+	mmg_595->Draw("same");
+	mmg_625->Draw("same");
+	l6->Draw();
+	mmg_675->SaveAs("mmg_drift_pi.png");
+	
+	//=======================================
+	//MMG1-TRD, XeCO2
+	
+	TFile *file12 = TFile::Open("Run_003196_Output.root");
+	HistDQM = (TList *)file12->Get("HistDQM");
+	TObject *obj19 = HistDQM->FindObject("mmg1_f125_el_amp2ds");
+	mmg1_f125_el_amp2ds = (TH2 *)obj19;
+	elScaleFactor_mmg1 = 1./mmg1_f125_el_amp2ds->GetEntries();
+    mmg1_f125_el_amp2ds->Scale(elScaleFactor_mmg1);
+	mmg1_f125_el_amp2ds->RebinX(8);
+	mmg1_f125_el_amp2ds->ProjectionX("MMG 595 e",120,210);
+	
+	TFile *file13 = TFile::Open("Run_003216_Output.root");
+	HistDQM = (TList *)file13->Get("HistDQM");
+	TObject *obj20 = HistDQM->FindObject("mmg1_f125_el_amp2ds");
+	mmg1_f125_el_amp2ds = (TH2 *)obj20;
+	elScaleFactor_mmg1 = 1./mmg1_f125_el_amp2ds->GetEntries();
+    mmg1_f125_el_amp2ds->Scale(elScaleFactor_mmg1);
+	mmg1_f125_el_amp2ds->RebinX(8);
+	mmg1_f125_el_amp2ds->ProjectionX("MMG 625 e",120,210);
+	
+	TFile *file14 = TFile::Open("Run_003287_Output.root");
+	HistDQM = (TList *)file14->Get("HistDQM");
+	TObject *obj21 = HistDQM->FindObject("mmg1_f125_el_amp2ds");
+	mmg1_f125_el_amp2ds = (TH2 *)obj21;
+	elScaleFactor_mmg1 = 1./mmg1_f125_el_amp2ds->GetEntries();
+    mmg1_f125_el_amp2ds->Scale(elScaleFactor_mmg1);
+	mmg1_f125_el_amp2ds->RebinX(8);
+	mmg1_f125_el_amp2ds->ProjectionX("MMG 675 e",120,210);
+	
+	TCanvas *c7 = new TCanvas("c7","", 1200, 800);
+	c7->cd();
+ 	gPad->SetGridy();
+ 	
+ 	TH1F *mmg_595_e = (TH1F*)file12->Get("MMG 595 e");
+	TH1F *mmg_625_e = (TH1F*)file13->Get("MMG 625 e");
+	TH1F *mmg_675_e = (TH1F*)file14->Get("MMG 675 e");
+	mmg_595_e->SetLineColor(51); //purple
+	mmg_595_e->SetMarkerStyle(21); //filled square
+	mmg_595_e->SetMarkerColor(51);
+	mmg_625_e->SetLineColor(209); //green
+	mmg_625_e->SetMarkerStyle(21);
+	mmg_625_e->SetMarkerColor(209);
+	mmg_675_e->SetLineColor(94); //orange
+	mmg_675_e->SetMarkerStyle(21);
+	mmg_675_e->SetMarkerColor(94);
+	
+ 	TLegend *l7 = new TLegend(0.7,0.7,0.9,0.9);
+	l7->AddEntry(mmg_595_e,"Electrons, 595V amp","lp");
+	l7->AddEntry(mmg_625_e,"Electrons, 625V amp","lp");
+	l7->AddEntry(mmg_675_e,"Electrons, 675V amp","lp");
+	
+	mmg_675_e->GetYaxis()->SetTitle("ADC Amplitude (Counts / numEntries)");
+	mmg_675_e->GetYaxis()->SetNdivisions(520);
+	mmg_675_e->GetXaxis()->SetRangeUser(50,220);
+	mmg_675_e->SetTitle("MMG1-TRD ADC Responses in Time With Radiator for Electrons");
+	mmg_675_e->Draw("");
+	mmg_595_e->Draw("same");
+	mmg_625_e->Draw("same");
+	l7->Draw();
+	mmg_675_e->SaveAs("mmg_drift_el.png");
+	
+	//=======================================
+
 	
 	
 }
