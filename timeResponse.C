@@ -467,7 +467,91 @@ void timeResponse() {
 	mmg_675_e->SaveAs("mmg_drift_el.png");
 	
 	//=======================================
-
+	//-- MMG1 w rad (e's & pi's)
 	
+	TFile *file15 = TFile::Open("Run_003287_Output.root");
+	HistDQM = (TList *)file15->Get("HistDQM");
+	TObject *obj22 = HistDQM->FindObject("mmg1_f125_el_amp2ds");
+	mmg1_f125_el_amp2ds = (TH2 *)obj22;
+	elScaleFactor_mmg1 = 1./mmg1_f125_el_amp2ds->GetEntries();
+    mmg1_f125_el_amp2ds->Scale(elScaleFactor_mmg1);
+	mmg1_f125_el_amp2ds->RebinX(8);
+	mmg1_f125_el_amp2ds->ProjectionX("Rad, el",120,210);
+	TObject *obj23 = HistDQM->FindObject("mmg1_f125_pi_amp2ds");
+	mmg1_f125_pi_amp2ds = (TH2 *)obj23;
+	piScaleFactor_mmg1 = 1./mmg1_f125_pi_amp2ds->GetEntries();
+    mmg1_f125_pi_amp2ds->Scale(piScaleFactor_mmg1);
+	mmg1_f125_pi_amp2ds->RebinX(8);
+	mmg1_f125_pi_amp2ds->ProjectionX("Rad, pions",120,210);
+	
+	TCanvas *c8 = new TCanvas("c8","", 1200, 800);
+	c8->cd();
+ 	gPad->SetGridy();
+	
+	TH1F *mmg_n_e = (TH1F*)file15->Get("Rad, el");
+	TH1F *mmg_n_pi = (TH1F*)file15->Get("Rad, pions");
+	mmg_n_e->SetLineColor(2); //red
+	mmg_n_e->SetMarkerStyle(20); //filled circle
+	mmg_n_e->SetMarkerColor(2);
+	mmg_n_pi->SetLineColor(4); //blue
+	mmg_n_pi->SetMarkerStyle(21); //filled square
+	mmg_n_pi->SetMarkerColor(4);
+	
+	TLegend *l8 = new TLegend(0.7,0.7,0.9,0.9);
+	l8->AddEntry(mmg_n_e,"Electrons, 10 GeV","lp");
+	l8->AddEntry(mmg_n_pi,"Pions, 10 GeV","lp");
+	
+	mmg_n_e->GetYaxis()->SetTitle("ADC Amplitude (Counts / numEntries)");
+	mmg_n_e->GetYaxis()->SetNdivisions(520);
+	mmg_n_e->GetXaxis()->SetRangeUser(50,220);
+	mmg_n_e->SetTitle("MMG1-TRD ADC Response in Time With 15cm Foil Radiator");
+	mmg_n_e->Draw("");
+	mmg_n_pi->Draw("same");
+	l8->Draw();
+	mmg_n_e->SaveAs("mmg_drift_rad.png");
+	
+	//=======================================
+	//-- uRWell w rad (e's & pi's)
+	
+	TFile *file16 = TFile::Open("Run_003218_Output.root");
+	HistDQM = (TList *)file16->Get("HistDQM");
+	TObject *obj24 = HistDQM->FindObject("urw_f125_el_amp2ds");
+	urw_f125_el_amp2ds = (TH2 *)obj24;
+	elScaleFactor_urw = 1./urw_f125_el_amp2ds->GetEntries();
+    urw_f125_el_amp2ds->Scale(elScaleFactor_urw);
+	urw_f125_el_amp2ds->RebinX(8);
+	urw_f125_el_amp2ds->ProjectionX("Rad el",30,120);
+	TObject *obj25 = HistDQM->FindObject("urw_f125_pi_amp2ds");
+	urw_f125_pi_amp2ds = (TH2 *)obj25;
+	piScaleFactor_urw = 1./urw_f125_pi_amp2ds->GetEntries();
+    urw_f125_pi_amp2ds->Scale(piScaleFactor_urw);
+	urw_f125_pi_amp2ds->RebinX(8);
+	urw_f125_pi_amp2ds->ProjectionX("Rad pions",30,210);
+	
+	TCanvas *c9 = new TCanvas("c9","", 1200, 800);
+	c9->cd();
+ 	gPad->SetGridy();
+	
+	TH1F *urw_n_e = (TH1F*)file16->Get("Rad el");
+	TH1F *urw_n_pi = (TH1F*)file16->Get("Rad pions");
+	urw_n_e->SetLineColor(2); //red
+	urw_n_e->SetMarkerStyle(20); //filled circle
+	urw_n_e->SetMarkerColor(2);
+	urw_n_pi->SetLineColor(4); //blue
+	urw_n_pi->SetMarkerStyle(21); //filled square
+	urw_n_pi->SetMarkerColor(4);
+	
+	TLegend *l9 = new TLegend(0.7,0.7,0.9,0.9);
+	l9->AddEntry(urw_n_e,"Electrons, 3 GeV","lp");
+	l9->AddEntry(urw_n_pi,"Pions, 3 GeV","lp");
+	
+	urw_n_e->GetYaxis()->SetTitle("ADC Amplitude (Counts / numEntries)");
+	urw_n_e->GetYaxis()->SetNdivisions(520);
+	urw_n_e->GetXaxis()->SetRangeUser(50,220);
+	urw_n_e->SetTitle("uRWELL-TRD ADC Response in Time With 15cm Fleece Radiator");
+	urw_n_e->Draw("");
+	urw_n_pi->Draw("same");
+	l9->Draw();
+	urw_n_e->SaveAs("urw_drift_rad.png");
 	
 }
