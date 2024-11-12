@@ -10,12 +10,13 @@
 
 void rejectionFactors() {
 	
-	TString rootFiles[] = {"mlp_run005268_333717Entries.root", "mlp_run005264_1282180Entries.root", "mlp_run005278_1602819Entries.root", "mlp_run005284_2012810Entries.root"};
-	TString mmgrootFiles[] = {"mlp_mmg_run005268_333717Entries.root", "mlp_mmg_run005264_1282180Entries.root", "mlp_mmg_run005278_1602819Entries.root", "mlp_mmg_run005284_2012810Entries.root"};
+	TString rootFiles[] = {"mlp_run005268_333717Entries.root", "mlp_run005264_1282180Entries.root", "mlp_run005278_1602819Entries.root", "mlp_run005284_2012810Entries.root", "mlp_run005306_559615Entries.root"};
+	TString mmgrootFiles[] = {"mlp_mmg_run005268_333717Entries.root", "mlp_mmg_run005264_1282180Entries.root", "mlp_mmg_run005278_1602819Entries.root", "mlp_mmg_run005284_2012810Entries.root", "mlp_mmg_run005306_559615Entries.root"};
   TList *gemList = new TList;
   TList *mmgList = new TList;
   int colorList[] = {1,94,51,209,4};
-	TString legendList[] = {"No Rad","15cm Fleece","23cm Fleece","23cm Fleece"};
+	TString legendList[] = {"No Rad","15cm Fleece","23cm Fleece","23cm Fleece","15cm Foil"};
+	TString legendList2[] = {"No Rad","15cm Fleece","23cm Fleece","23cm Fleece","21cm Foil"};
 	TLegend *l1 = new TLegend(0.75, 0.65, 0.9, 0.9);
 	TLegend *l2 = new TLegend(0.75, 0.65, 0.9, 0.9);
 	int ngemList=0, nmmgList=0;
@@ -66,7 +67,7 @@ void rejectionFactors() {
  	    mmg_rej->SetDirectory(0);
 		  mmgList->Add(mmg_rej);
 		  nmmgList++;
-		  //l1->AddEntry(mmg_rej, legendList[i], "l");
+		  l2->AddEntry(mmg_rej, legendList2[i], "l");
 		} else {
       std::cerr << "Error: Object 'hrejection_errors' in " << mmgrootFile << " is not a TH1 histogram or is missing." << std::endl;
     }
@@ -89,7 +90,7 @@ void rejectionFactors() {
 	mmgList->Draw("same");
 	l1->SetHeader("Radiator Material", "C");
   l1->Draw();
-	c1->SaveAs("rej_comparison_v1.png");
+	c1->SaveAs("rej_comparison_v2.png");
 	
 	TCanvas *c2 = new TCanvas("c2","GEM Rejection Factor Comparison", 1200, 800);
 	gStyle->SetOptStat(00000);
@@ -105,7 +106,7 @@ void rejectionFactors() {
 	gemList->Draw("same");
 	l1->SetHeader("Radiator Material", "C");
   l1->Draw();
-	c2->SaveAs("rej_comparison_gem_v1.png");
+	c2->SaveAs("rej_comparison_gem_v2.png");
 	
 	TCanvas *c3 = new TCanvas("c3","MMG Rejection Factor Comparison", 1200, 800);
 	gStyle->SetOptStat(00000);
@@ -119,8 +120,8 @@ void rejectionFactors() {
     firstHist3->SetTitle("MMG1-TRD Pion Rejection in XeCO2 90:10");
   }
 	mmgList->Draw("same");
-	l1->SetHeader("Radiator Material", "C");
-  l1->Draw();
-	c3->SaveAs("rej_comparison_mmg_v1.png");
+	l2->SetHeader("Radiator Material", "C");
+  l2->Draw();
+	c3->SaveAs("rej_comparison_mmg_v2.png");
 	
 }
