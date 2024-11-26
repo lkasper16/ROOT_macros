@@ -163,17 +163,17 @@ void makeNoRadTTree(const char* radFile, const char* noRadFile) {
     }
     outputRadFile->Close();
     outputNoRadFile->Close();
-    mergedFile->cd();
+    TFile* gem_file = new TFile("gem_file.root", "RECREATE");
     TChain mergedChaing("gem_hits");
     mergedChaing.Add("outputRadFile.root");
     mergedChaing.Add("outputNoRadFile.root");
-    mergedChaing.Write();
+    mergedChaing.Merge(gem_file, 0);
     cout << "Entries in merged gem Chain: " << mergedChaing.GetEntries() << endl;
-    //mergedChaing.Print();
+    TFile* mmg1_file = new TFile("mmg1_file.root", "RECREATE");
     TChain mergedChainm("mmg1_hits");
     mergedChainm.Add("outputRadFile.root");
     mergedChainm.Add("outputNoRadFile.root");
-    mergedChainm.Write();
+    mergedChainm.Merge(mmg1_file, 0);
     cout << "Entries in merged mmg Chain: " << mergedChainm.GetEntries() << endl;
     
     mergedFile->Close();
