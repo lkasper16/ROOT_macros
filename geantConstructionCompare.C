@@ -10,7 +10,8 @@
 
 void geantConstructionCompare() {
 	
-	TString legendList[] = {"Exit Radiator","Exit Kapton Window","Exit Dead Xe","Exit Cathode (Cr)","Exit Xe Drift Gap","Exit Kapton Base Layer"};
+	//TString legendList[] = {"Exit Radiator","Exit Kapton Window","Exit Dead Xe","Exit Cathode (Cr)","Exit Xe Drift Gap","Exit Kapton Base Layer"};
+	TString legendList[] = {"Exit Radiator","Exit Vacuum Layer","Exit Kapton Window","Exit Cathode (Al)","Exit Xe Drift Gap"};
 	TLegend *l1 = new TLegend(0.75, 0.65, 0.9, 0.9);
 	TLegend *l2 = new TLegend(0.75, 0.65, 0.9, 0.9);
 	TLegend *l3 = new TLegend(0.75, 0.65, 0.9, 0.9);
@@ -18,7 +19,7 @@ void geantConstructionCompare() {
 	//=======================================
 	//Sergey's Construction
 	
-	TFile *file0 = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d21:1.1mm_r15cm_m1_SingleKapton.root");
+	TFile *file0 = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r15cm_m1_freeRad.root");
 	if (!file0 || file0->IsZombie()) {
       std::cerr << "Error: Could not open file " << file0 << std::endl;
     }
@@ -30,12 +31,19 @@ void geantConstructionCompare() {
       exitRad->SetDirectory(0);
       l1->AddEntry(exitRad, legendList[0], "l");
 	
+	/*TObject *obj4 = file0->Get("hist36");
+      TH1 *exitVacuum = (TH1*)obj4;
+      exitVacuum->SetLineColor(7);
+      exitVacuum->SetLineWidth(2);
+      exitVacuum->SetDirectory(0);
+      l1->AddEntry(exitVacuum, legendList[1], "l");
+	*/
 	TObject *obj2 = file0->Get("hist32");
       TH1 *exitWin = (TH1*)obj2;
       exitWin->SetLineColor(209);
       exitWin->SetLineWidth(2);
       exitWin->SetDirectory(0);
-      l1->AddEntry(exitWin, legendList[1], "l");
+      l1->AddEntry(exitWin, legendList[2], "l");
     
     TObject *obj3 = file0->Get("hist33");
       TH1 *exitCath = (TH1*)obj3;
@@ -44,13 +52,6 @@ void geantConstructionCompare() {
       exitCath->SetDirectory(0);
       l1->AddEntry(exitCath, legendList[3], "l");
     
-    TObject *obj4 = file0->Get("hist34");
-      TH1 *exitDeadA = (TH1*)obj4;
-      exitDeadA->SetLineColor(7);
-      exitDeadA->SetLineWidth(2);
-      exitDeadA->SetDirectory(0);
-      l1->AddEntry(exitDeadA, legendList[2], "l");
-    
     TObject *obj5 = file0->Get("hist26");
       TH1 *exitDet = (TH1*)obj5;
       exitDet->SetLineColor(6);
@@ -58,17 +59,16 @@ void geantConstructionCompare() {
       exitDet->SetDirectory(0);
       l1->AddEntry(exitDet, legendList[4], "l");
     
-    TCanvas *c1 = new TCanvas("c1","150K e- with Rad, XeCO2 90:10", 1200, 800);
+    TCanvas *c1 = new TCanvas("c1","250K e- with Rad, XeCO2 90:10", 1200, 800);
 	gStyle->SetOptStat(00000);
 	c1->Divide(2,1);
 	c1->cd(1);
 	
     exitRad->GetXaxis()->SetTitle("TR Photon Energy [keV]");
     exitRad->GetYaxis()->SetTitle("Count");
-    exitRad->SetTitle("No Dead Xe Gap, Cr=1um");
+    exitRad->SetTitle("50um Kapton, 1um Al, 30mm Xe");
     exitRad->Draw();
 	exitWin->Draw("same");
-	exitDeadA->Draw("same");
 	exitCath->Draw("same");
 	exitDet->Draw("same");
 	l1->SetHeader("#gamma Energy", "C");
@@ -138,7 +138,7 @@ void geantConstructionCompare() {
 	//=======================================
 	//Fermi Construction w Second Kapton Layer
 	
-	TFile *file2 = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d21:1.1mm_r15cm_m1_DoubleKapton.root");
+	TFile *file2 = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r15cm_m1_vacuumRad.root");
 	if (!file2 || file2->IsZombie()) {
       std::cerr << "Error: Could not open file " << file2 << std::endl;
     }
@@ -150,27 +150,20 @@ void geantConstructionCompare() {
       exitRad1->SetDirectory(0);
       l3->AddEntry(exitRad1, legendList[0], "l");
 	
+	TObject *obj4 = file2->Get("hist36");
+      TH1 *exitVacuum = (TH1*)obj4;
+      exitVacuum->SetLineColor(7);
+      exitVacuum->SetLineWidth(2);
+      exitVacuum->SetDirectory(0);
+      l3->AddEntry(exitVacuum, legendList[1], "l");
+	
 	TObject *obj12 = file2->Get("hist32");
       TH1 *exitWin1 = (TH1*)obj12;
       exitWin1->SetLineColor(209);
       exitWin1->SetLineWidth(2);
       exitWin1->SetDirectory(0);
-      l3->AddEntry(exitWin1, legendList[1], "l");
-    
-    TObject *obj13 = file2->Get("hist34");
-      TH1 *exitDeadA1 = (TH1*)obj13;
-      exitDeadA1->SetLineColor(7);
-      exitDeadA1->SetLineWidth(2);
-      exitDeadA1->SetDirectory(0);
-      l3->AddEntry(exitDeadA1, legendList[2], "l");
-    
-    TObject *obj14 = file2->Get("hist35");
-      TH1 *exitKap = (TH1*)obj14;
-      exitKap->SetLineColor(93);
-      exitKap->SetLineWidth(2);
-      exitKap->SetDirectory(0);
-      l3->AddEntry(exitKap, legendList[5], "l");
-    
+      l3->AddEntry(exitWin1, legendList[2], "l");
+        
     TObject *obj15 = file2->Get("hist33");
       TH1 *exitCath1 = (TH1*)obj15;
       exitCath1->SetLineColor(4);
@@ -191,32 +184,31 @@ void geantConstructionCompare() {
 	c1->cd(2);
     exitRad1->GetXaxis()->SetTitle("TR Photon Energy [keV]");
     exitRad1->GetYaxis()->SetTitle("Count");
-    exitRad1->SetTitle("400um Dead Xe Gap, 50um Kapton, Cr=0.2um");
+    exitRad1->SetTitle("50um Kapton, 1um Al, 30mm Xe, with Vacuum Rad");
     exitRad1->Draw();
+    exitVacuum->Draw("same");
 	exitWin1->Draw("same");
-	exitDeadA1->Draw("same");
-	exitKap->Draw("same");
 	exitCath1->Draw("same");
 	exitDet1->Draw("same");
 	l3->SetHeader("#gamma Energy", "C");
   	l3->Draw();
 	//c3->SaveAs("doubleKaptonFermiConstruction.png");
-	c1->SaveAs("fermiConstructionCompare.png");
+	c1->SaveAs("halldRadCompare.png");
 	
 	//==================================================
 	// Ratio Plots
 	
 	TCanvas *c3 = new TCanvas("c3","c3", 1200, 800);
-	gStyle->SetOptStat(00000);
+	//gStyle->SetOptStat(00000);
 	c3->Divide(2,2);
 	c3->cd(1);
 	
-	TH1D *sergeySubtract = new TH1D("sergeySubtract","No Dead Xe Gap, Cr=1um",100,0.,100.);
+	TH1D *sergeySubtract = new TH1D("sergeySubtract","50um Kapton, 1um Al, 30mm Xe; TR Photon Energy [keV]; Count",100,0.,50.);
 	sergeySubtract->Add(exitRad,exitCath,1,-1);
 	sergeySubtract->Draw();
 	
 	c3->cd(2);
-	TH1D *fermiSubtract = new TH1D("fermiSubtract","400um Dead Xe Gap, 50um Kapton, Cr=0.2um",100,0.,100.);
+	TH1D *fermiSubtract = new TH1D("fermiSubtract","50um Kapton, 1um Al, 30mm Xe, with Vacuum Rad; TR Photon Energy [keV]; Count",100,0.,50.);
 	fermiSubtract->Add(exitRad1,exitCath1,1,-1);
 	fermiSubtract->Draw();
 	
@@ -225,6 +217,8 @@ void geantConstructionCompare() {
     c3->SetTicks(0, 1);
     rp1->Draw();
     rp1->GetLowYaxis()->SetNdivisions(505);
+    rp1->GetLowerRefGraph()->SetMinimum(0.5);
+   	rp1->GetLowerRefGraph()->SetMaximum(1.5);
 	
 	/*
 	auto rp1 = new TRatioPlot(exitRad, exitRad1);
@@ -263,6 +257,6 @@ void geantConstructionCompare() {
     rp5->GetLowYaxis()->SetNdivisions(505);
     */
     
-    c3->SaveAs("fermiConstructionCompareRatios.png");
+    c3->SaveAs("halldRadCompareRatios.png");
 	
 }
