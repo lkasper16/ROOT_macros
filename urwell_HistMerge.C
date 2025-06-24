@@ -2,7 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <filesystem>
+//#include <filesystem>
 #include <TTree.h>
 #include <TMath.h>
 #include <TStopwatch.h>
@@ -44,12 +44,12 @@ void urwell_HistMerge(){
 //        return;
 //  }
 	
-	TString rootFiles[] = {"Run_003196_Output.root", "Run_003199_Output.root", "Run_003218_Output.root"};
+	TString rootFiles[] = {"Run_006247_Output.root", "Run_006245_Output.root", "Run_006244_Output.root","Run_006209_Output.root","Run_006246_Output.root"};
 	TList *histList = new TList;
-	TString name1 = "urw_f125_el";
-	TString name2 = "urw_f125_pi";
-	int colorList[] = {94,51,209};
-	TString legendList[] = {"4500V/490V (10 GeV)","4500V/495V (10 GeV)","4500V/540V (3 GeV)"};
+	TString name1 = "urw_f125_el_x";
+	//TString name2 = "urw_f125_pi";
+	int colorList[] = {94,51,209,6,7,1,2};
+	TString legendList[] = {"1.925 kV/cm","1.95 kV/cm","1.975 kV/cm","1.2 kV/cm","2.025 kV/cm"};
 	TLegend *l1 = new TLegend(0.75, 0.65, 0.9, 0.9);
 	
 	for (int i=0; i<sizeof(rootFiles)/sizeof(rootFiles[0]); i++) {
@@ -67,7 +67,7 @@ void urwell_HistMerge(){
 				readObject->Scale(elScaleFactor);
 				histList->Add(readObject);
 				l1->AddEntry(readObject, legendList[i], "l");
-			} else if (histName == name2) {
+			} /*else if (histName == name2) {
 				readObject->SetLineStyle(3);
  	        	readObject->SetMarkerStyle(3);
           		readObject->SetMarkerColor(colorList[i]);
@@ -77,26 +77,27 @@ void urwell_HistMerge(){
           		readObject->Scale(piScaleFactor);
          		//l1->AddEntry(readObject, legendList[i], "l");
          		histList->Add(readObject);
-			}
+			}*/
 		}
 		file->Close();
 	}
 	
-	TCanvas *c1 = new TCanvas("c1","uRWell ADC Distributions", 1200, 800);
+	TCanvas *c1 = new TCanvas("c1","uRWell X ADC Distributions, Varied TF", 1200, 800);
 	gStyle->SetOptStat(00000);
 	c1->cd();
 	gPad->SetLogy();
 	gPad->SetGridx();
  	gPad->SetGridy();
 	
-	TH1 *firstHist = (TH1 *)histList->First();
+	  TH1 *firstHist = (TH1 *)histList->First();
     if (firstHist) {
-        firstHist->GetXaxis()->SetTitle("ADC amplitude");
+        firstHist->GetXaxis()->SetTitle("ADC amplitude (X Plane)");
         firstHist->GetYaxis()->SetTitle("Counts / numEntries");
-        firstHist->SetTitle("uRWell-TRD ADC Distributions in XeCO2");
+        firstHist->SetTitle("uRWell-TRD in ArCO2, 1.385kV/cm DF, 385V GEM dV, 490V WELL");
     }
 	
-	histList->Draw("same");
+	  histList->Draw("same");
+    l1->SetHeader("Transfer Field","C");
     l1->Draw();
-		c1->SaveAs("urw_ADC_Xe_Comparison_v1.png");
+		c1->SaveAs("urw_ADC_TF_Comparison_v1.png");
 }
