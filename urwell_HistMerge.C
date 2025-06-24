@@ -25,32 +25,24 @@
 #include <TLegend.h>
 #include <TProfile.h>
 
-//bool changeToDirectory(const TString& directoryPath) {
-//    if (gSystem->AccessPathName(directoryPath) == 0) {
-//        if (gSystem->ChangeDirectory(directoryPath) == 0) {
-//            return true; // Successfully changed to the directory
-//        }
-//    }
-//    return false; // Directory doesn't exist or failed to change
-//}
-
 void urwell_HistMerge(){
 	
-	//TString inputDir = "~fermiDataAnalysis/cherDownUpNoBoxOutput/RootOutput";
-	TString inputDir = "../fermiDataAnalysis/patternRecognitionTracks/v5/RootOutput";
-	
-//	if (!changeToDirectory(inputDir)) {
-//        std::cerr << "Error: Directory '" << inputDir << "' does not exist or cannot be accessed." << std::endl;
-//        return;
-//  }
-	
-	TString rootFiles[] = {"Run_006247_Output.root", "Run_006245_Output.root", "Run_006244_Output.root","Run_006209_Output.root","Run_006246_Output.root"};
+	//TString rootFiles[] = {"Run_006247_Output.root", "Run_006245_Output.root", "Run_006244_Output.root","Run_006209_Output.root","Run_006246_Output.root"}; //Varied TF
+	//TString rootFiles[] = {"Run_006253_Output.root", "Run_006251_Output.root", "Run_006248_Output.root","Run_006249_Output.root"}; //Varied rWELL V (IF)
+  //TString rootFiles[] = {"Run_006214_Output.root", "Run_006212_Output.root", "Run_006211_Output.root","Run_006209_Output.root","Run_006213_Output.root","Run_006215_Output.root","Run_006216_Output.root"}; //Varied DF
+  TString rootFiles[] = {"Run_006243_Output.root", "Run_006218_Output.root", "Run_006217_Output.root","Run_006209_Output.root","Run_006250_Output.root"}; //Varied GEM dV
+  
+  
 	TList *histList = new TList;
 	TString name1 = "urw_f125_el_x";
 	//TString name2 = "urw_f125_pi";
-	int colorList[] = {94,51,209,6,7,1,2};
-	TString legendList[] = {"1.925 kV/cm","1.95 kV/cm","1.975 kV/cm","1.2 kV/cm","2.025 kV/cm"};
-	TLegend *l1 = new TLegend(0.75, 0.65, 0.9, 0.9);
+	int colorList[] = {94,51,209,6,7,1,4,2};
+	//TString legendList[] = {"1.925 kV/cm","1.95 kV/cm","1.975 kV/cm","1.2 kV/cm","2.025 kV/cm"}; //Varied TF
+  //TString legendList[] = {"485 V","490 V","495 V","500 V"}; //Varied rWELL V (IF)
+  //TString legendList[] = {"1.365 kV/cm","1.372 kV/cm","1.378 kV/cm","1.385 kV/cm","1.391 kV/cm","1.398 kV/cm","1.404 kV/cm"}; //Varied DF
+  TString legendList[] = {"370 V","375 V","380 V","385 V","390 V"}; //Varied GEM dV
+  
+	TLegend *l1 = new TLegend(0.75, 0.6, 0.9, 0.9);
 	
 	for (int i=0; i<sizeof(rootFiles)/sizeof(rootFiles[0]); i++) {
 		const TString& rootFile = rootFiles[i];
@@ -82,8 +74,12 @@ void urwell_HistMerge(){
 		file->Close();
 	}
 	
-	TCanvas *c1 = new TCanvas("c1","uRWell X ADC Distributions, Varied TF", 1200, 800);
-	gStyle->SetOptStat(00000);
+	//TCanvas *c1 = new TCanvas("c1","uRWell X ADC Distributions, Varied TF", 1200, 800);
+	//TCanvas *c1 = new TCanvas("c1","uRWell X ADC Distributions, Varied IF", 1200, 800);
+  //TCanvas *c1 = new TCanvas("c1","uRWell X ADC Distributions, Varied DF", 1200, 800);
+  TCanvas *c1 = new TCanvas("c1","uRWell X ADC Distributions, Varied GEM dV", 1200, 800);
+  
+  gStyle->SetOptStat(00000);
 	c1->cd();
 	gPad->SetLogy();
 	gPad->SetGridx();
@@ -93,11 +89,22 @@ void urwell_HistMerge(){
     if (firstHist) {
         firstHist->GetXaxis()->SetTitle("ADC amplitude (X Plane)");
         firstHist->GetYaxis()->SetTitle("Counts / numEntries");
-        firstHist->SetTitle("uRWell-TRD in ArCO2, 1.385kV/cm DF, 385V GEM dV, 490V WELL");
+        //firstHist->SetTitle("uRWell-TRD in ArCO2, 1.385kV/cm DF, 385V GEM dV, 490V WELL"); //Varied TF
+        //firstHist->SetTitle("uRWell-TRD in ArCO2, 1.361kV/cm DF, 375V GEM dV, 1.95kV/cm TF"); //Varied rWELL V (IF)
+        //firstHist->SetTitle("uRWell-TRD in ArCO2, 2kV/cm TF, 385V GEM dV, 490V WELL"); //Varied DF
+        firstHist->SetTitle("uRWell-TRD in ArCO2, 2kV/cm TF, 1.385kV/cm DF, 490V WELL"); //Varied GEM dV
     }
 	
 	  histList->Draw("same");
-    l1->SetHeader("Transfer Field","C");
+    //l1->SetHeader("Transfer Field","C"); //Varied TF
+    //l1->SetHeader("rWell Voltage","C"); //Varied rWELL V (IF)
+    //l1->SetHeader("Drift Field","C"); //Varied DF
+    l1->SetHeader("GEM #Delta V","C"); //Varied GEM dV
+    
     l1->Draw();
-		c1->SaveAs("urw_ADC_TF_Comparison_v1.png");
+		//c1->SaveAs("urw_ADC_TF_Comparison_v1.png"); //Varied TF
+		//c1->SaveAs("urw_ADC_IF_Comparison_v1.png"); //Varied rWELL V (IF)
+    //c1->SaveAs("urw_ADC_DF_Comparison_v1.png"); //Varied DF
+    c1->SaveAs("urw_ADC_GEMdV_Comparison_v1.png"); //Varied GEM dV
+    
 }
