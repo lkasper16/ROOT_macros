@@ -84,7 +84,7 @@ void timeResponse() {
   tf_4->SetMarkerColor(7);
   tf_4->SetDirectory(0);
   
-	TCanvas *c0 = new TCanvas("c0","uRWell-TRD ADC Response in Time for Varied TF", 1200, 800);
+	TCanvas *c0 = new TCanvas("c0","uRWell-TRD ADC Response in Time for Varied TF", 1600, 1000);
 	gStyle->SetOptStat(0);
 	c0->cd();
  	gPad->SetGridy();
@@ -204,7 +204,7 @@ void timeResponse() {
   df_6->SetMarkerColor(4);
   df_6->SetDirectory(0);
   
-  TCanvas *c1 = new TCanvas("c1","uRWell-TRD ADC Response in Time for Varied DF", 1200, 800);
+  TCanvas *c1 = new TCanvas("c1","uRWell-TRD ADC Response in Time for Varied DF", 1600, 1000);
   c1->cd();
   gPad->SetGridy();
 
@@ -234,12 +234,174 @@ void timeResponse() {
   c1->SaveAs("urw_time_DF_Comparison_v1.png");
 
   //=======================================
-  //
+  //Varied rWELL V (IF)
+  
+  TFile *filei0 = TFile::Open("Run_006253_Output.root");
+  HistDQM = (TList *)filei0->Get("HistDQM");
+  TObject *obji0 = HistDQM->FindObject("urw_f125_x_amp2ds");
+  TH2 *if0 = (TH2 *)obji0;
+  IFScaleFactor = 1./if0->GetEntries();
+  if0->Scale(IFScaleFactor);
+  if0->RebinX(4);
+  TH1D *if_0 = if0->ProjectionX("rWELL=485 V",10,110);
+  if_0->SetLineColor(94);
+  if_0->SetMarkerStyle(20); //filled circle
+  if_0->SetMarkerColor(94);
+  if_0->SetDirectory(0);
 
+  TFile *filei1 = TFile::Open("Run_006251_Output.root");
+  HistDQM = (TList *)filei1->Get("HistDQM");
+  TObject *obji1 = HistDQM->FindObject("urw_f125_x_amp2ds");
+  TH2 *if1 = (TH2 *)obji1;
+  IFScaleFactor = 1./if1->GetEntries();
+  if1->Scale(IFScaleFactor);
+  if1->RebinX(4);
+  TH1D *if_1 = if1->ProjectionX("rWell=490 V",10,110);
+  if_1->SetLineColor(2);
+  if_1->SetMarkerStyle(20); //filled circle
+  if_1->SetMarkerColor(2);
+  if_1->SetDirectory(0);
+  
+  TFile *filei2 = TFile::Open("Run_006248_Output.root");
+  HistDQM = (TList *)filei2->Get("HistDQM");
+  TObject *obji2 = HistDQM->FindObject("urw_f125_x_amp2ds");
+  TH2 *if2 = (TH2 *)obji2;
+  IFScaleFactor = 1./if2->GetEntries();
+  if2->Scale(IFScaleFactor);
+  if2->RebinX(4);
+  TH1D *if_2 = if2->ProjectionX("rWELL=495 V",10,110);
+  if_2->SetLineColor(209);
+  if_2->SetMarkerStyle(20); //filled circle
+  if_2->SetMarkerColor(209);
+  if_2->SetDirectory(0);
 
+  TFile *filei3 = TFile::Open("Run_006249_Output.root");
+  HistDQM = (TList *)filei3->Get("HistDQM");
+  TObject *obji3 = HistDQM->FindObject("urw_f125_x_amp2ds");
+  TH2 *if3 = (TH2 *)obji3;
+  IFScaleFactor = 1./if3->GetEntries();
+  if3->Scale(IFScaleFactor);
+  if3->RebinX(4);
+  TH1D *if_3 = if3->ProjectionX("rWELL=500 V",10,110);
+  if_3->SetLineColor(6);
+  if_3->SetMarkerStyle(20); //filled circle
+  if_3->SetMarkerColor(6);
+  if_3->SetDirectory(0);
+  
+  TCanvas *c2 = new TCanvas("c2","uRWell-TRD ADC Response in Time for Varied IF", 1600, 1000);
+  c2->cd();
+  gPad->SetGridy();
 
+  TLegend *l2 = new TLegend(0.75,0.6,0.9,0.9);
+  l2->AddEntry(if_0,"485 V","lp");
+  l2->AddEntry(if_1,"490 V","lp");
+  l2->AddEntry(if_2,"495 V","lp");
+  l2->AddEntry(if_3,"500 V","lp");
 
+  if_0->GetYaxis()->SetTitle("ADC Amplitude (Counts / numEntries)");
+  if_0->GetYaxis()->SetNdivisions(520);
+  if_0->GetXaxis()->SetRangeUser(30,130);
+  if_0->SetTitle("uRWell-TRD ADC Response in Time, 1.361kV/cm DF, 1.95kV/cm TF, 375 GEM dV");
+  if_0->Draw("");
+  if_1->Draw("same");
+  if_2->Draw("same");
+  if_3->Draw("same");
 
+  l2->SetHeader("rWell Voltage","C");
+  l2->Draw();
+  c2->SaveAs("urw_time_IF_Comparison_v1.png");
+  
+  //=======================================
+  //Varied GEM dV
+  
+  TFile *filedv0 = TFile::Open("Run_006243_Output.root");
+  HistDQM = (TList *)filedv0->Get("HistDQM");
+  TObject *objdv0 = HistDQM->FindObject("urw_f125_x_amp2ds");
+  TH2 *dv0 = (TH2 *)objdv0;
+  dVScaleFactor = 1./dv0->GetEntries();
+  dv0->Scale(dVScaleFactor);
+  dv0->RebinX(4);
+  TH1D *dv_0 = dv0->ProjectionX("dV=370 V",10,110);
+  dv_0->SetLineColor(94);
+  dv_0->SetMarkerStyle(20); //filled circle
+  dv_0->SetMarkerColor(94);
+  dv_0->SetDirectory(0);
 
+  TFile *filedv1 = TFile::Open("Run_006218_Output.root");
+  HistDQM = (TList *)filedv1->Get("HistDQM");
+  TObject *objdv1 = HistDQM->FindObject("urw_f125_x_amp2ds");
+  TH2 *dv1 = (TH2 *)objdv1;
+  dVScaleFactor = 1./dv1->GetEntries();
+  dv1->Scale(dVScaleFactor);
+  dv1->RebinX(4);
+  TH1D *dv_1 = dv1->ProjectionX("dV=375 V",10,110);
+  dv_1->SetLineColor(2);
+  dv_1->SetMarkerStyle(20); //filled circle
+  dv_1->SetMarkerColor(2);
+  dv_1->SetDirectory(0);
+  
+  TFile *filedv2 = TFile::Open("Run_006217_Output.root");
+  HistDQM = (TList *)filedv2->Get("HistDQM");
+  TObject *objdv2 = HistDQM->FindObject("urw_f125_x_amp2ds");
+  TH2 *dv2 = (TH2 *)objdv2;
+  dVScaleFactor = 1./dv2->GetEntries();
+  dv2->Scale(dVScaleFactor);
+  dv2->RebinX(4);
+  TH1D *dv_2 = dv2->ProjectionX("dV=380 V",10,110);
+  dv_2->SetLineColor(209);
+  dv_2->SetMarkerStyle(20); //filled circle
+  dv_2->SetMarkerColor(209);
+  dv_2->SetDirectory(0);
 
+  TFile *filedv3 = TFile::Open("Run_006261_Output.root");
+  HistDQM = (TList *)filedv3->Get("HistDQM");
+  TObject *objdv3 = HistDQM->FindObject("urw_f125_x_amp2ds");
+  TH2 *dv3 = (TH2 *)objdv3;
+  dVScaleFactor = 1./dv3->GetEntries();
+  dv3->Scale(dVScaleFactor);
+  dv3->RebinX(4);
+  TH1D *dv_3 = dv3->ProjectionX("dV=385 V",10,110);
+  dv_3->SetLineColor(6);
+  dv_3->SetMarkerStyle(20); //filled circle
+  dv_3->SetMarkerColor(6);
+  dv_3->SetDirectory(0);
+  
+  TFile *filedv4 = TFile::Open("Run_006250_Output.root");
+  HistDQM = (TList *)filedv4->Get("HistDQM");
+  TObject *objdv4 = HistDQM->FindObject("urw_f125_x_amp2ds");
+  TH2 *dv4 = (TH2 *)objdv4;
+  dVScaleFactor = 1./dv4->GetEntries();
+  dv4->Scale(dVScaleFactor);
+  dv4->RebinX(4);
+  TH1D *dv_4 = dv4->ProjectionX("dV=390 V",10,110);
+  dv_4->SetLineColor(7);
+  dv_4->SetMarkerStyle(20); //filled circle
+  dv_4->SetMarkerColor(7);
+  dv_4->SetDirectory(0);
+  
+  TCanvas *c3 = new TCanvas("c3","uRWell-TRD ADC Response in Time for Varied GEM dV", 1600, 1000);
+  c3->cd();
+  gPad->SetGridy();
+
+  TLegend *l3 = new TLegend(0.75,0.6,0.9,0.9);
+  l3->AddEntry(dv_0,"370 V","lp");
+  l3->AddEntry(dv_1,"375 V","lp");
+  l3->AddEntry(dv_2,"380 V","lp");
+  l3->AddEntry(dv_3,"385 V","lp");
+  l3->AddEntry(dv_4,"390 V","lp");
+  
+  dv_0->GetYaxis()->SetTitle("ADC Amplitude (Counts / numEntries)");
+  dv_0->GetYaxis()->SetNdivisions(520);
+  dv_0->GetXaxis()->SetRangeUser(30,130);
+  dv_0->SetTitle("uRWell-TRD ADC Response in Time, 1.385kV/cm DF, 2kV/cm TF, 490V rWell");
+  dv_0->Draw("");
+  dv_1->Draw("same");
+  dv_2->Draw("same");
+  dv_3->Draw("same");
+  dv_4->Draw("same");
+  
+  l3->SetHeader("GEM #Delta V","C");
+  l3->Draw();
+  c3->SaveAs("urw_time_dV_Comparison_v1.png");
+   
 }
