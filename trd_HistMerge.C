@@ -1,8 +1,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
-#include <string>
-#include <filesystem>
+//#include <filesystem>
 #include <TTree.h>
 #include <TMath.h>
 #include <TStopwatch.h>
@@ -25,113 +24,103 @@
 #include <TLegend.h>
 #include <TProfile.h>
 
-//bool changeToDirectory(const TString& directoryPath) {
-//    if (gSystem->AccessPathName(directoryPath) == 0) {
-//        if (gSystem->ChangeDirectory(directoryPath) == 0) {
-//            return true; // Successfully changed to the directory
-//        }
-//    }
-//    return false; // Directory doesn't exist or failed to change
-//}
-
 void trd_HistMerge(){
 	
-	//TString inputDir = "~fermiDataAnalysis/cherDownUpNoBoxOutput/RootOutput";
-	TString inputDir = "../fermiDataAnalysis/patternRecognitionTracks/v5/RootOutput";
-	
-//	if (!changeToDirectory(inputDir)) {
-//        std::cerr << "Error: Directory '" << inputDir << "' does not exist or cannot be accessed." << std::endl;
-//        return;
-//  }
-	
-	TString rootFiles[] = {"Run_003202_Output.root", "Run_003288_Output.root", "Run_003218_Output.root"};
-	TList *histList = new TList;
+	TString rootFilesGEM[] = {"RootOutput/cern24/merged/Run_005284_2012810Entries_Output.root", "RootOutput/cern24/merged/Run_005256_129038Entries_Output.root", "RootOutput/cern24/merged/Run_005306_559615Entries_Output.root", "RootOutput/ps25/Run_006268_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root"};
+	TString rootFilesMMG[] = {"RootOutput/cern24/merged/Run_005284_2012810Entries_Output.root", "RootOutput/cern24/merged/Run_005256_129038Entries_Output.root", "RootOutput/cern24/merged/Run_005306_559615Entries_Output.root", "RootOutput/ps25/Run_006268_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root"};
+  
+  
+  TList *histListGEM = new TList;
+  TList *histListMMG = new TList;
 	TString name1 = "f125_el";
-    TString name2 = "f125_pi";
-	TString name3 = "mmg1_f125_el";
-    TString name4 = "mmg1_f125_pi";
-	TString name5 = "urw_f125_el";
-	TString name6 = "urw_f125_pi";
-	int colorList[] = {94,51,209};
-	TString legendList[] = {"GEM 6200V/3200V (10 GeV)","MMG-1 4800V/675V (10 GeV)","uRWell 4500V/540V (3 GeV)"};
-	TLegend *l1 = new TLegend(0.75, 0.65, 0.9, 0.9);
+	TString name2 = "mmg1_f125_el";
+	TString name3 = "urw_f125_el_x";
 	
-	for (int i=0; i<sizeof(rootFiles)/sizeof(rootFiles[0]); i++) {
-		const TString& rootFile = rootFiles[i];
+	int colorList[] = {94,2,209,6,7,1,4,51};
+	TString legendListGEM[] = {"CERN 6400V/3380V Xe(1st Bottle)","CERN 6350V/3350V Xe(1st Bottle)","CERN 6400V/3380V Xe (2nd Bottle)","PS25 6300V/3300V Xe (100CCPM)","FERMI 6200V/3200V Xe"};
+  TString legendListMMG[] = {"CERN 5100V/1630V Xe(1st Bottle)","CERN 5000V/1580V Xe(1st Bottle)","CERN 5100V/1630V Xe (2nd Bottle)","PS25 5000V/1550V Xe (100CCPM)","FERMI 4825V/625V Xe"};
+  
+	TLegend *l1 = new TLegend(0.7, 0.65, 0.9, 0.9);
+  TLegend *l2 = new TLegend(0.7, 0.65, 0.9, 0.9);
+	
+  //-- Triple GEM-TRD
+	for (int i=0; i<sizeof(rootFilesGEM)/sizeof(rootFilesGEM[0]); i++) {
+		const TString& rootFile = rootFilesGEM[i];
 		TFile *file = TFile::Open(rootFile, "READ");
 		TList *HistDQM = (TList *)file->Get("HistDQM");
 		TIter next(HistDQM);
 		
 		while (TH1 *readObject = dynamic_cast<TH1*>(next())) {
 			TString histName = readObject->GetName();
-			if (histName == name1 && rootFile == "Run_003202_Output.root") {
+			if (histName == name1) {
 				readObject->SetLineColor(colorList[i]);
 				readObject->SetLineWidth(2);
 				double elScaleFactor = 1./readObject->GetEntries();
 				readObject->Scale(elScaleFactor);
-				histList->Add(readObject);
-				l1->AddEntry(readObject, legendList[i], "l");
-			} else if (histName == name2 && rootFile == "Run_003202_Output.root") {
-				readObject->SetLineStyle(3);
- 	        	readObject->SetMarkerStyle(3);
-          		readObject->SetMarkerColor(colorList[i]);
-          		readObject->SetLineColor(colorList[i]);
-				readObject->SetLineWidth(2);
-          		double piScaleFactor = 1./readObject->GetEntries();
-          		readObject->Scale(piScaleFactor);
-         		histList->Add(readObject);
-			} else if (histName == name3 && rootFile == "Run_003288_Output.root") {
-				readObject->SetLineColor(colorList[i]);
-				readObject->SetLineWidth(2);
-				double elScaleFactor = 1./readObject->GetEntries();
-				readObject->Scale(elScaleFactor);
-				histList->Add(readObject);
-				l1->AddEntry(readObject, legendList[i], "l");
-			} else if (histName == name4 && rootFile == "Run_003288_Output.root") {
-				readObject->SetLineStyle(3);
- 	        	readObject->SetMarkerStyle(3);
-          		readObject->SetMarkerColor(colorList[i]);
-          		readObject->SetLineColor(colorList[i]);
-				readObject->SetLineWidth(2);
-          		double piScaleFactor = 1./readObject->GetEntries();
-          		readObject->Scale(piScaleFactor);
-         		histList->Add(readObject);
-			} else if (histName == name5 && rootFile == "Run_003218_Output.root") {
-				readObject->SetLineColor(colorList[i]);
-				readObject->SetLineWidth(2);
-				double elScaleFactor = 1./readObject->GetEntries();
-				readObject->Scale(elScaleFactor);
-				histList->Add(readObject);
-				l1->AddEntry(readObject, legendList[i], "l");
-			} else if (histName == name6 && rootFile == "Run_003218_Output.root") {
-				readObject->SetLineStyle(3);
- 	        	readObject->SetMarkerStyle(3);
-          		readObject->SetMarkerColor(colorList[i]);
-          		readObject->SetLineColor(colorList[i]);
-				readObject->SetLineWidth(2);
-          		double piScaleFactor = 1./readObject->GetEntries();
-          		readObject->Scale(piScaleFactor);
-         		histList->Add(readObject);
+				histListGEM->Add(readObject);
+				l1->AddEntry(readObject, legendListGEM[i], "lp");
 			}
 		}
 		file->Close();
 	}
+  
+  //-- MMG1-TRD
+  for (int i=0; i<sizeof(rootFilesMMG)/sizeof(rootFilesMMG[0]); i++) {
+    const TString& rootFile = rootFilesMMG[i];
+    TFile *file = TFile::Open(rootFile, "READ");
+    TList *HistDQM = (TList *)file->Get("HistDQM");
+    TIter next(HistDQM);
+    
+    while (TH1 *readObject = dynamic_cast<TH1*>(next())) {
+      TString histName = readObject->GetName();
+      if (histName == name2) {
+        readObject->SetLineColor(colorList[i]);
+        readObject->SetLineWidth(2);
+        double elScaleFactor = 1./readObject->GetEntries();
+        readObject->Scale(elScaleFactor);
+        histListMMG->Add(readObject);
+        l2->AddEntry(readObject, legendListMMG[i], "lp");
+      }
+    }
+    file->Close();
+  }
 	
-	TCanvas *c1 = new TCanvas("c1","Prototype ADC Distributions at Max HV Applied", 1200, 800);
+	TCanvas *c1 = new TCanvas("c1","GEMTRD ADC Distributions at Varied HV in Xe", 1600, 1000);
 	gStyle->SetOptStat(00000);
 	c1->cd();
 	gPad->SetLogy();
 	gPad->SetGridx();
  	gPad->SetGridy();
 	
-	TH1 *firstHist = (TH1 *)histList->First();
-    if (firstHist) {
-        firstHist->GetXaxis()->SetTitle("ADC amplitude");
-        firstHist->GetYaxis()->SetTitle("Counts / numEntries");
-        firstHist->SetTitle("Prototype ADC Distributions in XeCO2");
-    }
+	TH1 *firstHist1 = (TH1 *)histListGEM->First();
+  if (firstHist1) {
+    firstHist1->GetXaxis()->SetTitle("ADC amplitude");
+    firstHist1->GetYaxis()->SetTitle("Counts / numEntries");
+    firstHist1->SetMaximum(1);
+    firstHist1->SetTitle("GEMTRD ADC Distributions in XeCO2");
+  }
 	
-	histList->Draw("same");
-    l1->Draw();
-	c1->SaveAs("TRD_ADC_Xe_Comparison_v1.png");
+	histListGEM->Draw("same");
+  l1->Draw();
+	c1->SaveAs("GEMTRD_ADC_Xe_Comparison_v1.png");
+  
+  TCanvas *c2 = new TCanvas("c2","MMG1-TRD ADC Distributions at Varied HV in Xe", 1600, 1000);
+  c2->cd();
+  gPad->SetLogy();
+  gPad->SetGridx();
+  gPad->SetGridy();
+  
+  TH1 *firstHist2 = (TH1 *)histListMMG->First();
+  if (firstHist2) {
+    firstHist2->GetXaxis()->SetTitle("ADC amplitude");
+    firstHist2->GetYaxis()->SetTitle("Counts / numEntries");
+    firstHist2->SetMaximum(1);
+    firstHist2->SetTitle("MMG1-TRD ADC Distributions in XeCO2");
+  }
+  
+  histListMMG->Draw("same");
+  l2->Draw();
+  c2->SaveAs("MMG1TRD_ADC_Xe_Comparison_v1.png");
+  
+  
 }
