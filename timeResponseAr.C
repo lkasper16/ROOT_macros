@@ -19,7 +19,7 @@ void timeResponseAr() {
 	//=======================================
 	//uRWell-TRD Varied TF
 	
-	TFile *file0 = TFile::Open("RootOutput/ps25/Run_006269_Output.root");
+	TFile *file0 = TFile::Open("RootOutput/ps25/Run_006290_Output.root");
 	HistDQM = (TList *)file0->Get("HistDQM");
 	TObject *obj0 = HistDQM->FindObject("urw_f125_x_amp2ds");
 	TH2 *tf0 = (TH2 *)obj0;
@@ -55,7 +55,7 @@ void timeResponseAr() {
   m_0->SetDirectory(0);
   
   
-  TFile *file1 = TFile::Open("RootOutput/ps25/Run_006270_Output.root");
+  TFile *file1 = TFile::Open("RootOutput/ps25/Run_006291_Output.root");
   HistDQM = (TList *)file1->Get("HistDQM");
   TObject *obj1 = HistDQM->FindObject("urw_f125_x_amp2ds");
   TH2 *tf1 = (TH2 *)obj1;
@@ -91,7 +91,7 @@ void timeResponseAr() {
   m_1->SetDirectory(0);
   
   
-  TFile *file2 = TFile::Open("RootOutput/ps25/Run_006271_Output.root");
+  TFile *file2 = TFile::Open("RootOutput/ps25/Run_006295_Output.root");
   HistDQM = (TList *)file2->Get("HistDQM");
   TObject *obj2 = HistDQM->FindObject("urw_f125_x_amp2ds");
   TH2 *tf2 = (TH2 *)obj2;
@@ -126,7 +126,7 @@ void timeResponseAr() {
   m_2->SetMarkerColor(209);
   m_2->SetDirectory(0);
   
-  
+  /*
   TFile *file3 = TFile::Open("RootOutput/ps25/Run_006272_Output.root");
   HistDQM = (TList *)file3->Get("HistDQM");
   TObject *obj3 = HistDQM->FindObject("urw_f125_x_amp2ds");
@@ -270,98 +270,99 @@ void timeResponseAr() {
   m_6->SetMarkerColor(4);
   m_6->SetDirectory(0);
   
+*/
   
-	TCanvas *c0 = new TCanvas("c0","uRWell-TRD ADC Response in Time for Varied Gas Flow", 1600, 1000);
+	TCanvas *c0 = new TCanvas("c0","uRWell-TRD ADC Response in Time for LV / Pedestal Changes", 1600, 1000);
 	gStyle->SetOptStat(0);
 	c0->cd();
  	gPad->SetGridy();
 	
-	TLegend *l0 = new TLegend(0.75,0.6,0.9,0.9);
-	l0->AddEntry(tf_0,"1 - 100CCPM","lp");
-  l0->AddEntry(tf_1,"2 - 100CCPM","lp");
-  l0->AddEntry(tf_2,"3 - 50CCPM","lp");
-	l0->AddEntry(tf_3,"4 - 50CCPM","lp");
-  l0->AddEntry(tf_4,"5 - 50CCPM (?)","lp");
-  l0->AddEntry(tf_5,"6 - 100CCPM","lp");
-  l0->AddEntry(tf_6,"7 - 100CCPM","lp");
+	TLegend *l0 = new TLegend(0.7,0.7,0.9,0.9);
+	l0->AddEntry(tf_0,"Lower LV, Old Pedestal","lp");
+  l0->AddEntry(tf_1,"Higher LV, Old Pedestal","lp");
+  l0->AddEntry(tf_2,"Higher LV, New Pedestal","lp");
+	//l0->AddEntry(tf_3,"4 - 50CCPM","lp");
+  //l0->AddEntry(tf_4,"5 - 50CCPM (?)","lp");
+  //l0->AddEntry(tf_5,"6 - 100CCPM","lp");
+  //l0->AddEntry(tf_6,"7 - 100CCPM","lp");
   
 	tf_0->GetYaxis()->SetTitle("ADC Amplitude (Counts / numEntries)");
 	tf_0->GetYaxis()->SetNdivisions(520);
-	tf_0->GetXaxis()->SetRangeUser(30,130);
+	tf_0->GetXaxis()->SetRangeUser(30,170);
   tf_0->SetMaximum(tf_0->GetMaximum()+10.);
-	tf_0->SetTitle("uRWell-TRD ADC Response in Time, 4420V/1265V/890V/490V");
+	tf_0->SetTitle("uRWell-TRD ADC Response in Time, 4455V/1300V/920V/520V");
 	tf_0->Draw("");
 	tf_1->Draw("same");
   tf_2->Draw("same");
-  tf_3->Draw("same");
-  tf_4->Draw("same");
-  tf_5->Draw("same");
-  tf_6->Draw("same");
+  //tf_3->Draw("same");
+  //tf_4->Draw("same");
+  //tf_5->Draw("same");
+  //tf_6->Draw("same");
   
 	l0->Draw();
-	c0->SaveAs("urw_time_GasFlow_Comparison_v1.png");
+	c0->SaveAs("urw_time_LV_Comparison_v1.png");
   
   
-  TCanvas *c1 = new TCanvas("c1","Triple GEM-TRD ADC Response in Time for Varied Gas Flow", 1600, 1000);
+  TCanvas *c1 = new TCanvas("c1","Triple GEM-TRD ADC Response in Time for LV / Pedestal Changes", 1600, 1000);
   gStyle->SetOptStat(0);
   c1->cd();
   gPad->SetGridy();
   
-  TLegend *l1 = new TLegend(0.75,0.6,0.9,0.9);
-  l1->AddEntry(g_0,"1 - 100CCPM","lp");
-  l1->AddEntry(g_1,"2 - 100CCPM","lp");
-  l1->AddEntry(g_2,"3 - 50CCPM","lp");
-  l1->AddEntry(g_3,"4 - 50CCPM","lp");
-  l1->AddEntry(g_4,"5 - 50CCPM (?)","lp");
-  l1->AddEntry(g_5,"6 - 100CCPM","lp");
-  l1->AddEntry(g_6,"7 - 100CCPM","lp");
+  TLegend *l1 = new TLegend(0.7,0.7,0.9,0.9);
+  l1->AddEntry(g_0,"Lower LV, Old Pedestal","lp");
+  l1->AddEntry(g_1,"Higher LV, Old Pedestal","lp");
+  l1->AddEntry(g_2,"Higher LV, New Pedestal","lp");
+  //l1->AddEntry(g_3,"4 - 50CCPM","lp");
+  //l1->AddEntry(g_4,"5 - 50CCPM (?)","lp");
+  //l1->AddEntry(g_5,"6 - 100CCPM","lp");
+  //l1->AddEntry(g_6,"7 - 100CCPM","lp");
 
   g_0->GetYaxis()->SetTitle("ADC Amplitude (Counts / numEntries)");
   g_0->GetYaxis()->SetNdivisions(520);
-  g_0->GetXaxis()->SetRangeUser(30,130);
+  g_0->GetXaxis()->SetRangeUser(30,170);
   g_0->SetMaximum(g_0->GetMaximum()+10.);
-  g_0->SetTitle("Triple GEM-TRD ADC Response in Time, 6100V/3100V");
+  g_0->SetTitle("Triple GEM-TRD ADC Response in Time, 6400V/3380V");
   g_0->Draw("");
   g_1->Draw("same");
   g_2->Draw("same");
-  g_3->Draw("same");
-  g_4->Draw("same");
-  g_5->Draw("same");
-  g_6->Draw("same");
+  //g_3->Draw("same");
+  //g_4->Draw("same");
+  //g_5->Draw("same");
+  //g_6->Draw("same");
 
   l1->Draw();
-  c1->SaveAs("gem_time_GasFlow_Comparison_v1.png");
+  c1->SaveAs("gem_time_LV_Comparison_v1.png");
   
   
-  TCanvas *c2 = new TCanvas("c2","MMG1-TRD ADC Response in Time for Varied Gas Flow", 1600, 1000);
+  TCanvas *c2 = new TCanvas("c2","MMG1-TRD ADC Response in Time for LV / Pedestal Changes", 1600, 1000);
   gStyle->SetOptStat(0);
   c2->cd();
   gPad->SetGridy();
   
-  TLegend *l2 = new TLegend(0.75,0.6,0.9,0.9);
-  l2->AddEntry(m_0,"1 - 100CCPM","lp");
-  l2->AddEntry(m_1,"2 - 100CCPM","lp");
-  l2->AddEntry(m_2,"3 - 50CCPM","lp");
-  l2->AddEntry(m_3,"4 - 50CCPM","lp");
-  l2->AddEntry(m_4,"5 - 50CCPM (?)","lp");
-  l2->AddEntry(m_5,"6 - 100CCPM","lp");
-  l2->AddEntry(m_6,"7 - 100CCPM","lp");
+  TLegend *l2 = new TLegend(0.7,0.7,0.9,0.9);
+  l2->AddEntry(m_0,"Lower LV, Old Pedestal","lp");
+  l2->AddEntry(m_1,"Higher LV, Old Pedestal","lp");
+  l2->AddEntry(m_2,"Higher LV, New Pedestal","lp");
+  //l2->AddEntry(m_3,"4 - 50CCPM","lp");
+  //l2->AddEntry(m_4,"5 - 50CCPM (?)","lp");
+  //l2->AddEntry(m_5,"6 - 100CCPM","lp");
+  //l2->AddEntry(m_6,"7 - 100CCPM","lp");
 
   m_0->GetYaxis()->SetTitle("ADC Amplitude (Counts / numEntries)");
   m_0->GetYaxis()->SetNdivisions(520);
-  m_0->GetXaxis()->SetRangeUser(30,130);
+  m_0->GetXaxis()->SetRangeUser(30,170);
   m_0->SetMaximum(m_0->GetMaximum()+10.);
-  m_0->SetTitle("MMG1-TRD ADC Response in Time, 4750V/1450V");
+  m_0->SetTitle("MMG1-TRD ADC Response in Time, 5100V/1630V");
   m_0->Draw("");
   m_1->Draw("same");
   m_2->Draw("same");
-  m_3->Draw("same");
-  m_4->Draw("same");
-  m_5->Draw("same");
-  m_6->Draw("same");
+  //m_3->Draw("same");
+  //m_4->Draw("same");
+  //m_5->Draw("same");
+  //m_6->Draw("same");
 
   l2->Draw();
-  c2->SaveAs("mmg_time_GasFlow_Comparison_v1.png");
+  c2->SaveAs("mmg_time_LV_Comparison_v1.png");
   	
    
 }

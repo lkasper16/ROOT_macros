@@ -28,22 +28,22 @@ void trd_HistMerge(){
 	
   bool makeTimeDistributions=true;
   
-	TString rootFilesGEM[] = {"RootOutput/cern24/merged/Run_005284_2012810Entries_Output.root", "RootOutput/cern24/merged/Run_005256_129038Entries_Output.root", "RootOutput/cern24/merged/Run_005254_88047Entries_Output.root", "RootOutput/cern24/Run_005257_Output.root", "RootOutput/cern24/merged/Run_005306_559615Entries_Output.root", "RootOutput/ps25/Run_006268_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root"};
-	TString rootFilesMMG[] = {"RootOutput/cern24/merged/Run_005284_2012810Entries_Output.root", "RootOutput/cern24/merged/Run_005256_129038Entries_Output.root", "RootOutput/cern24/merged/Run_005254_88047Entries_Output.root", "RootOutput/cern24/Run_005257_Output.root", "RootOutput/cern24/merged/Run_005306_559615Entries_Output.root", "RootOutput/ps25/Run_006268_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root"};
+	TString rootFilesGEM[] = {"RootOutput/cern24/merged/Run_005284_2012810Entries_Output.root", "RootOutput/cern24/merged/Run_005256_129038Entries_Output.root", "RootOutput/cern24/merged/Run_005254_88047Entries_Output.root", "RootOutput/cern24/Run_005257_Output.root", "RootOutput/cern24/merged/Run_005306_559615Entries_Output.root", "RootOutput/ps25/Run_006284_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root", "RootOutput/ps25/Run_006281_Output.root","RootOutput/ps25/Run_006291_Output.root"};
+	TString rootFilesMMG[] = {"RootOutput/cern24/merged/Run_005284_2012810Entries_Output.root", "RootOutput/cern24/merged/Run_005256_129038Entries_Output.root", "RootOutput/cern24/merged/Run_005254_88047Entries_Output.root", "RootOutput/cern24/Run_005257_Output.root", "RootOutput/cern24/merged/Run_005306_559615Entries_Output.root", "RootOutput/ps25/Run_006284_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root", "RootOutput/ps25/Run_006281_Output.root", "RootOutput/ps25/Run_006291_Output.root"};
   
   
   TList *histListGEM = new TList;
-  TList *histListGEM2 = new TList;
+  //TList *histListGEM2 = new TList;
   TList *histListMMG = new TList;
-  TList *histListMMG2 = new TList;
+  //TList *histListMMG2 = new TList;
 	TString name1 = "f125_el";
 	TString name2 = "mmg1_f125_el";
-	TString name3 = "f125_el_amp2d";
-  TString name4 = "mmg1_f125_el_amp2d";
+	//TString name3 = "f125_el_amp2d";
+  //TString name4 = "mmg1_f125_el_amp2d";
 	
-	int colorList[] = {94,2,209,6,7,1,4,51};
-	TString legendListGEM[] = {"CERN 6400V/3380V Xe(1st Bottle)","CERN 6350V/3350V Xe(1st Bottle)","CERN 6300V/3300V Xe(1st Bottle)","CERN 6400V/3400V Xe(1st Bottle)","CERN 6400V/3380V Xe (2nd Bottle)","PS25 6300V/3300V Xe (100CCPM)","FERMI 6200V/3200V Xe"};
-  TString legendListMMG[] = {"CERN 5100V/1630V Xe(1st Bottle)","CERN 5000V/1580V Xe(1st Bottle)","CERN 5000V/1560V Xe(1st Bottle)","CERN 5000V/1580V Xe(1st Bottle)","CERN 5100V/1630V Xe (2nd Bottle)","PS25 5000V/1550V Xe (100CCPM)","FERMI 4825V/625V Xe"};
+	int colorList[] = {94,2,209,6,7,1,4,51,28};
+	TString legendListGEM[] = {"CERN 6400V/3380V Xe(1st Bottle)","CERN 6350V/3350V Xe(1st Bottle)","CERN 6300V/3300V Xe(1st Bottle)","CERN 6400V/3400V Xe(1st Bottle)","CERN 6400V/3380V Xe (2nd Bottle)","PS25 6400V/3380V Xe (50CCPM)","FERMI 6200V/3200V Xe","PS25 6300V/3300V (50CCPM)","PS25 6400V/3380V Xe (50CCPM) NEW LV"};
+  TString legendListMMG[] = {"CERN 5100V/1630V Xe(1st Bottle)","CERN 5000V/1580V Xe(1st Bottle)","CERN 5000V/1560V Xe(1st Bottle)","CERN 5000V/1580V Xe(1st Bottle)","CERN 5100V/1630V Xe (2nd Bottle)","PS25 5100V/1630V Xe (50CCPM)","FERMI 4825V/625V Xe","PS25 5000V/1575V (50CCPM)","PS25 5100V/1630V Xe (50CCPM) NEW LV"};
   
 	TLegend *l1 = new TLegend(0.7, 0.65, 0.9, 0.9);
   TLegend *l2 = new TLegend(0.7, 0.65, 0.9, 0.9);
@@ -311,6 +311,59 @@ void trd_HistMerge(){
   m_6->SetMarkerColor(4);
   m_6->SetDirectory(0);
   
+  TFile *file7 = TFile::Open(rootFilesGEM[7]);
+  HistDQM = (TList *)file7->Get("HistDQM");
+  
+  TObject *objg7 = HistDQM->FindObject("f125_el_amp2ds");
+  TH2 *g7 = (TH2 *)objg7;
+  TFScaleFactor = 1./g7->GetEntries();
+  g7->Scale(TFScaleFactor);
+  g7->RebinX(4);
+  TH1D *g_7 = g7->ProjectionX(legendListGEM[7],60,180);
+  g_7->SetLineColor(51);
+  g_7->SetLineWidth(2);
+  g_7->SetMarkerStyle(20); //filled star
+  g_7->SetMarkerColor(51);
+  g_7->SetDirectory(0);
+
+  TObject *objm7 = HistDQM->FindObject("mmg1_f125_el_amp2ds");
+  TH2 *m7 = (TH2 *)objm7;
+  TFScaleFactor = 1./m7->GetEntries();
+  m7->Scale(TFScaleFactor);
+  m7->RebinX(4);
+  TH1D *m_7 = m7->ProjectionX(legendListMMG[7],60,180);
+  m_7->SetLineColor(51);
+  m_7->SetLineWidth(2);
+  m_7->SetMarkerStyle(20); //filled star
+  m_7->SetMarkerColor(51);
+  m_7->SetDirectory(0);
+  
+  TFile *file8 = TFile::Open(rootFilesGEM[8]);
+  HistDQM = (TList *)file8->Get("HistDQM");
+
+  TObject *objg8 = HistDQM->FindObject("f125_el_amp2ds");
+  TH2 *g8 = (TH2 *)objg8;
+  TFScaleFactor = 1./g8->GetEntries();
+  g8->Scale(TFScaleFactor);
+  g8->RebinX(4);
+  TH1D *g_8 = g8->ProjectionX(legendListGEM[8],60,180);
+  g_8->SetLineColor(28);
+  g_8->SetLineWidth(2);
+  g_8->SetMarkerStyle(20); //filled star
+  g_8->SetMarkerColor(28);
+  g_8->SetDirectory(0);
+
+  TObject *objm8 = HistDQM->FindObject("mmg1_f125_el_amp2ds");
+  TH2 *m8 = (TH2 *)objm8;
+  TFScaleFactor = 1./m8->GetEntries();
+  m8->Scale(TFScaleFactor);
+  m8->RebinX(4);
+  TH1D *m_8 = m8->ProjectionX(legendListMMG[8],60,180);
+  m_8->SetLineColor(28);
+  m_8->SetLineWidth(2);
+  m_8->SetMarkerStyle(20); //filled star
+  m_8->SetMarkerColor(28);
+  m_8->SetDirectory(0);
   
   TLegend *l3 = new TLegend(0.7, 0.65, 0.9, 0.9);
   TLegend *l4 = new TLegend(0.7, 0.65, 0.9, 0.9);
@@ -324,6 +377,8 @@ void trd_HistMerge(){
   l3->AddEntry(g_4,legendListGEM[4],"lp");
   l3->AddEntry(g_5,legendListGEM[5],"lp");
   l3->AddEntry(g_6,legendListGEM[6],"lp");
+  l3->AddEntry(g_7,legendListGEM[7],"lp");
+  l3->AddEntry(g_8,legendListGEM[8],"lp");
   g_0->GetYaxis()->SetTitle("ADC Amplitude (Counts / numEntries)");
   g_0->GetYaxis()->SetNdivisions(520);
   g_0->GetXaxis()->SetRangeUser(20,300);
@@ -336,8 +391,10 @@ void trd_HistMerge(){
   g_4->Draw("same");
   g_5->Draw("same");
   g_6->Draw("same");
+  g_7->Draw("same");
+  g_8->Draw("same");
   l3->Draw();
-  c3->SaveAs("GEMTRD_Time_Xe_Comparison_v1.png");
+  c3->SaveAs("GEMTRD_Time_Xe_Comparison_v2.png");
   
   TCanvas *c4 = new TCanvas("c4","MMG1-TRD Timing Distributions at Varied HV in Xe", 1600, 1000);
   c4->cd();
@@ -349,7 +406,8 @@ void trd_HistMerge(){
   l4->AddEntry(m_4,legendListMMG[4],"lp");
   l4->AddEntry(m_5,legendListMMG[5],"lp");
   l4->AddEntry(m_6,legendListMMG[6],"lp");
-  
+  l4->AddEntry(m_7,legendListMMG[7],"lp");
+  l4->AddEntry(m_8,legendListMMG[8],"lp");
   m_0->GetYaxis()->SetTitle("ADC Amplitude (Counts / numEntries)");
   m_0->GetYaxis()->SetNdivisions(520);
   m_0->GetXaxis()->SetRangeUser(20,300);
@@ -362,8 +420,10 @@ void trd_HistMerge(){
   m_4->Draw("same");
   m_5->Draw("same");
   m_6->Draw("same");
+  m_7->Draw("same");
+  m_8->Draw("same");
   l4->Draw();
-  c4->SaveAs("MMG1TRD_Time_Xe_Comparison_v1.png");
+  c4->SaveAs("MMG1TRD_Time_Xe_Comparison_v2.png");
   
   
   }  

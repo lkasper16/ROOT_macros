@@ -26,7 +26,7 @@
 
 void trd_HistMergeAr(){
 	
-	TString rootFilesGEM[] = {"RootOutput/ps25/Run_006269_Output.root", "RootOutput/ps25/Run_006270_Output.root", "RootOutput/ps25/Run_006271_Output.root", "RootOutput/ps25/Run_006272_Output.root", "RootOutput/ps25/Run_006273_Output.root", "RootOutput/ps25/Run_006274_Output.root", "RootOutput/ps25/Run_006275_Output.root"};
+	TString rootFilesGEM[] = {"RootOutput/ps25/Run_006290_Output.root", "RootOutput/ps25/Run_006291_Output.root", "RootOutput/ps25/Run_006295_Output.root"};
 	//TString rootFilesMMG[] = {"RootOutput/cern24/merged/Run_005284_2012810Entries_Output.root", "RootOutput/cern24/merged/Run_005256_129038Entries_Output.root", "RootOutput/cern24/merged/Run_005254_88047Entries_Output.root", "RootOutput/cern24/Run_005257_Output.root", "RootOutput/cern24/merged/Run_005306_559615Entries_Output.root", "RootOutput/ps25/Run_006268_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root"};
   
   
@@ -44,7 +44,7 @@ void trd_HistMergeAr(){
   TString name5 = "urw_f125_el_x";
 	
 	int colorList[] = {94,2,209,6,7,1,4,51};
-	TString legendListGEM[] = {"1 - ArCO2 100CCPM","2 - ArCO2 100CCPM","3 - ArCO2 50CCPM","4 - ArCO2 50CCPM","5 - ArCO2 50CCPM(?)","6 - ArCO2 100CCPM","7 - ArCO2 100CCPM","8 - ArCO2 100CCPM"};
+	TString legendListGEM[] = {"Lower LV, Old Pedestal","Higher LV, Old Pedestal","Higher LV, New Pedestal","","","","",""};
   //TString legendListMMG[] = {"CERN 5100V/1630V Xe(1st Bottle)","CERN 5000V/1580V Xe(1st Bottle)","CERN 5000V/1560V Xe(1st Bottle)","CERN 5000V/1580V Xe(1st Bottle)","CERN 5100V/1630V Xe (2nd Bottle)","PS25 5000V/1550V Xe (100CCPM)","FERMI 4825V/625V Xe"};
   
 	TLegend *l1 = new TLegend(0.7, 0.65, 0.9, 0.9);
@@ -110,7 +110,7 @@ void trd_HistMergeAr(){
 		file->Close();
 	}
   
-	TCanvas *c1 = new TCanvas("c1","GEMTRD ADC Distributions for Varied Gas Flow", 1600, 1000);
+	TCanvas *c1 = new TCanvas("c1","GEMTRD ADC Distributions for LV / Pedestal Changes", 1600, 1000);
 	gStyle->SetOptStat(00000);
 	c1->cd();
 	gPad->SetLogy();
@@ -121,13 +121,13 @@ void trd_HistMergeAr(){
     firstHist1->GetXaxis()->SetTitle("ADC amplitude");
     firstHist1->GetYaxis()->SetTitle("Counts / numEntries");
     firstHist1->SetMaximum(1);
-    firstHist1->SetTitle("GEMTRD ADC Distributions in ArCO2, 6100V/3100V");
+    firstHist1->SetTitle("GEMTRD ADC Distributions in XeCO2, 6400V/3380V");
   }
 	histListGEM->Draw("same");
   l1->Draw();
-	c1->SaveAs("GEMTRD_ADC_GasFlow_Comparison_v1.png");
+	c1->SaveAs("GEMTRD_ADC_LV_Comparison_v1.png");
   
-  TCanvas *c2 = new TCanvas("c2","MMG1-TRD ADC Distributions for Varied Gas Flow", 1600, 1000);
+  TCanvas *c2 = new TCanvas("c2","MMG1-TRD ADC Distributions for LV / Pedestal Changes", 1600, 1000);
   c2->cd();
   gPad->SetLogy();
   gPad->SetGridx();
@@ -137,11 +137,11 @@ void trd_HistMergeAr(){
     firstHist2->GetXaxis()->SetTitle("ADC amplitude");
     firstHist2->GetYaxis()->SetTitle("Counts / numEntries");
     firstHist2->SetMaximum(1);
-    firstHist2->SetTitle("MMG1-TRD ADC Distributions in ArCO2, 4750V/1450V");
+    firstHist2->SetTitle("MMG1-TRD ADC Distributions in XeCO2, 5100V/1630V");
   }
   histListMMG->Draw("same");
   l2->Draw();
-  c2->SaveAs("MMG1TRD_ADC_GasFlow_Comparison_v1.png");
+  c2->SaveAs("MMG1TRD_ADC_LV_Comparison_v1.png");
   /*
   TCanvas *c3 = new TCanvas("c3","GEMTRD Timing Distributions at Varied HV in Xe", 1600, 1000);
   c3->cd();
@@ -172,7 +172,7 @@ void trd_HistMergeAr(){
   c4->SaveAs("MMG1TRD_Time_Xe_Comparison_v1.png");
  */
   
-  TCanvas *c5 = new TCanvas("c5","uRWell-TRD ADC Distributions for Varied Gas Flow", 1600, 1000);
+  TCanvas *c5 = new TCanvas("c5","uRWell-TRD ADC Distributions for LV / Pedestal Changes", 1600, 1000);
   c5->cd();
   gPad->SetLogy();
   gPad->SetGridx();
@@ -182,10 +182,10 @@ void trd_HistMergeAr(){
     firstHist5->GetXaxis()->SetTitle("ADC amplitude");
     firstHist5->GetYaxis()->SetTitle("Counts / numEntries");
     firstHist5->SetMaximum(1);
-    firstHist5->SetTitle("uRWell-TRD ADC Distributions in ArCO2, 4420V/1265V/890V/490V");
+    firstHist5->SetTitle("uRWell-TRD ADC Distributions in XeCO2, 4455V/1300V/920V/520V");
   }
   histListURW->Draw("same");
   l5->Draw();
-  c5->SaveAs("URWTRD_ADC_GasFlow_Comparison_v1.png");
+  c5->SaveAs("URWTRD_ADC_LV_Comparison_v1.png");
   
 }
