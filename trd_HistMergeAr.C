@@ -26,7 +26,8 @@
 
 void trd_HistMergeAr(){
 	
-	TString rootFilesGEM[] = {"RootOutput/ps25/Run_006290_Output.root", "RootOutput/ps25/Run_006291_Output.root", "RootOutput/ps25/Run_006295_Output.root"};
+	TString rootFilesGEM[] = {"RootOutput/ps25/Run_006274_Output.root", "RootOutput/ps25/Run_006326_Output.root", "RootOutput/ps25/Run_006357_Output.root"};
+  //TString rootFilesGEM[] = {"RootOutput/ps25/Run_006290_Output.root", "RootOutput/ps25/Run_006291_Output.root", "RootOutput/ps25/Run_006295_Output.root"};
 	//TString rootFilesMMG[] = {"RootOutput/cern24/merged/Run_005284_2012810Entries_Output.root", "RootOutput/cern24/merged/Run_005256_129038Entries_Output.root", "RootOutput/cern24/merged/Run_005254_88047Entries_Output.root", "RootOutput/cern24/Run_005257_Output.root", "RootOutput/cern24/merged/Run_005306_559615Entries_Output.root", "RootOutput/ps25/Run_006268_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root"};
   
   
@@ -43,12 +44,13 @@ void trd_HistMergeAr(){
   TString name4 = "mmg1_f125_el_amp2d";
   TString name5 = "urw_f125_el_x";
 	
-	int colorList[] = {94,2,209,6,7,1,4,51};
-	TString legendListGEM[] = {"Lower LV, Old Pedestal","Higher LV, Old Pedestal","Higher LV, New Pedestal","","","","",""};
+	int colorList[] = {94,2,209,4,7,1,6,51};
+  TString legendListGEM[] = {"5um Copper, 100CCPM, Low LV With Rad","5um Copper, 100CCPM, High LV No Rad","0.1um Aluminum, 100CCPM, High LV With Rad","0.1um Aluminum, 100CCPM, Low LV With Rad","","","",""};
+	//TString legendListGEM[] = {"Lower LV, Old Pedestal","Higher LV, Old Pedestal","Higher LV, New Pedestal","","","","",""};
   //TString legendListMMG[] = {"CERN 5100V/1630V Xe(1st Bottle)","CERN 5000V/1580V Xe(1st Bottle)","CERN 5000V/1560V Xe(1st Bottle)","CERN 5000V/1580V Xe(1st Bottle)","CERN 5100V/1630V Xe (2nd Bottle)","PS25 5000V/1550V Xe (100CCPM)","FERMI 4825V/625V Xe"};
   
-	TLegend *l1 = new TLegend(0.7, 0.65, 0.9, 0.9);
-  TLegend *l2 = new TLegend(0.7, 0.65, 0.9, 0.9);
+	TLegend *l1 = new TLegend(0.59, 0.7, 0.9, 0.9);
+  TLegend *l2 = new TLegend(0.59, 0.7, 0.9, 0.9);
 	TLegend *l3 = new TLegend(0.7, 0.65, 0.9, 0.9);
   TLegend *l4 = new TLegend(0.7, 0.65, 0.9, 0.9);
   TLegend *l5 = new TLegend(0.7, 0.65, 0.9, 0.9);
@@ -110,7 +112,7 @@ void trd_HistMergeAr(){
 		file->Close();
 	}
   
-	TCanvas *c1 = new TCanvas("c1","GEMTRD ADC Distributions for LV / Pedestal Changes", 1600, 1000);
+	TCanvas *c1 = new TCanvas("c1","GEMTRD ADC Distributions", 1600, 1000);
 	gStyle->SetOptStat(00000);
 	c1->cd();
 	gPad->SetLogy();
@@ -121,13 +123,14 @@ void trd_HistMergeAr(){
     firstHist1->GetXaxis()->SetTitle("ADC amplitude");
     firstHist1->GetYaxis()->SetTitle("Counts / numEntries");
     firstHist1->SetMaximum(1);
-    firstHist1->SetTitle("GEMTRD ADC Distributions in XeCO2, 6400V/3380V");
+    //firstHist1->SetTitle("GEMTRD ADC Distributions in XeCO2, 6400V/3380V");
+    firstHist1->SetTitle("GEMTRD ADC Distributions in Ar:CO2 80:20, 6100V/3100V");
   }
 	histListGEM->Draw("same");
   l1->Draw();
-	c1->SaveAs("GEMTRD_ADC_LV_Comparison_v1.png");
+	c1->SaveAs("GEMTRD_ADC_CAT_Comparison_v1.png");
   
-  TCanvas *c2 = new TCanvas("c2","MMG1-TRD ADC Distributions for LV / Pedestal Changes", 1600, 1000);
+  TCanvas *c2 = new TCanvas("c2","MMG1-TRD ADC Distributions", 1600, 1000);
   c2->cd();
   gPad->SetLogy();
   gPad->SetGridx();
@@ -137,11 +140,12 @@ void trd_HistMergeAr(){
     firstHist2->GetXaxis()->SetTitle("ADC amplitude");
     firstHist2->GetYaxis()->SetTitle("Counts / numEntries");
     firstHist2->SetMaximum(1);
-    firstHist2->SetTitle("MMG1-TRD ADC Distributions in XeCO2, 5100V/1630V");
+    //firstHist2->SetTitle("MMG1-TRD ADC Distributions in XeCO2, 5100V/1630V");
+    firstHist2->SetTitle("MMG1-TRD ADC Distributions in Ar:CO2 80:20, 4750V/1450V");
   }
   histListMMG->Draw("same");
   l2->Draw();
-  c2->SaveAs("MMG1TRD_ADC_LV_Comparison_v1.png");
+  c2->SaveAs("MMG1TRD_ADC_CAT_Comparison_v1.png");
   /*
   TCanvas *c3 = new TCanvas("c3","GEMTRD Timing Distributions at Varied HV in Xe", 1600, 1000);
   c3->cd();
@@ -171,7 +175,7 @@ void trd_HistMergeAr(){
   l4->Draw();
   c4->SaveAs("MMG1TRD_Time_Xe_Comparison_v1.png");
  */
-  
+  /*
   TCanvas *c5 = new TCanvas("c5","uRWell-TRD ADC Distributions for LV / Pedestal Changes", 1600, 1000);
   c5->cd();
   gPad->SetLogy();
@@ -187,5 +191,5 @@ void trd_HistMergeAr(){
   histListURW->Draw("same");
   l5->Draw();
   c5->SaveAs("URWTRD_ADC_LV_Comparison_v1.png");
-  
+ */ 
 }
