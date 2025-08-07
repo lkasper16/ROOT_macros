@@ -21,6 +21,7 @@ void geantCathodeCompare() {
 	TLegend *l7 = new TLegend(0.6, 0.75, 0.9, 0.9);
   //TLegend *l8 = new TLegend(0.6, 0.75, 0.9, 0.9);
   //TLegend *l9 = new TLegend(0.6, 0.75, 0.9, 0.9);
+  TLegend *l10 = new TLegend(0.6, 0.75, 0.9, 0.9);
   
 	//=======================================
 	//LGT Construction w Cu as Cathode
@@ -228,7 +229,7 @@ void geantCathodeCompare() {
   c2->Divide(4,1);
   c2->SetRightMargin(0.05);
   
-  TFile *file0au = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_0.1Au.root");
+  TFile *file0au = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_0.085Au.root");
   if (!file0au || file0au->IsZombie()) {
       std::cerr << "Error: Could not open file " << file0au << std::endl;
     }
@@ -264,7 +265,7 @@ void geantCathodeCompare() {
   c2->cd(1);
   exitRadau->GetXaxis()->SetTitle("TR Photon Energy [keV]");
   exitRadau->GetYaxis()->SetTitle("Count");
-  exitRadau->SetTitle("50um Kapton, 0.1um Au Cat, 30mm Xe");
+  exitRadau->SetTitle("20um Mylar, 0.085um Au Cat, 30mm Xe");
   exitRadau->Draw();
   exitWinau->Draw("same");
   exitCathau->Draw("same");
@@ -276,7 +277,7 @@ void geantCathodeCompare() {
   l4->Draw();
   
   
-  TFile *file1au = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_0.5Au.root");
+  TFile *file1au = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_0.1Au.root");
   if (!file1au || file1au->IsZombie()) {
       std::cerr << "Error: Could not open file " << file1au << std::endl;
   }
@@ -312,7 +313,7 @@ void geantCathodeCompare() {
   c2->cd(2);
   exitRad1au->GetXaxis()->SetTitle("TR Photon Energy [keV]");
   exitRad1au->GetYaxis()->SetTitle("Count");
-  exitRad1au->SetTitle("50um Kapton, 0.5um Au Cat, 30mm Xe");
+  exitRad1au->SetTitle("50um Kapton, 0.1um Au Cat, 30mm Xe");
   exitRad1au->Draw();
   exitWin1au->Draw("same");
   exitCath1au->Draw("same");
@@ -323,7 +324,7 @@ void geantCathodeCompare() {
   l4->Draw();
 
 
-  TFile *file2au = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_1.0Au.root");
+  TFile *file2au = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_0.5Au.root");
   if (!file2au || file2au->IsZombie()) {
       std::cerr << "Error: Could not open file " << file2au << std::endl;
   }
@@ -359,7 +360,7 @@ void geantCathodeCompare() {
   c2->cd(3);
   exitRad2au->GetXaxis()->SetTitle("TR Photon Energy [keV]");
   exitRad2au->GetYaxis()->SetTitle("Count");
-  exitRad2au->SetTitle("50um Kapton, 1.0um Au Cat, 30mm Xe");
+  exitRad2au->SetTitle("50um Kapton, 0.5um Au Cat, 30mm Xe");
   exitRad2au->Draw();
   exitWin2au->Draw("same");
   exitCath2au->Draw("same");
@@ -369,7 +370,7 @@ void geantCathodeCompare() {
   //l6->SetHeader("#gamma Energy", "C");
   l4->Draw();
   
-  TFile *file02au = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_5.0Au.root");
+  TFile *file02au = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_1.0Au.root");
   if (!file02au || file02au->IsZombie()) {
       std::cerr << "Error: Could not open file " << file02au << std::endl;
   }
@@ -405,7 +406,7 @@ void geantCathodeCompare() {
   c2->cd(4);
   exitRad02au->GetXaxis()->SetTitle("TR Photon Energy [keV]");
   exitRad02au->GetYaxis()->SetTitle("Count");
-  exitRad02au->SetTitle("50um Kapton, 5.0um Au Cat, 30mm Xe");
+  exitRad02au->SetTitle("50um Kapton, 1.0um Au Cat, 30mm Xe");
   exitRad02au->Draw();
   exitWin02au->Draw("same");
   exitCath02au->Draw("same");
@@ -615,41 +616,291 @@ void geantCathodeCompare() {
   
   c3->SaveAs("GEMTRDAlCatCompare.png");
   
+  
+  //=================================================
+  // LGT Construction with Cr as Cathode
+
+  TCanvas *c4 = new TCanvas("c4","125K e- with 20cm Reg. Rad, XeCO2 90:10, Cr Cathodes", 1600, 1000);
+  gStyle->SetOptStat(00000);
+  c4->Divide(4,1);
+  c4->SetRightMargin(0.05);
+  
+  TFile *file0cr = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_0.1Cr.root");
+  if (!file0cr || file0cr->IsZombie()) {
+      std::cerr << "Error: Could not open file " << file0cr << std::endl;
+    }
+
+  TObject *obj1cr = file0cr->Get("hist31");
+      TH1 *exitRadcr = (TH1*)obj1cr;
+      exitRadcr->SetLineColor(2);
+      exitRadcr->SetLineWidth(2);
+      exitRadcr->SetDirectory(0);
+      l10->AddEntry(exitRadcr, legendList[0], "l");
+  
+  TObject *obj2cr = file0cr->Get("hist32");
+      TH1 *exitWincr = (TH1*)obj2cr;
+      exitWincr->SetLineColor(209);
+      exitWincr->SetLineWidth(2);
+      exitWincr->SetDirectory(0);
+      l10->AddEntry(exitWincr, legendList[1], "l");
+  
+  TObject *obj3cr = file0cr->Get("hist33");
+      TH1 *exitCathcr = (TH1*)obj3cr;
+      exitCathcr->SetLineColor(4);
+      exitCathcr->SetLineWidth(2);
+      exitCathcr->SetDirectory(0);
+      l10->AddEntry(exitCathcr, legendList[2], "l");
+
+    TObject *obj4cr = file0cr->Get("hist26");
+      TH1 *exitDetcr = (TH1*)obj4cr;
+      exitDetcr->SetLineColor(6);
+      exitDetcr->SetLineWidth(2);
+      exitDetcr->SetDirectory(0);
+      l10->AddEntry(exitDetcr, legendList[3], "l");
+  
+  c4->cd(1);
+  exitRadcr->GetXaxis()->SetTitle("TR Photon Energy [keV]");
+  exitRadcr->GetYaxis()->SetTitle("Count");
+  exitRadcr->SetTitle("50um Kapton, 0.1um Cr Cat, 30mm Xe");
+  exitRadcr->Draw();
+  exitWincr->Draw("same");
+  exitCathcr->Draw("same");
+  exitDetcr->Draw("same");
+  gPad->SetRightMargin(0.07);
+  gPad->SetLeftMargin(0.18);
+  l10->SetTextSize(0.027);
+  l10->SetHeader("#gamma Energy", "C");
+  l10->Draw();
+  
+  
+  TFile *file1cr = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_0.5Cr.root");
+  if (!file1cr || file1cr->IsZombie()) {
+      std::cerr << "Error: Could not open file " << file1cr << std::endl;
+  }
+
+  TObject *obj5cr = file1cr->Get("hist31");
+      TH1 *exitRad1cr = (TH1*)obj5cr;
+      exitRad1cr->SetLineColor(2);
+      exitRad1cr->SetLineWidth(2);
+      exitRad1cr->SetDirectory(0);
+      //l8->AddEntry(exitRad1cr, legendList[0], "l");
+
+  TObject *obj6cr = file1cr->Get("hist32");
+      TH1 *exitWin1cr = (TH1*)obj6;
+      exitWin1cr->SetLineColor(209);
+      exitWin1cr->SetLineWidth(2);
+      exitWin1cr->SetDirectory(0);
+      //l8->AddEntry(exitWin1cr, legendList[1], "l");
+
+    TObject *obj7cr = file1cr->Get("hist33");
+      TH1 *exitCath1cr = (TH1*)obj7cr;
+      exitCath1cr->SetLineColor(4);
+      exitCath1cr->SetLineWidth(2);
+      exitCath1cr->SetDirectory(0);
+      //l8->AddEntry(exitCath1cr, legendList[2], "l");
+      
+    TObject *obj8cr = file1cr->Get("hist26");
+      TH1 *exitDet1cr = (TH1*)obj8cr;
+      exitDet1cr->SetLineColor(6);
+      exitDet1cr->SetLineWidth(2);
+      exitDet1cr->SetDirectory(0);
+      //l8->AddEntry(exitDet1cr, legendList[3], "l");
+
+  c4->cd(2);
+  exitRad1cr->GetXaxis()->SetTitle("TR Photon Energy [keV]");
+  exitRad1cr->GetYaxis()->SetTitle("Count");
+  exitRad1cr->SetTitle("50um Kapton, 0.5um Cr Cat, 30mm Xe");
+  exitRad1cr->Draw();
+  exitWin1cr->Draw("same");
+  exitCath1cr->Draw("same");
+  exitDet1cr->Draw("same");
+  gPad->SetRightMargin(0.07);
+  gPad->SetLeftMargin(0.18);
+  //l8->SetHeader("#gamma Energy", "C");
+  l10->Draw();
+
+
+  TFile *file2cr = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_1.0Cr.root");
+  if (!file2cr || file2cr->IsZombie()) {
+      std::cerr << "Error: Could not open file " << file2cr << std::endl;
+  }
+  
+  TObject *obj9cr = file2cr->Get("hist31");
+      TH1 *exitRad2cr = (TH1*)obj9cr;
+      exitRad2cr->SetLineColor(2);
+      exitRad2cr->SetLineWidth(2);
+      exitRad2cr->SetDirectory(0);
+      //l9->AddEntry(exitRad2cr, legendList[0], "l");
+
+  TObject *obj10cr = file2cr->Get("hist32");
+      TH1 *exitWin2cr = (TH1*)obj10cr;
+      exitWin2cr->SetLineColor(209);
+      exitWin2cr->SetLineWidth(2);
+      exitWin2cr->SetDirectory(0);
+      //l9->AddEntry(exitWin2cr, legendList[1], "l");
+
+  TObject *obj11cr = file2cr->Get("hist33");
+      TH1 *exitCath2cr = (TH1*)obj11cr;
+      exitCath2cr->SetLineColor(4);
+      exitCath2cr->SetLineWidth(2);
+      exitCath2cr->SetDirectory(0);
+      //l9->AddEntry(exitCath2cr, legendList[2], "l");
+
+    TObject *obj12cr = file2cr->Get("hist26");
+      TH1 *exitDet2cr = (TH1*)obj12cr;
+      exitDet2cr->SetLineColor(6);
+      exitDet2cr->SetLineWidth(2);
+      exitDet2cr->SetDirectory(0);
+      //l9->AddEntry(exitDet2cr, legendList[3], "l");
+    
+  c4->cd(3);
+  exitRad2cr->GetXaxis()->SetTitle("TR Photon Energy [keV]");
+  exitRad2cr->GetYaxis()->SetTitle("Count");
+  exitRad2cr->SetTitle("50um Kapton, 1.0um Cr Cat, 30mm Xe");
+  exitRad2cr->Draw();
+  exitWin2cr->Draw("same");
+  exitCath2cr->Draw("same");
+  exitDet2cr->Draw("same");
+  gPad->SetRightMargin(0.07);
+  gPad->SetLeftMargin(0.18);
+  //l9->SetHeader("#gamma Energy", "C");
+  l10->Draw();
+  
+  TFile *file02cr = TFile::Open("fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_5.0Cr.root");
+  if (!file02cr || file02cr->IsZombie()) {
+      std::cerr << "Error: Could not open file " << file02cr << std::endl;
+  }
+  
+  TObject *obj09cr = file02cr->Get("hist31");
+      TH1 *exitRad02cr = (TH1*)obj09cr;
+      exitRad02cr->SetLineColor(2);
+      exitRad02cr->SetLineWidth(2);
+      exitRad02cr->SetDirectory(0);
+      //l9->AddEntry(exitRad02cr, legendList[0], "l");
+
+  TObject *obj010cr = file02cr->Get("hist32");
+      TH1 *exitWin02cr = (TH1*)obj010cr;
+      exitWin02cr->SetLineColor(209);
+      exitWin02cr->SetLineWidth(2);
+      exitWin02cr->SetDirectory(0);
+      //l9->AddEntry(exitWin02cr, legendList[1], "l");
+
+  TObject *obj011cr = file02cr->Get("hist33");
+      TH1 *exitCath02cr = (TH1*)obj011cr;
+      exitCath02cr->SetLineColor(4);
+      exitCath02cr->SetLineWidth(2);
+      exitCath02cr->SetDirectory(0);
+      //l9->AddEntry(exitCath02cr, legendList[2], "l");
+
+    TObject *obj012cr = file02cr->Get("hist26");
+      TH1 *exitDet02cr = (TH1*)obj012cr;
+      exitDet02cr->SetLineColor(6);
+      exitDet02cr->SetLineWidth(2);
+      exitDet02cr->SetDirectory(0);
+      //l9->AddEntry(exitDet02cr, legendList[3], "l");
+
+  c4->cd(4);
+  exitRad02cr->GetXaxis()->SetTitle("TR Photon Energy [keV]");
+  exitRad02cr->GetYaxis()->SetTitle("Count");
+  exitRad02cr->SetTitle("50um Kapton, 5.0um Cr Cat, 30mm Xe");
+  exitRad02cr->Draw();
+  exitWin02cr->Draw("same");
+  exitCath02cr->Draw("same");
+  exitDet02cr->Draw("same");
+  gPad->SetRightMargin(0.07);
+  gPad->SetLeftMargin(0.18);
+  //l9->SetHeader("#gamma Energy", "C");
+  l10->Draw();
+  
+  c4->SaveAs("GEMTRDCrCatCompare.png");
+  
+  //=================================================
+  // LGT Construction with Cr as Cathode
+  
+  TCanvas *c5 = new TCanvas("c5","125K e- with 20cm Reg. Rad, XeCO2 90:10", 1600, 1000);
+  gStyle->SetOptStat(00000);
+  c5->Divide(3,1);
+  c5->SetRightMargin(0.05);
+  
+  c5->cd(1);
+  exitRad02->GetXaxis()->SetTitle("TR Photon Energy [keV]");
+  exitRad02->GetYaxis()->SetTitle("Count");
+  exitRad02->SetTitle("50um Kapton, 5.0um Cu Cat, 30mm Xe");
+  exitRad02->Draw();
+  exitWin02->Draw("same");
+  exitCath02->Draw("same");
+  exitDet02->Draw("same");
+  gPad->SetRightMargin(0.07);
+  gPad->SetLeftMargin(0.18);
+  l1->Draw();
+  
+  c5->cd(2);
+  exitRadal->GetXaxis()->SetTitle("TR Photon Energy [keV]");
+  exitRadal->GetYaxis()->SetTitle("Count");
+  exitRadal->SetTitle("50um Kapton, 0.1um Al Cat, 30mm Xe");
+  exitRadal->Draw();
+  exitWinal->Draw("same");
+  exitCathal->Draw("same");
+  exitDetal->Draw("same");
+  gPad->SetRightMargin(0.07);
+  gPad->SetLeftMargin(0.18);
+  l7->SetTextSize(0.027);
+  //l7->SetHeader("#gamma Energy", "C");
+  l7->Draw();
+  
+  c5->cd(3);
+  exitRadau->GetXaxis()->SetTitle("TR Photon Energy [keV]");
+  exitRadau->GetYaxis()->SetTitle("Count");
+  exitRadau->SetTitle("20um Mylar, 0.085um Au Cat, 30mm Xe");
+  exitRadau->Draw();
+  exitWinau->Draw("same");
+  exitCathau->Draw("same");
+  exitDetau->Draw("same");
+  gPad->SetRightMargin(0.07);
+  gPad->SetLeftMargin(0.18);
+  l4->SetTextSize(0.027);
+  //l4->SetHeader("#gamma Energy", "C");
+  l4->Draw();
+  
+  c5->SaveAs("GEMTRDCatCompare.png");
+  
+  
 	//==================================================
 	// Ratio Plots
-/*	
-	TCanvas *c3 = new TCanvas("c3","c3", 1200, 800);
+  
+	TCanvas *c6 = new TCanvas("c6","Al vs Au Ratio", 1600, 1000);
 	//gStyle->SetOptStat(00000);
-	c3->Divide(2,2);
+	c6->Divide(2,2);
 	
-	c3->cd(1);
-	TH1D *cathodeSubtract1 = new TH1D("cathodeSubtract1","25um Kapton, 400um Xe, 50um Kapton, 0.2um Cr, 21mm Xe; TR Photon Energy [keV]; Count",100,0.,50.);
-	cathodeSubtract1->Add(exitRad,exitCath,1,-1);
-	TH1D *escapeSubtract1 = new TH1D("escapeSubtract1","25um Kapton, 400um Xe, 50um Kapton, 0.2um Cr, 21mm Xe; TR Photon Energy [keV]; Count",100,0.,50.);
-	escapeSubtract1->Add(cathodeSubtract1,exitDet,1,-1);
+	c6->cd(1);
+	//TH1D *cathodeSubtract1 = new TH1D("cathodeSubtract1","50um Kapton, 0.1um Al, 30mm Xe; TR Photon Energy [keV]; Count",100,0.,50.);
+	//cathodeSubtract1->Add(exitRadal,exitCathal,1,-1);
+	TH1D *escapeSubtract1 = new TH1D("escapeSubtract1","Absorbed Spectra: 50um Kapton, 0.1um Al, 30mm Xe; TR Photon Energy [keV]; Count",100,0.,50.);
+	escapeSubtract1->Add(exitCathal,exitDetal,1,-1);
 	escapeSubtract1->SetMinimum(0);
 	escapeSubtract1->SetLineWidth(2);
 	escapeSubtract1->Draw();
 	
-	c3->cd(2);
-	TH1D *cathodeSubtract2 = new TH1D("cathodeSubtract2","55um Kapton, 5um Cu, 19.9mm Xe; TR Photon Energy [keV]; Count",100,0.,50.);
-	cathodeSubtract2->Add(exitRad1,exitCath1,1,-1);
-	TH1D *escapeSubtract2 = new TH1D("escapeSubtract2","55um Kapton, 5um Cu, 19.9mm Xe; TR Photon Energy [keV]; Count",100,0.,50.);
-	escapeSubtract2->Add(cathodeSubtract2,exitDet1,1,-1);
+	c6->cd(2);
+	//TH1D *cathodeSubtract2 = new TH1D("cathodeSubtract2","20um Mylar, 0.085um Au, 30mm Xe; TR Photon Energy [keV]; Count",100,0.,50.);
+	//cathodeSubtract2->Add(exitRadau,exitCathau,1,-1);
+	TH1D *escapeSubtract2 = new TH1D("escapeSubtract2","Absorbed Spectra: 20um Mylar, 0.085um Au, 30mm Xe; TR Photon Energy [keV]; Count",100,0.,50.);
+	escapeSubtract2->Add(exitCathau,exitDetau,1,-1);
 	escapeSubtract2->SetMinimum(0);
 	escapeSubtract2->SetLineWidth(2);
 	escapeSubtract2->Draw();
 	
-	c3->cd(3);
-	auto rp1 = new TRatioPlot(escapeSubtract2, escapeSubtract1);
-    c3->SetTicks(0, 1);
-    rp1->Draw();
-    rp1->GetLowYaxis()->SetNdivisions(505);
-    rp1->GetLowerRefGraph()->SetMinimum(-3);
-   	rp1->GetLowerRefGraph()->SetMaximum(15);
+	c6->cd(3);
+	auto rp1 = new TRatioPlot(escapeSubtract1, escapeSubtract2);
+  c6->SetTicks(0,1);
+  //rp1->SetTitle("Absorbed Spectra Ratio: Al / Au");
+  rp1->Draw();
+  rp1->GetLowYaxis()->SetNdivisions(505);
+  rp1->GetLowerRefGraph()->SetMinimum(-2);
+  rp1->GetLowerRefGraph()->SetMaximum(1.5);
 	
-    c3->SaveAs("GEMTRDCompareRatios.png");
-*/
+  c6->SaveAs("GEMTRDCatCompareRatios.png");
+
 	/*
 	auto rp1 = new TRatioPlot(exitRad, exitRad1);
     c3->SetTicks(0, 1);
