@@ -70,9 +70,11 @@ void trd_HistMerge(){
 	//TString rootFilesGEM[] = {"RootOutput/cern24/merged/Run_005284_3615629Entries_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root","RootOutput/ps25/Run_006302_Output.root","RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008254_Output.root"};
 	//TString rootFilesGEM[] = {"RootOutput/ps26/Run_008242_Output.root","RootOutput/ps26/Run_008249_Output.root","RootOutput/ps26/Run_008246_Output.root","RootOutput/ps26/Run_008254_Output.root","RootOutput/ps26/Run_008235_Output.root"};
 	TString rootFilesGEM[] = {"RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008230_Output.root","RootOutput/ps26/Run_008234_Output.root","RootOutput/ps26/Run_008235_Output.root"};
-  TString rootFilesMMG[] = {"RootOutput/cern24/merged/Run_005284_3615629Entries_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root","RootOutput/ps25/Run_006302_Output.root","RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008254_Output.root"};
+  //TString rootFilesMMG[] = {"RootOutput/cern24/merged/Run_005284_3615629Entries_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root","RootOutput/ps25/Run_006302_Output.root","RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008254_Output.root"};
+  TString rootFilesMMG[] = {"RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008230_Output.root","RootOutput/ps26/Run_008234_Output.root","RootOutput/ps26/Run_008235_Output.root","RootOutput/ps26/Run_008236_Output.root","RootOutput/ps26/Run_008237_Output.root","RootOutput/ps26/Run_008239_Output.root","RootOutput/ps26/Run_008242_Output.root"};
   //TString rootFilesURW[] = {"RootOutput/ps25/Run_006302_Output.root","RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008254_Output.root"};
-  TString rootFilesURW[] = {"RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008230_Output.root","RootOutput/ps26/Run_008234_Output.root","RootOutput/ps26/Run_008235_Output.root","RootOutput/ps26/Run_008256_Output.root"};
+  //TString rootFilesURW[] = {"RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008230_Output.root","RootOutput/ps26/Run_008234_Output.root","RootOutput/ps26/Run_008235_Output.root","RootOutput/ps26/Run_008256_Output.root"};
+  TString rootFilesURW[] = {"RootOutput/ps26/Run_008235_Output.root","RootOutput/ps26/Run_008236_Output.root","RootOutput/ps26/Run_008237_Output.root"};
   
   TList *histListGEM = new TList;
   TList *histListMMG = new TList;
@@ -82,20 +84,22 @@ void trd_HistMerge(){
   TString name3 = "urw_f125_el_x";
 	
 	int colorList[] = {1,2,209,6,4,94,7,51,28};
-  int markerList[] = {3,4,25,27,46,42};
+  int markerList[] = {3,4,25,27,46,42,30,44,35};
   
 	//TString legendListGEM[] = {"CERN Xe:CO_{2}, 6400V/3380V","FERMI Xe:CO_{2}, 6200V/3200V","PS25 Xe:CO_{2}, 6400V/3475V", "PS26 Xe:ISO, 6400V/3475V", "PS26 Xe:ISO, 6400V/450/425V/390V"};
 	//TString legendListGEM[] = {"2.75 kV/cm","3.00 kV/cm","3.25 kV/cm","3.50 kV/cm","3.74 kV/cm"};
   TString legendListGEM[] = {"448V / 411V / 374V","450V / 415V / 380V","450V / 420V / 385V","450V / 425V / 390V"};
-  TString legendListMMG[] = {"CERN Xe:CO_{2}, 5100V/1630V","FERMI Xe:CO_{2}, 4825V/625V","PS25 Xe:CO_{2}, 5150V/1675V","PS26 Xe:ISO, 5150V/1675V","PS26 Xe:ISO, 5195V/1735V"};
+  //TString legendListMMG[] = {"CERN Xe:CO_{2}, 5100V/1630V","FERMI Xe:CO_{2}, 4825V/625V","PS25 Xe:CO_{2}, 5150V/1675V","PS26 Xe:ISO, 5150V/1675V","PS26 Xe:ISO, 5195V/1735V"};
+  TString legendListMMG[] = {"1675V","1685V","1695V","1700V","1710V","1720V","1730V","1735V"};
   //TString legendListURW[] = {"PS25 Xe:CO_{2}, 4465V/1310V/925V/525V","PS26 Xe:ISO, 4465V/1310V/925V/525V","PS26 Xe:ISO, 4515V/1410V/1000V/525V"};
-  TString legendListURW[] = {"380V","390V","395V","400V","410V"};
+  //TString legendListURW[] = {"380V","390V","395V","400V","410V"};
+  TString legendListURW[] = {"525V","530V","535V"};
   
 	//TLegend *l1 = new TLegend(0.44, 0.58, 0.9, 0.9);
 	TLegend *l1 = new TLegend(0.62, 0.6, 0.9, 0.865);
-  TLegend *l2 = new TLegend(0.52, 0.58, 0.9, 0.9);
+  TLegend *l2 = new TLegend(0.8, 0.42, 0.9, 0.865);
   //TLegend *l3 = new TLegend(0.42, 0.68, 0.9, 0.9);
-  TLegend *l3 = new TLegend(0.65, 0.65, 0.9, 0.865);
+  TLegend *l3 = new TLegend(0.75, 0.65, 0.9, 0.865);
   
   //-- Triple GEM-TRD
 	for (int i=0; i<sizeof(rootFilesGEM)/sizeof(rootFilesGEM[0]); i++) {
@@ -139,7 +143,7 @@ void trd_HistMerge(){
         readObject->SetMarkerSize(2);
         double elScaleFactor = 1./readObject->GetEntries();
         readObject->Scale(elScaleFactor);
-        if (i>1) readObject->RebinX(5);
+        /*if (i>1)*/ readObject->RebinX(5);
         histListMMG->Add(readObject);
         l2->AddEntry(readObject, legendListMMG[i], "lp");
       } 
@@ -175,6 +179,7 @@ void trd_HistMerge(){
 	
 	TCanvas *c1 = new TCanvas("c1","GEMTRD ADC Distributions at Varied HV in Xe", 1600, 1000);
 	gStyle->SetOptStat(00000);
+  //gStyle->SetTitleAlign(22); //Centered
 	c1->cd();
 	gPad->SetLogy();
 	gPad->SetGridx();
@@ -198,20 +203,22 @@ void trd_HistMerge(){
   //l1->SetNColumns(2);
   l1->SetTextSize(0.044);
   l1->Draw();
-	c1->SaveAs("GEMTRD_ADC_Xe_Comparison_v4.C");
-  c1->SaveAs("GEMTRD_ADC_Xe_Comparison_v4.pdf");
+	//c1->SaveAs("GEMTRD_ADC_Xe_Comparison_v4.C");
+  //c1->SaveAs("GEMTRD_ADC_Xe_Comparison_v4.pdf");
   
   TCanvas *c2 = new TCanvas("c2","MMG1-TRD ADC Distributions at Varied HV in Xe", 1600, 1000);
   c2->cd();
   gPad->SetLogy();
   gPad->SetGridx();
   gPad->SetGridy();
+  gPad->SetTopMargin(0.135);
   TH1 *firstHist2 = (TH1 *)histListMMG->First();
   if (firstHist2) {
     firstHist2->GetXaxis()->SetTitle("Pulse Peak Amplitude [fADC Units]");
     firstHist2->GetYaxis()->SetTitle("Pulses / numEvents");
     firstHist2->SetMaximum(1);
-    firstHist2->SetTitle("MMG1-TRD ADC Distributions in Xe Mixtures");
+    //firstHist2->SetTitle("MMG1-TRD ADC Distributions in Xe Mixtures");
+    firstHist2->SetTitle("#splitline{MMG1-TRD ADC Distributions in Xe:ISO 90:10}{DF:1.35kV/cm, Amplification HV Scan}");
     firstHist2->GetXaxis()->SetTitleSize(0.045);
     firstHist2->GetXaxis()->SetLabelSize(0.042);
     firstHist2->GetYaxis()->SetTitleSize(0.045);
@@ -220,9 +227,11 @@ void trd_HistMerge(){
   }
   histListMMG->Draw("same");
   l2->SetTextSize(0.044);
+  l2->SetHeader("Divider V_{in}","C");
+  l2->SetTextAlign(12); //Centered
   l2->Draw();
-  //c2->SaveAs("MMG1TRD_ADC_Xe_Comparison_v1.C");
-  //c2->SaveAs("MMG1TRD_ADC_Xe_Comparison_v1.pdf");
+  c2->SaveAs("MMG1TRD_ADC_Xe_Comparison_v5.C");
+  c2->SaveAs("MMG1TRD_ADC_Xe_Comparison_v5.pdf");
   
   TCanvas *c3 = new TCanvas("c3","uRWell-TRD ADC Distributions at Varied HV in Xe", 1600, 1000);
   c3->cd();
@@ -235,8 +244,8 @@ void trd_HistMerge(){
     firstHist3->GetXaxis()->SetTitle("Pulse Peak Amplitude [fADC Units]");
     firstHist3->GetYaxis()->SetTitle("Pulses / numEvents");
     firstHist3->SetMaximum(1);
-    firstHist3->SetTitle("#muRWell-TRD ADC Distributions in Xe Mixtures");
-    firstHist3->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Distributions in Xe:ISO 90:10}{DF:1.35kV/cm  TF:2.35kV/cm WELL:525V, GEM dV Scan}");
+    //firstHist3->SetTitle("#muRWell-TRD ADC Distributions in Xe Mixtures");
+    firstHist3->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Distributions in Xe:ISO 90:10}{DF:1.35kV/cm  TF:2.35kV/cm GEM dV:400V, WELL Scan}");
     firstHist3->GetXaxis()->SetTitleSize(0.045);
     firstHist3->GetXaxis()->SetLabelSize(0.042);
     firstHist3->GetYaxis()->SetTitleSize(0.045);
@@ -245,11 +254,11 @@ void trd_HistMerge(){
   }
   histListURW->Draw("same");
   l3->SetTextSize(0.042);
-  l3->SetHeader("GEM dVs","C");
-  l3->SetNColumns(2);
+  l3->SetHeader("Resistive WELL","C");
+  //l3->SetNColumns(2);
   l3->Draw();
-  //c3->SaveAs("URWTRD_ADC_Xe_Comparison_v3.C");
-  //c3->SaveAs("URWTRD_ADC_Xe_Comparison_v3.pdf");
+  c3->SaveAs("URWTRD_ADC_Xe_Comparison_v5.C");
+  c3->SaveAs("URWTRD_ADC_Xe_Comparison_v5.pdf");
   
 //======================================================================================
 if (makeTimeDistributions)
@@ -260,13 +269,13 @@ if (makeTimeDistributions)
   
   //TLegend *l31 = new TLegend(0.44, 0.68, 0.9, 0.9);
   TLegend *l31 = new TLegend(0.62, 0.6, 0.9, 0.865);
-  TLegend *l4 = new TLegend(0.52, 0.64, 0.9, 0.9);
+  TLegend *l4 = new TLegend(0.79, 0.42, 0.9, 0.865);
   //TLegend *l5 = new TLegend(0.42, 0.69, 0.9, 0.9);
-  TLegend *l5 = new TLegend(0.65, 0.65, 0.9, 0.865);
+  TLegend *l5 = new TLegend(0.75, 0.65, 0.9, 0.865);
   
+  //================== Triple-GEM =============================
   TFile *file0 = TFile::Open(rootFilesGEM[0]);
 	HistDQM = (TList *)file0->Get("HistDQM");
-  
   TObject *objg0 = HistDQM->FindObject("f125_el_amp2d");
   TH2 *g0 = (TH2 *)objg0;
   TFScaleFactor = 1./g0->GetEntries();
@@ -279,22 +288,8 @@ if (makeTimeDistributions)
   g_0->SetMarkerSize(2);
   g_0->SetDirectory(0);
   
-  TObject *objm0 = HistDQM->FindObject("mmg1_f125_el_amp2d");
-  TH2 *m0 = (TH2 *)objm0;
-  TFScaleFactor = 1./m0->GetEntries();
-  m0->Scale(TFScaleFactor);
-  m0->RebinX(4);
-  TH1D *m_0 = m0->ProjectionX(legendListMMG[0],80,160);
-  m_0->SetLineColor(colorList[0]);
-  m_0->SetMarkerStyle(markerList[0]);
-  m_0->SetMarkerColor(colorList[0]);
-  m_0->SetMarkerSize(2);
-  m_0->SetDirectory(0);
-  
-  
   TFile *file1 = TFile::Open(rootFilesGEM[1]);
-	HistDQM = (TList *)file1->Get("HistDQM");
-  
+  HistDQM = (TList *)file1->Get("HistDQM");
   //TObject *objg1 = HistDQM->FindObject("f125_el_amp2ds");
   TObject *objg1 = HistDQM->FindObject("f125_el_amp2d");
   TH2 *g1 = (TH2 *)objg1;
@@ -308,22 +303,8 @@ if (makeTimeDistributions)
   g_1->SetMarkerSize(2);
   g_1->SetDirectory(0);
   
-  TObject *objm1 = HistDQM->FindObject("mmg1_f125_el_amp2ds");
-  TH2 *m1 = (TH2 *)objm1;
-  TFScaleFactor = 1./m1->GetEntries();
-  m1->Scale(TFScaleFactor);
-  m1->RebinX(4);
-  TH1D *m_1 = m1->ProjectionX(legendListMMG[1],80,160);
-  m_1->SetLineColor(colorList[1]);
-  m_1->SetMarkerStyle(markerList[1]);
-  m_1->SetMarkerColor(colorList[1]);
-  m_1->SetMarkerSize(2);
-  m_1->SetDirectory(0);
-  
-  
   TFile *file2 = TFile::Open(rootFilesGEM[2]);
-	HistDQM = (TList *)file2->Get("HistDQM");
-  
+  HistDQM = (TList *)file2->Get("HistDQM");
   TObject *objg2 = HistDQM->FindObject("f125_el_amp2d");
   TH2 *g2 = (TH2 *)objg2;
   TFScaleFactor = 1./g2->GetEntries();
@@ -336,6 +317,123 @@ if (makeTimeDistributions)
   g_2->SetMarkerSize(2);
   g_2->SetDirectory(0);
   
+  TFile *file3 = TFile::Open(rootFilesGEM[3]);
+  HistDQM = (TList *)file3->Get("HistDQM");
+  TObject *objg3 = HistDQM->FindObject("f125_el_amp2d");
+  TH2 *g3 = (TH2 *)objg3;
+  TFScaleFactor = 1./g3->GetEntries();
+  g3->Scale(TFScaleFactor);
+  g3->RebinX(4);
+  TH1D *g_3 = g3->ProjectionX(legendListGEM[3],80,160);
+  g_3->SetLineColor(colorList[3]);
+  g_3->SetMarkerStyle(markerList[3]);
+  g_3->SetMarkerColor(colorList[3]);
+  g_3->SetMarkerSize(2);
+  g_3->SetDirectory(0);
+  /*
+  TFile *file4 = TFile::Open(rootFilesGEM[4]);
+  HistDQM = (TList *)file4->Get("HistDQM");
+  TObject *objg4 = HistDQM->FindObject("f125_el_amp2d");
+  TH2 *g4 = (TH2 *)objg4;
+  TFScaleFactor = 1./g4->GetEntries();
+  g4->Scale(TFScaleFactor);
+  g4->RebinX(4);
+  TH1D *g_4 = g4->ProjectionX(legendListGEM[4],80,160);
+  g_4->SetLineColor(colorList[4]);
+  g_4->SetMarkerStyle(markerList[4]);
+  g_4->SetMarkerColor(colorList[4]);
+  g_4->SetMarkerSize(2);
+  g_4->SetDirectory(0);
+  
+  TFile *file5 = TFile::Open(rootFilesGEM[5]);
+  HistDQM = (TList *)file5->Get("HistDQM");
+  TObject *objg5 = HistDQM->FindObject("f125_el_amp2d");
+  TH2 *g5 = (TH2 *)objg5;
+  TFScaleFactor = 1./g5->GetEntries();
+  g5->Scale(TFScaleFactor);
+  g5->RebinX(4);
+  TH1D *g_5 = g5->ProjectionX(legendListGEM[5],80,160);
+  g_5->SetLineColor(colorList[5]);
+  g_5->SetMarkerStyle(markerList[5]);
+  g_5->SetMarkerColor(colorList[5]);
+  g_5->SetMarkerSize(2);
+  g_5->SetDirectory(0);
+  
+  TFile *file6 = TFile::Open(rootFilesGEM[6]);
+  HistDQM = (TList *)file6->Get("HistDQM");
+  TObject *objg6 = HistDQM->FindObject("f125_el_amp2d");
+  TH2 *g6 = (TH2 *)objg6;
+  TFScaleFactor = 1./g6->GetEntries();
+  g6->Scale(TFScaleFactor);
+  g6->RebinX(4);
+  TH1D *g_6 = g6->ProjectionX(legendListGEM[6],80,160);
+  g_6->SetLineColor(colorList[6]);
+  g_6->SetMarkerStyle(markerList[6]);
+  g_6->SetMarkerColor(colorList[6]);
+  g_6->SetMarkerSize(2);
+  g_6->SetDirectory(0);
+  
+  TFile *file7 = TFile::Open(rootFilesGEM[7]);
+  HistDQM = (TList *)file7->Get("HistDQM");
+  TObject *objg7 = HistDQM->FindObject("f125_el_amp2d");
+  TH2 *g7 = (TH2 *)objg7;
+  TFScaleFactor = 1./g7->GetEntries();
+  g7->Scale(TFScaleFactor);
+  g7->RebinX(4);
+  TH1D *g_7 = g7->ProjectionX(legendListGEM[7],80,160);
+  g_7->SetLineColor(colorList[7]);
+  g_7->SetMarkerStyle(markerList[7]);
+  g_7->SetMarkerColor(colorList[7]);
+  g_7->SetMarkerSize(2);
+  g_7->SetDirectory(0);
+  
+  TFile *file8 = TFile::Open(rootFilesGEM[8]);
+  HistDQM = (TList *)file8->Get("HistDQM");
+  TObject *objg8 = HistDQM->FindObject("f125_el_amp2d");
+  TH2 *g8 = (TH2 *)objg8;
+  TFScaleFactor = 1./g8->GetEntries();
+  g8->Scale(TFScaleFactor);
+  g8->RebinX(4);
+  TH1D *g_8 = g8->ProjectionX(legendListGEM[8],80,160);
+  g_8->SetLineColor(colorList[8]);
+  g_8->SetMarkerStyle(markerList[8]);
+  g_8->SetMarkerColor(colorList[8]);
+  g_8->SetMarkerSize(2);
+  g_8->SetDirectory(0);
+  */
+  
+  //================== MMG1 =============================
+  TFile *file0m = TFile::Open(rootFilesMMG[0]);
+  HistDQM = (TList *)file0m->Get("HistDQM");
+  TObject *objm0 = HistDQM->FindObject("mmg1_f125_el_amp2d");
+  TH2 *m0 = (TH2 *)objm0;
+  TFScaleFactor = 1./m0->GetEntries();
+  m0->Scale(TFScaleFactor);
+  m0->RebinX(4);
+  TH1D *m_0 = m0->ProjectionX(legendListMMG[0],80,160);
+  m_0->SetLineColor(colorList[0]);
+  m_0->SetMarkerStyle(markerList[0]);
+  m_0->SetMarkerColor(colorList[0]);
+  m_0->SetMarkerSize(2);
+  m_0->SetDirectory(0);
+  
+  TFile *file1m = TFile::Open(rootFilesMMG[1]);
+  HistDQM = (TList *)file1m->Get("HistDQM");
+  //TObject *objm1 = HistDQM->FindObject("mmg1_f125_el_amp2ds");
+  TObject *objm1 = HistDQM->FindObject("mmg1_f125_el_amp2d");
+  TH2 *m1 = (TH2 *)objm1;
+  TFScaleFactor = 1./m1->GetEntries();
+  m1->Scale(TFScaleFactor);
+  m1->RebinX(4);
+  TH1D *m_1 = m1->ProjectionX(legendListMMG[1],80,160);
+  m_1->SetLineColor(colorList[1]);
+  m_1->SetMarkerStyle(markerList[1]);
+  m_1->SetMarkerColor(colorList[1]);
+  m_1->SetMarkerSize(2);
+  m_1->SetDirectory(0);
+  
+  TFile *file2m = TFile::Open(rootFilesMMG[2]);
+  HistDQM = (TList *)file2m->Get("HistDQM");
   TObject *objm2 = HistDQM->FindObject("mmg1_f125_el_amp2d");
   TH2 *m2 = (TH2 *)objm2;
   TFScaleFactor = 1./m2->GetEntries();
@@ -348,22 +446,8 @@ if (makeTimeDistributions)
   m_2->SetMarkerSize(2);
   m_2->SetDirectory(0);
   
-  
-  TFile *file3 = TFile::Open(rootFilesGEM[3]);
-	HistDQM = (TList *)file3->Get("HistDQM");
-  
-  TObject *objg3 = HistDQM->FindObject("f125_el_amp2d");
-  TH2 *g3 = (TH2 *)objg3;
-  TFScaleFactor = 1./g3->GetEntries();
-  g3->Scale(TFScaleFactor);
-  g3->RebinX(4);
-  TH1D *g_3 = g3->ProjectionX(legendListGEM[3],80,160);
-  g_3->SetLineColor(colorList[3]);
-  g_3->SetMarkerStyle(markerList[3]);
-  g_3->SetMarkerColor(colorList[3]);
-  g_3->SetMarkerSize(2);
-  g_3->SetDirectory(0);
-  
+  TFile *file3m = TFile::Open(rootFilesMMG[3]);
+  HistDQM = (TList *)file3m->Get("HistDQM");
   TObject *objm3 = HistDQM->FindObject("mmg1_f125_el_amp2d");
   TH2 *m3 = (TH2 *)objm3;
   TFScaleFactor = 1./m3->GetEntries();
@@ -376,22 +460,8 @@ if (makeTimeDistributions)
   m_3->SetMarkerSize(2);
   m_3->SetDirectory(0);
   
- /* 
-  TFile *file4 = TFile::Open(rootFilesGEM[4]);
-	HistDQM = (TList *)file4->Get("HistDQM");
-  
-  TObject *objg4 = HistDQM->FindObject("f125_el_amp2d");
-  TH2 *g4 = (TH2 *)objg4;
-  TFScaleFactor = 1./g4->GetEntries();
-  g4->Scale(TFScaleFactor);
-  g4->RebinX(4);
-  TH1D *g_4 = g4->ProjectionX(legendListGEM[4],80,160);
-  g_4->SetLineColor(colorList[4]);
-  g_4->SetMarkerStyle(markerList[4]);
-  g_4->SetMarkerColor(colorList[4]);
-  g_4->SetMarkerSize(2);
-  g_4->SetDirectory(0);
-  */
+  TFile *file4m = TFile::Open(rootFilesMMG[4]);
+  HistDQM = (TList *)file4m->Get("HistDQM");
   TObject *objm4 = HistDQM->FindObject("mmg1_f125_el_amp2d");
   TH2 *m4 = (TH2 *)objm4;
   TFScaleFactor = 1./m4->GetEntries();
@@ -404,113 +474,66 @@ if (makeTimeDistributions)
   m_4->SetMarkerSize(2);
   m_4->SetDirectory(0);
   
-/*  
-  TFile *file5 = TFile::Open(rootFilesGEM[5]);
-	HistDQM = (TList *)file5->Get("HistDQM");
-  
-  TObject *objg5 = HistDQM->FindObject("f125_el_amp2d");
-  TH2 *g5 = (TH2 *)objg5;
-  TFScaleFactor = 1./g5->GetEntries();
-  g5->Scale(TFScaleFactor);
-  g5->RebinX(4);
-  TH1D *g_5 = g5->ProjectionX(legendListGEM[5],60,180);
-  g_5->SetLineColor(colorList[5]);
-  g_5->SetMarkerStyle(20);
-  g_5->SetMarkerColor(colorList[5]);
-  g_5->SetDirectory(0);
-
+  TFile *file5m = TFile::Open(rootFilesMMG[5]);
+  HistDQM = (TList *)file5m->Get("HistDQM");
   TObject *objm5 = HistDQM->FindObject("mmg1_f125_el_amp2d");
   TH2 *m5 = (TH2 *)objm5;
   TFScaleFactor = 1./m5->GetEntries();
   m5->Scale(TFScaleFactor);
   m5->RebinX(4);
-  TH1D *m_5 = m5->ProjectionX(legendListMMG[5],60,180);
+  TH1D *m_5 = m5->ProjectionX(legendListMMG[5],80,160);
   m_5->SetLineColor(colorList[5]);
-  m_5->SetMarkerStyle(20);
+  m_5->SetMarkerStyle(markerList[5]);
   m_5->SetMarkerColor(colorList[5]);
+  m_5->SetMarkerSize(2);
   m_5->SetDirectory(0);
   
-  
-  TFile *file6 = TFile::Open(rootFilesGEM[6]);
-	HistDQM = (TList *)file6->Get("HistDQM");
-  
-  TObject *objg6 = HistDQM->FindObject("f125_el_amp2ds");
-  TH2 *g6 = (TH2 *)objg6;
-  TFScaleFactor = 1./g6->GetEntries();
-  g6->Scale(TFScaleFactor);
-  g6->RebinX(4);
-  TH1D *g_6 = g6->ProjectionX(legendListGEM[6],60,180);
-  g_6->SetLineColor(colorList[6]);
-  g_6->SetMarkerStyle(20);
-  g_6->SetMarkerColor(colorList[6]);
-  g_6->SetDirectory(0);
-
-  TObject *objm6 = HistDQM->FindObject("mmg1_f125_el_amp2ds");
+  TFile *file6m = TFile::Open(rootFilesMMG[6]);
+  HistDQM = (TList *)file6m->Get("HistDQM");
+  TObject *objm6 = HistDQM->FindObject("mmg1_f125_el_amp2d");
   TH2 *m6 = (TH2 *)objm6;
   TFScaleFactor = 1./m6->GetEntries();
   m6->Scale(TFScaleFactor);
   m6->RebinX(4);
-  TH1D *m_6 = m6->ProjectionX(legendListMMG[6],60,180);
+  TH1D *m_6 = m6->ProjectionX(legendListMMG[6],80,160);
   m_6->SetLineColor(colorList[6]);
-  m_6->SetMarkerStyle(20);
+  m_6->SetMarkerStyle(markerList[6]);
   m_6->SetMarkerColor(colorList[6]);
+  m_6->SetMarkerSize(2);
   m_6->SetDirectory(0);
   
-  TFile *file7 = TFile::Open(rootFilesGEM[7]);
-  HistDQM = (TList *)file7->Get("HistDQM");
-  
-  TObject *objg7 = HistDQM->FindObject("f125_el_amp2ds");
-  TH2 *g7 = (TH2 *)objg7;
-  TFScaleFactor = 1./g7->GetEntries();
-  g7->Scale(TFScaleFactor);
-  g7->RebinX(4);
-  TH1D *g_7 = g7->ProjectionX(legendListGEM[7],60,180);
-  g_7->SetLineColor(colorList[7]);
-  g_7->SetMarkerStyle(20);
-  g_7->SetMarkerColor(colorList[7]);
-  g_7->SetDirectory(0);
-
-  TObject *objm7 = HistDQM->FindObject("mmg1_f125_el_amp2ds");
+  TFile *file7m = TFile::Open(rootFilesMMG[7]);
+  HistDQM = (TList *)file7m->Get("HistDQM");
+  TObject *objm7 = HistDQM->FindObject("mmg1_f125_el_amp2d");
   TH2 *m7 = (TH2 *)objm7;
   TFScaleFactor = 1./m7->GetEntries();
   m7->Scale(TFScaleFactor);
   m7->RebinX(4);
-  TH1D *m_7 = m7->ProjectionX(legendListMMG[7],60,180);
+  TH1D *m_7 = m7->ProjectionX(legendListMMG[7],80,160);
   m_7->SetLineColor(colorList[7]);
-  m_7->SetMarkerStyle(20);
+  m_7->SetMarkerStyle(markerList[7]);
   m_7->SetMarkerColor(colorList[7]);
+  m_7->SetMarkerSize(2);
   m_7->SetDirectory(0);
-  
-  TFile *file8 = TFile::Open(rootFilesGEM[8]);
-  HistDQM = (TList *)file8->Get("HistDQM");
-
-  TObject *objg8 = HistDQM->FindObject("f125_el_amp2ds");
-  TH2 *g8 = (TH2 *)objg8;
-  TFScaleFactor = 1./g8->GetEntries();
-  g8->Scale(TFScaleFactor);
-  g8->RebinX(4);
-  TH1D *g_8 = g8->ProjectionX(legendListGEM[8],60,180);
-  g_8->SetLineColor(colorList[8]);
-  g_8->SetMarkerStyle(20);
-  g_8->SetMarkerColor(colorList[8]);
-  g_8->SetDirectory(0);
-
-  TObject *objm8 = HistDQM->FindObject("mmg1_f125_el_amp2ds");
+  /*
+  TFile *file8m = TFile::Open(rootFilesMMG[8]);
+  HistDQM = (TList *)file8m->Get("HistDQM");
+  TObject *objm8 = HistDQM->FindObject("mmg1_f125_el_amp2d");
   TH2 *m8 = (TH2 *)objm8;
   TFScaleFactor = 1./m8->GetEntries();
   m8->Scale(TFScaleFactor);
   m8->RebinX(4);
-  TH1D *m_8 = m8->ProjectionX(legendListMMG[8],60,180);
+  TH1D *m_8 = m8->ProjectionX(legendListMMG[8],80,160);
   m_8->SetLineColor(colorList[8]);
-  m_8->SetMarkerStyle(20);
+  m_8->SetMarkerStyle(markerList[8]);
   m_8->SetMarkerColor(colorList[8]);
+  m_8->SetMarkerSize(2);
   m_8->SetDirectory(0);
   */
-  //--uRWell-TRD Files
+  //=================== uRWell-TRD ==========================
 
   TFile *fileu0 = TFile::Open(rootFilesURW[0]);
   HistDQM = (TList *)fileu0->Get("HistDQM");
-
   TObject *obju0 = HistDQM->FindObject("urw_f125_x_amp2d");
   TH2 *u0 = (TH2 *)obju0;
   TFScaleFactor = 1./u0->GetEntries();
@@ -525,7 +548,6 @@ if (makeTimeDistributions)
   
   TFile *fileu1 = TFile::Open(rootFilesURW[1]);
   HistDQM = (TList *)fileu1->Get("HistDQM");
-
   TObject *obju1 = HistDQM->FindObject("urw_f125_x_amp2d");
   TH2 *u1 = (TH2 *)obju1;
   TFScaleFactor = 1./u1->GetEntries();
@@ -540,7 +562,6 @@ if (makeTimeDistributions)
   
   TFile *fileu2 = TFile::Open(rootFilesURW[2]);
   HistDQM = (TList *)fileu2->Get("HistDQM");
-
   TObject *obju2 = HistDQM->FindObject("urw_f125_x_amp2d");
   TH2 *u2 = (TH2 *)obju2;
   TFScaleFactor = 1./u2->GetEntries();
@@ -553,10 +574,9 @@ if (makeTimeDistributions)
   u_2->SetMarkerSize(2);
   u_2->SetDirectory(0);
     
-
+/*
   TFile *fileu3 = TFile::Open(rootFilesURW[3]);
   HistDQM = (TList *)fileu3->Get("HistDQM");
-
   TObject *obju3 = HistDQM->FindObject("urw_f125_x_amp2d");
   TH2 *u3 = (TH2 *)obju3;
   TFScaleFactor = 1./u3->GetEntries();
@@ -571,7 +591,6 @@ if (makeTimeDistributions)
   
   TFile *fileu4 = TFile::Open(rootFilesURW[4]);
   HistDQM = (TList *)fileu4->Get("HistDQM");
-
   TObject *obju4 = HistDQM->FindObject("urw_f125_x_amp2d");
   TH2 *u4 = (TH2 *)obju4;
   TFScaleFactor = 1./u4->GetEntries();
@@ -583,7 +602,7 @@ if (makeTimeDistributions)
   u_4->SetMarkerColor(colorList[4]);
   u_4->SetMarkerSize(2);
   u_4->SetDirectory(0);
-  
+  */
   
   AlignLeadingEdge(g_0, g_1);
   AlignLeadingEdge(g_0, g_2);
@@ -594,11 +613,14 @@ if (makeTimeDistributions)
   AlignLeadingEdge(m_0, m_2);
   AlignLeadingEdge(m_0, m_3);
   AlignLeadingEdge(m_0, m_4);
+  AlignLeadingEdge(m_0, m_5);
+  AlignLeadingEdge(m_0, m_6);
+  AlignLeadingEdge(m_0, m_7);
   
   AlignLeadingEdge(u_0, u_1);
   AlignLeadingEdge(u_0, u_2);
-  AlignLeadingEdge(u_0, u_3);
-  AlignLeadingEdge(u_0, u_4);
+  //AlignLeadingEdge(u_0, u_3);
+  //AlignLeadingEdge(u_0, u_4);
   
   TCanvas *c31 = new TCanvas("c31","GEMTRD Timing Distributions at Varied HV in Xe", 1600, 1000);
   c31->cd();
@@ -637,44 +659,48 @@ if (makeTimeDistributions)
   //l31->SetNColumns(2);
   l31->SetTextSize(0.044);
   l31->Draw();
-  c31->SaveAs("GEMTRD_Time_Xe_Comparison_v4.C");
-  c31->SaveAs("GEMTRD_Time_Xe_Comparison_v4.pdf");
+  //c31->SaveAs("GEMTRD_Time_Xe_Comparison_v4.C");
+  //c31->SaveAs("GEMTRD_Time_Xe_Comparison_v4.pdf");
   
   TCanvas *c4 = new TCanvas("c4","MMG1-TRD Timing Distributions at Varied HV in Xe", 1600, 1000);
   c4->cd();
   gPad->SetGridy();
   l4->AddEntry(m_0,legendListMMG[0],"lp");
-  //l4->AddEntry(m_1,legendListMMG[1],"lp");
+  l4->AddEntry(m_1,legendListMMG[1],"lp");
   l4->AddEntry(m_2,legendListMMG[2],"lp");
   l4->AddEntry(m_3,legendListMMG[3],"lp");
   l4->AddEntry(m_4,legendListMMG[4],"lp");
-  //l4->AddEntry(m_5,legendListMMG[5],"lp");
-  //l4->AddEntry(m_6,legendListMMG[6],"lp");
-  //l4->AddEntry(m_7,legendListMMG[7],"lp");
+  l4->AddEntry(m_5,legendListMMG[5],"lp");
+  l4->AddEntry(m_6,legendListMMG[6],"lp");
+  l4->AddEntry(m_7,legendListMMG[7],"lp");
   //l4->AddEntry(m_8,legendListMMG[8],"lp");
   m_0->GetYaxis()->SetTitle("ADC Amplitude (Pulses / numEvents)");
   m_0->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
   //m_0->GetYaxis()->SetNdivisions(520);
-  m_0->GetXaxis()->SetRangeUser(25.,200.);
+  m_0->GetXaxis()->SetRangeUser(15.,155.);
   m_0->SetMaximum(m_0->GetMaximum()+15.);
-  m_0->SetTitle("MMG1-TRD ADC Response in Time");
+  //m_0->SetTitle("MMG1-TRD ADC Response in Time");
+  m_0->SetTitle("#splitline{MMG1-TRD ADC Response in Time, Xe:ISO 90:10}{DF:1.35kV/cm, Amplification HV Scan}");
+  gPad->SetTopMargin(0.135);
   m_0->GetXaxis()->SetTitleSize(0.045);
   m_0->GetXaxis()->SetLabelSize(0.042);
   m_0->GetYaxis()->SetTitleSize(0.044);
   m_0->GetYaxis()->SetLabelSize(0.042);
   m_0->Draw("PL");
-  //m_1->Draw("PL same");
+  m_1->Draw("PL same");
   m_2->Draw("PL same");
   m_3->Draw("PL same");
   m_4->Draw("PL same");
-  //m_5->Draw("same");
-  //m_6->Draw("same");
-  //m_7->Draw("same");
+  m_5->Draw("PL same");
+  m_6->Draw("PL same");
+  m_7->Draw("PL same");
   //m_8->Draw("same");
   l4->SetTextSize(0.044);
+  l4->SetHeader("Divider V_{in}","C");
+  l4->SetTextAlign(12); //Centered
   l4->Draw();
-  //c4->SaveAs("MMG1TRD_Time_Xe_Comparison_v1.C");
-  //c4->SaveAs("MMG1TRD_Time_Xe_Comparison_v1.pdf");
+  c4->SaveAs("MMG1TRD_Time_Xe_Comparison_v5.C");
+  c4->SaveAs("MMG1TRD_Time_Xe_Comparison_v5.pdf");
   
   
   TCanvas *c5 = new TCanvas("c5","uRWell-TRD Timing Distributions at Varied HV in Xe", 1600, 1000);
@@ -684,8 +710,8 @@ if (makeTimeDistributions)
   l5->AddEntry(u_0,legendListURW[0],"lp");
   l5->AddEntry(u_1,legendListURW[1],"lp");
   l5->AddEntry(u_2,legendListURW[2],"lp");
-  l5->AddEntry(u_3,legendListURW[3],"lp");
-  l5->AddEntry(u_4,legendListURW[4],"lp");
+  //l5->AddEntry(u_3,legendListURW[3],"lp");
+  //l5->AddEntry(u_4,legendListURW[4],"lp");
   //l5->AddEntry(u_5,legendListURW[5],"lp");
   //l5->AddEntry(u_6,legendListURW[6],"lp");
   //l5->AddEntry(u_7,legendListURW[7],"lp");
@@ -696,7 +722,7 @@ if (makeTimeDistributions)
   u_0->GetXaxis()->SetRangeUser(10.,140.);
   u_0->SetMaximum(u_0->GetMaximum()+10.);
   //u_0->SetTitle("#muRWell-TRD ADC Response in Time");
-  u_0->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Response in Time, Xe:ISO 90:10}{DF:1.35kV/cm  TF:2.35kV/cm WELL:525V, GEM dV Scan}");
+  u_0->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Response in Time, Xe:ISO 90:10}{DF:1.35kV/cm  TF:2.35kV/cm GEM dV:400V, WELL Scan}");
   u_0->GetXaxis()->SetTitleSize(0.045);
   u_0->GetXaxis()->SetLabelSize(0.042);
   u_0->GetYaxis()->SetTitleSize(0.044);
@@ -704,14 +730,14 @@ if (makeTimeDistributions)
   u_0->Draw("PL");
   u_1->Draw("PL same");
   u_2->Draw("PL same");
-  u_3->Draw("PL same");
-  u_4->Draw("PL same");
+  //u_3->Draw("PL same");
+  //u_4->Draw("PL same");
   l5->SetTextSize(0.042);
-  l5->SetHeader("GEM dV","C");
-  l5->SetNColumns(2);
+  l5->SetHeader("Resistive WELL","C");
+  //l5->SetNColumns(2);
   l5->Draw();
-  //c5->SaveAs("URWTRD_Time_Xe_Comparison_v3.C");
-  //c5->SaveAs("URWTRD_Time_Xe_Comparison_v3.pdf");
+  c5->SaveAs("URWTRD_Time_Xe_Comparison_v5.C");
+  c5->SaveAs("URWTRD_Time_Xe_Comparison_v5.pdf");
   
   }  
 }
