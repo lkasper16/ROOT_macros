@@ -24,7 +24,7 @@
 #include <TProfile.h>
 
 
-int FindLeadingEdge(TH1 *h, double frac=0.18) {
+int FindLeadingEdge(TH1 *h, double frac=0.1) {
   double thresh = frac*h->GetMaximum();
   for (int i=1;i<=h->GetNbinsX();i++) {
     if (h->GetBinContent(i) >= thresh) return i;
@@ -63,16 +63,15 @@ void trd_HistMerge(){
   bool makeTimeDistributions=true;
   bool useMax=true;
   
-	////TString rootFilesGEM[] = {"RootOutput/cern24/merged/Run_005284_3615629Entries_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root","RootOutput/ps25/Run_006302_Output.root","RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008254_Output.root"};
-	////TString rootFilesGEM[] = {"RootOutput/ps26/Run_008242_Output.root","RootOutput/ps26/Run_008249_Output.root","RootOutput/ps26/Run_008246_Output.root","RootOutput/ps26/Run_008254_Output.root","RootOutput/ps26/Run_008235_Output.root"};
-	TString rootFilesGEM[] = {"RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008230_Output.root","RootOutput/ps26/Run_008234_Output.root","RootOutput/ps26/Run_008235_Output.root"};
-  ////TString rootFilesMMG[] = {"RootOutput/cern24/merged/Run_005284_3615629Entries_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root","RootOutput/ps25/Run_006302_Output.root","RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008254_Output.root"};
-  TString rootFilesMMG[] = {"RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008230_Output.root","RootOutput/ps26/Run_008234_Output.root","RootOutput/ps26/Run_008235_Output.root","RootOutput/ps26/Run_008236_Output.root","RootOutput/ps26/Run_008237_Output.root","RootOutput/ps26/Run_008239_Output.root","RootOutput/ps26/Run_008242_Output.root"};
-  ////TString rootFilesURW[] = {"RootOutput/ps25/Run_006302_Output.root","RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008254_Output.root"};
-  ////TString rootFilesURW[] = {"RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008230_Output.root","RootOutput/ps26/Run_008234_Output.root","RootOutput/ps26/Run_008235_Output.root","RootOutput/ps26/Run_008256_Output.root"};
-  ////TString rootFilesURW[] = {"RootOutput/ps26/Run_008235_Output.root","RootOutput/ps26/Run_008236_Output.root","RootOutput/ps26/Run_008237_Output.root"};
+	TString rootFilesGEM[] = {"RootOutput/cern24/merged/Run_005284_3615629Entries_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root","RootOutput/ps25/Run_006385_Output.root","RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008254_Output.root"};
+	//TString rootFilesGEM[] = {"RootOutput/ps26/Run_008242_Output.root","RootOutput/ps26/Run_008249_Output.root","RootOutput/ps26/Run_008246_Output.root","RootOutput/ps26/Run_008254_Output.root","RootOutput/ps26/Run_008235_Output.root"};
+	//TString rootFilesGEM[] = {"RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008230_Output.root","RootOutput/ps26/Run_008234_Output.root","RootOutput/ps26/Run_008235_Output.root"};
+  TString rootFilesMMG[] = {"RootOutput/cern24/merged/Run_005284_3615629Entries_Output.root", "RootOutput/fermiMerged/Run_003202_513789Entries_Output.root","RootOutput/ps25/Run_006385_Output.root","RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008254_Output.root"};
+  //TString rootFilesMMG[] = {"RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008230_Output.root","RootOutput/ps26/Run_008234_Output.root","RootOutput/ps26/Run_008235_Output.root","RootOutput/ps26/Run_008236_Output.root","RootOutput/ps26/Run_008237_Output.root","RootOutput/ps26/Run_008239_Output.root","RootOutput/ps26/Run_008242_Output.root"};
+  TString rootFilesURW[] = {"RootOutput/ps25/Run_006385_Output.root","RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008254_Output.root"};
+  //TString rootFilesURW[] = {"RootOutput/ps26/Run_008229_Output.root","RootOutput/ps26/Run_008230_Output.root","RootOutput/ps26/Run_008234_Output.root","RootOutput/ps26/Run_008235_Output.root","RootOutput/ps26/Run_008256_Output.root"};
+  //TString rootFilesURW[] = {"RootOutput/ps26/Run_008235_Output.root","RootOutput/ps26/Run_008236_Output.root","RootOutput/ps26/Run_008237_Output.root"};
   //TString rootFilesURW[] = {"RootOutput/ps26/Run_008257_Output.root","RootOutput/ps26/Run_008256_Output.root","RootOutput/ps26/Run_008254_Output.root","RootOutput/ps26/Run_008253_Output.root"};
-  TString rootFilesURW[] = {"RootOutput/ps26/Run_008249_Output.root","RootOutput/ps26/Run_008246_Output.root","RootOutput/ps26/Run_008242_Output.root"};
   
   TList *histListGEM = new TList;
   TList *histListMMG = new TList;
@@ -93,25 +92,22 @@ void trd_HistMerge(){
 	int colorList[] = {1,2,209,6,4,94,7,51,28};
   int markerList[] = {3,4,25,27,46,42,30,44,35};
   
-	////TString legendListGEM[] = {"CERN Xe:CO_{2}, 6400V/3380V","FERMI Xe:CO_{2}, 6200V/3200V","PS25 Xe:CO_{2}, 6400V/3475V", "PS26 Xe:ISO, 6400V/3475V", "PS26 Xe:ISO, 6400V/450/425V/390V"};
-	////TString legendListGEM[] = {"2.75 kV/cm","3.00 kV/cm","3.25 kV/cm","3.50 kV/cm","3.74 kV/cm"};
-  TString legendListGEM[] = {"448V / 411V / 374V","450V / 415V / 380V","450V / 420V / 385V","450V / 425V / 390V"};
-  ////TString legendListMMG[] = {"CERN Xe:CO_{2}, 5100V/1630V","FERMI Xe:CO_{2}, 4825V/625V","PS25 Xe:CO_{2}, 5150V/1675V","PS26 Xe:ISO, 5150V/1675V","PS26 Xe:ISO, 5195V/1735V"};
-  TString legendListMMG[] = {"1675V","1685V","1695V","1700V","1710V","1720V","1730V","1735V"};
-  ////TString legendListURW[] = {"PS25 Xe:CO_{2}, 4465V/1310V/925V/525V","PS26 Xe:ISO, 4465V/1310V/925V/525V","PS26 Xe:ISO, 4515V/1410V/1000V/525V"};
-  ////TString legendListURW[] = {"380V","390V","395V","400V","410V"};
-  ////TString legendListURW[] = {"525V","530V","535V"};
+	TString legendListGEM[] = {"CERN Xe:CO_{2}, 6400V/3380V","FERMI Xe:CO_{2}, 6200V/3200V","PS25 Xe:CO_{2}, 6400V/3475V", "PS26 Xe:ISO, 6400V/3475V", "PS26 Xe:ISO, 6400V/450/425V/390V"};
+	//TString legendListGEM[] = {"2.75 kV/cm","3.00 kV/cm","3.25 kV/cm","3.50 kV/cm","3.74 kV/cm"};
+  //TString legendListGEM[] = {"448V / 411V / 374V","450V / 415V / 380V","450V / 420V / 385V","450V / 425V / 390V"};
+  TString legendListMMG[] = {"CERN Xe:CO_{2}, 5100V/1630V","FERMI Xe:CO_{2}, 4825V/625V","PS25 Xe:CO_{2}, 5150V/1675V","PS26 Xe:ISO, 5150V/1675V","PS26 Xe:ISO, 5195V/1735V"};
+  //TString legendListMMG[] = {"1675V","1685V","1695V","1700V","1710V","1720V","1730V","1735V"};
+  TString legendListURW[] = {"PS25 Xe:CO_{2}, 4465V/1310V/925V/525V","PS26 Xe:ISO, 4465V/1310V/925V/525V","PS26 Xe:ISO, 4515V/1410V/1000V/525V"};
+  //TString legendListURW[] = {"380V","390V","395V","400V","410V"};
+  //TString legendListURW[] = {"525V","530V","535V"};
   //TString legendListURW[] = {"2.325 kV/cm","2.35 kV/cm","2.375 kV/cm","2.4 kV/cm"};
-  TString legendListURW[] = {"2.375 kV/cm","2.4 kV/cm","2.5 kV/cm"};
   
-	//TLegend *l1 = new TLegend(0.35, 0.58, 0.9, 0.865);
-	TLegend *l1 = new TLegend(0.62, 0.64, 0.9, 0.865);
-  //TLegend *l1 = new TLegend(0.5, 0.66, 0.9, 0.865);
-  //TLegend *l2 = new TLegend(0.48, 0.61, 0.9, 0.865);
-  TLegend *l2 = new TLegend(0.147, 0.75, 0.897, 0.86);
-  //TLegend *l3 = new TLegend(0.4, 0.7, 0.9, 0.865);
-  //TLegend *l3 = new TLegend(0.42, 0.68, 0.9, 0.865);
-  TLegend *l3 = new TLegend(0.65, 0.62, 0.9, 0.865);
+	TLegend *l1 = new TLegend(0.375, 0.595, 0.9, 0.865);
+	//TLegend *l1 = new TLegend(0.63, 0.56, 0.9, 0.865);
+  TLegend *l2 = new TLegend(0.48, 0.625, 0.9, 0.865);
+  //TLegend *l2 = new TLegend(0.147, 0.75, 0.897, 0.86);
+  TLegend *l3 = new TLegend(0.41, 0.68, 0.9, 0.865);
+  //TLegend *l3 = new TLegend(0.67, 0.6, 0.9, 0.865);
   
   //-- Triple GEM-TRD
 	for (int i=0; i<sizeof(rootFilesGEM)/sizeof(rootFilesGEM[0]); i++) {
@@ -130,7 +126,7 @@ void trd_HistMerge(){
         readObject->SetMarkerSize(2);
 				double elScaleFactor = 1./readObject->GetEntries();
 				readObject->Scale(elScaleFactor);
-        /*if (i>1)*/ readObject->RebinX(5);
+        if (i>1) readObject->RebinX(5);
 				histListGEM->Add(readObject);
 				l1->AddEntry(readObject, legendListGEM[i], "lp");
 			}
@@ -155,11 +151,11 @@ void trd_HistMerge(){
         readObject->SetMarkerSize(2);
         double elScaleFactor = 1./readObject->GetEntries();
         readObject->Scale(elScaleFactor);
-        /*if (i>1)*/ readObject->RebinX(5);
-        //if (i!=1){
+        if (i>1) readObject->RebinX(5);
+        if (i!=1){
         histListMMG->Add(readObject);
         l2->AddEntry(readObject, legendListMMG[i], "lp");
-        //}
+        }
       } 
     }
     file->Close();
@@ -202,14 +198,12 @@ void trd_HistMerge(){
   if (firstHist1) {
     if (useMax) {
       firstHist1->GetXaxis()->SetTitle("Maximum Pulse Amplitude [fADC Units]");
-      //firstHist1->SetTitle("#splitline{Triple-GEM-TRD Maximum ADC Value}{in Xe Mixtures with Varied HVs}");
-      //firstHist1->SetTitle("#splitline{Triple-GEM-TRD Maximum ADC Value in Xe:ISO 90:10}{GEM dVs: 450V/425V/390V, Transfer Field Scan}");
-      firstHist1->SetTitle("#splitline{Triple-GEM-TRD Maximum ADC Value in Xe:ISO 90:10}{DF:1.7kV/cm TF:3.74kV/cm, GEM dV Scan}");
+      firstHist1->SetTitle("#splitline{Triple-GEM-TRD Maximum ADC Value}{in Xe Mixtures with Varied HVs}");
     } else {
       firstHist1->GetXaxis()->SetTitle("Pulse Peak Amplitude [fADC Units]");
-      //firstHist1->SetTitle("#splitline{Triple-GEM-TRD ADC Distributions}{in Xe Mixtures with Varied HVs}");
+      firstHist1->SetTitle("#splitline{Triple-GEM-TRD ADC Distributions}{in Xe Mixtures with Varied HVs}");
+      //firstHist1->SetTitle("#splitline{Triple-GEM-TRD ADC Distributions in Xe:ISO 90:10}{DF:1.7kV/cm TF:3.74kV/cm, GEM dV Scan}");
       //firstHist1->SetTitle("#splitline{Triple-GEM-TRD ADC Distributions in Xe:ISO 90:10}{GEM dVs: 450V/425V/390V, Transfer Field Scan}");
-      firstHist1->SetTitle("#splitline{Triple-GEM-TRD ADC Distributions in Xe:ISO 90:10}{DF:1.7kV/cm TF:3.74kV/cm, GEM dV Scan}");
     }
     firstHist1->GetYaxis()->SetTitle("Pulses / numEvents");
     firstHist1->SetMaximum(1);
@@ -221,18 +215,17 @@ void trd_HistMerge(){
   }
 	histListGEM->Draw("same");
   //l1->SetHeader("Transfer Fields","C");
-  l1->SetHeader("GEM dVs","C");
   //l1->SetNColumns(2);
   l1->SetTextSize(0.042);
   l1->Draw();
   gPad->Modified();
   gPad->Update();
   if (useMax) {
-    c1->SaveAs("GEMTRD_Max_ADC_Xe_Comparison_v3.C");
-    c1->SaveAs("GEMTRD_Max_ADC_Xe_Comparison_v3.pdf");
+    c1->SaveAs("GEMTRD_Max_ADC_Xe_Comparison_v6.C");
+    c1->SaveAs("GEMTRD_Max_ADC_Xe_Comparison_v6.pdf");
   } else {
-	  c1->SaveAs("GEMTRD_ADC_Xe_Comparison_v3.C");
-    c1->SaveAs("GEMTRD_ADC_Xe_Comparison_v3.pdf");
+	  c1->SaveAs("GEMTRD_ADC_Xe_Comparison_v6.C");
+    c1->SaveAs("GEMTRD_ADC_Xe_Comparison_v6.pdf");
   }
   
   TCanvas *c2 = new TCanvas("c2","MMG1-TRD ADC Distributions at Varied HV in Xe", 1600, 1000);
@@ -245,12 +238,12 @@ void trd_HistMerge(){
   if (firstHist2) {
     if (useMax) {
       firstHist2->GetXaxis()->SetTitle("Maximum Pulse Amplitude [fADC Units]");
-      //firstHist2->SetTitle("#splitline{MMG1-TRD Maximum ADC Value}{in Xe Mixtures with Varied HVs}");
-      firstHist2->SetTitle("#splitline{MMG1-TRD Maximum ADC Value in Xe:ISO 90:10}{DF:1.35kV/cm, Amplification HV Scan}");
+      firstHist2->SetTitle("#splitline{MMG1-TRD Maximum ADC Value}{in Xe Mixtures with Varied HVs}");
     } else {
       firstHist2->GetXaxis()->SetTitle("Pulse Peak Amplitude [fADC Units]");
-      //firstHist2->SetTitle("#splitline{MMG1-TRD ADC Distributions}{in Xe Mixtures with Varied HVs}");
-      firstHist2->SetTitle("#splitline{MMG1-TRD ADC Distributions in Xe:ISO 90:10}{DF:1.35kV/cm, Amplification HV Scan}");
+      //firstHist2->SetTitle("MMG1-TRD ADC Distributions in Xe Mixtures");
+      firstHist2->SetTitle("#splitline{MMG1-TRD ADC Distributions}{in Xe Mixtures with Varied HVs}");
+      //firstHist2->SetTitle("#splitline{MMG1-TRD ADC Distributions in Xe:ISO 90:10}{DF:1.35kV/cm, Amplification HV Scan}");
     }
     firstHist2->GetYaxis()->SetTitle("Pulses / numEvents");
     firstHist2->SetMaximum(1);
@@ -262,17 +255,17 @@ void trd_HistMerge(){
   }
   histListMMG->Draw("same");
   l2->SetTextSize(0.042);
-  l2->SetHeader("Divider V_{in}","C");
-  l2->SetNColumns(8);
+  //l2->SetHeader("Divider V_{in}","C");
+  //l2->SetNColumns(8);
   l2->Draw();
   gPad->Modified();
   gPad->Update();
   if (useMax) {
-    c2->SaveAs("MMG1TRD_Max_ADC_Xe_Comparison_v2.C");
-    c2->SaveAs("MMG1TRD_Max_ADC_Xe_Comparison_v2.pdf");
+    c2->SaveAs("MMG1TRD_Max_ADC_Xe_Comparison_v6.C");
+    c2->SaveAs("MMG1TRD_Max_ADC_Xe_Comparison_v6.pdf");
   } else {
-    c2->SaveAs("MMG1TRD_ADC_Xe_Comparison_v2.C");
-    c2->SaveAs("MMG1TRD_ADC_Xe_Comparison_v2.pdf");
+    c2->SaveAs("MMG1TRD_ADC_Xe_Comparison_v6.C");
+    c2->SaveAs("MMG1TRD_ADC_Xe_Comparison_v6.pdf");
   }
   
   TCanvas *c3 = new TCanvas("c3","uRWell-TRD ADC Distributions at Varied HV in Xe", 1600, 1000);
@@ -286,17 +279,12 @@ void trd_HistMerge(){
     if (useMax) {
       firstHist3->GetXaxis()->SetTitle("Maximum Pulse Amplitude [fADC Units]");
       //firstHist3->SetTitle("#splitline{Hybrid #muRWELL-TRD Maximum ADC in Xe:ISO 90:10}{DF:1.35kV/cm TF:2.35kV/cm GEM dV:400V, WELL Scan}");
-      //firstHist3->SetTitle("#splitline{Hybrid #muRWELL-TRD Maximum ADC Value}{in Xe Mixtures with Varied HVs}");
-      //firstHist3->SetTitle("#splitline{Hybrid #muRWELL-TRD Maximum ADC Value in Xe:ISO 90:10}{DF:1.35kV/cm TF:2.35kV/cm WELL:525V, GEM dV Scan}");
-      //firstHist3->SetTitle("#splitline{Hybrid #muRWELL-TRD Maximum ADC Value in Xe:ISO 90:10}{DF:1.35kV/cm GEM dV:410V, WELL:525V, TF Scan}");
-      firstHist3->SetTitle("#splitline{Hybrid #muRWELL-TRD Maximum ADC Value in Xe:ISO 90:10}{DF:1.35kV/cm GEM dV:405V, WELL:530V, TF Scan}");
+      firstHist3->SetTitle("#splitline{Hybrid #muRWell-TRD Maximum ADC Value}{in Xe Mixtures with Varied HVs}");
     } else {
       firstHist3->GetXaxis()->SetTitle("Pulse Peak Amplitude [fADC Units]");
-      //firstHist3->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Distributions}{in Xe Mixtures with Varied HVs}");
+      firstHist3->SetTitle("#splitline{Hybrid #muRWell-TRD ADC Distributions}{in Xe Mixtures with Varied HVs}");
       //firstHist3->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Distributions in Xe:ISO 90:10}{DF:1.35kV/cm GEM dV:410V, WELL:525V, TF Scan}");
-      firstHist3->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Distributions in Xe:ISO 90:10}{DF:1.35kV/cm GEM dV:405V, WELL:530V, TF Scan}");
       //firstHist3->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Distributions in Xe:ISO 90:10}{DF:1.35kV/cm TF:2.35kV/cm GEM dV:400V, WELL Scan}");
-      //firstHist3->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Distributions in Xe:ISO 90:10}{DF:1.35kV/cm TF:2.35kV/cm WELL:525V, GEM dV Scan}");
     }
     firstHist3->GetYaxis()->SetTitle("Pulses / numEvents");
     firstHist3->SetMaximum(1);
@@ -309,18 +297,16 @@ void trd_HistMerge(){
   histListURW->Draw("same");
   l3->SetTextSize(0.042);
   //l3->SetHeader("Resistive WELL","C");
-  //l3->SetHeader("GEM dV","C");
-  l3->SetHeader("Transfer Field","C");
   //l3->SetNColumns(2);
   l3->Draw();
   gPad->Modified();
   gPad->Update();
   if (useMax) {
-    c3->SaveAs("URWTRD_Max_ADC_Xe_Comparison_v5.C");
-    c3->SaveAs("URWTRD_Max_ADC_Xe_Comparison_v5.pdf");
+    c3->SaveAs("URWTRD_Max_ADC_Xe_Comparison_v6.C");
+    c3->SaveAs("URWTRD_Max_ADC_Xe_Comparison_v6.pdf");
   } else {
-    c3->SaveAs("URWTRD_ADC_Xe_Comparison_v5.C");
-    c3->SaveAs("URWTRD_ADC_Xe_Comparison_v5.pdf");
+    c3->SaveAs("URWTRD_ADC_Xe_Comparison_v6.C");
+    c3->SaveAs("URWTRD_ADC_Xe_Comparison_v6.pdf");
   }
   
 //======================================================================================
@@ -330,14 +316,12 @@ if (makeTimeDistributions)
   TList *HistDQM;
 	double TFScaleFactor = -1.;
   
-  //TLegend *l31 = new TLegend(0.35, 0.65, 0.9, 0.865);
-  TLegend *l31 = new TLegend(0.25, 0.59, 0.53, 0.865);
-  //TLegend *l4 = new TLegend(0.48, 0.62, 0.9, 0.865);
-  TLegend *l4 = new TLegend(0.14, 0.75, 0.897, 0.86);
-  //TLegend *l5 = new TLegend(0.42, 0.69, 0.9, 0.865);
-  //TLegend *l5 = new TLegend(0.4, 0.69, 0.9, 0.865);
+  TLegend *l31 = new TLegend(0.35, 0.65, 0.9, 0.865);
+  //TLegend *l31 = new TLegend(0.25, 0.56, 0.53, 0.865);
+  TLegend *l4 = new TLegend(0.48, 0.62, 0.9, 0.865);
+  //TLegend *l4 = new TLegend(0.14, 0.75, 0.897, 0.86);
+  TLegend *l5 = new TLegend(0.42, 0.69, 0.9, 0.865);
   //TLegend *l5 = new TLegend(0.67, 0.6, 0.9, 0.865);
-  TLegend *l5 = new TLegend(0.32, 0.63, 0.54, 0.865);
   
   //================== Triple-GEM =============================
   TFile *file0 = TFile::Open(rootFilesGEM[0]);
@@ -356,8 +340,8 @@ if (makeTimeDistributions)
   
   TFile *file1 = TFile::Open(rootFilesGEM[1]);
   HistDQM = (TList *)file1->Get("HistDQM");
-  //TObject *objg1 = HistDQM->FindObject("f125_el_amp2ds");
-  TObject *objg1 = HistDQM->FindObject("f125_el_amp2d");
+  TObject *objg1 = HistDQM->FindObject("f125_el_amp2ds");
+  //TObject *objg1 = HistDQM->FindObject("f125_el_amp2d");
   TH2 *g1 = (TH2 *)objg1;
   TFScaleFactor = 1./g1->GetEntries();
   g1->Scale(TFScaleFactor);
@@ -396,7 +380,7 @@ if (makeTimeDistributions)
   g_3->SetMarkerStyle(markerList[3]);
   g_3->SetMarkerColor(colorList[3]);
   g_3->SetMarkerSize(2);
-  /*
+  
   TFile *file4 = TFile::Open(rootFilesGEM[4]);
   HistDQM = (TList *)file4->Get("HistDQM");
   TObject *objg4 = HistDQM->FindObject("f125_el_amp2d");
@@ -410,7 +394,7 @@ if (makeTimeDistributions)
   g_4->SetMarkerStyle(markerList[4]);
   g_4->SetMarkerColor(colorList[4]);
   g_4->SetMarkerSize(2);
-  
+  /*
   TFile *file5 = TFile::Open(rootFilesGEM[5]);
   HistDQM = (TList *)file5->Get("HistDQM");
   TObject *objg5 = HistDQM->FindObject("f125_el_amp2d");
@@ -485,8 +469,8 @@ if (makeTimeDistributions)
   
   TFile *file1m = TFile::Open(rootFilesMMG[1]);
   HistDQM = (TList *)file1m->Get("HistDQM");
-  //TObject *objm1 = HistDQM->FindObject("mmg1_f125_el_amp2ds");
-  TObject *objm1 = HistDQM->FindObject("mmg1_f125_el_amp2d");
+  TObject *objm1 = HistDQM->FindObject("mmg1_f125_el_amp2ds");
+  //TObject *objm1 = HistDQM->FindObject("mmg1_f125_el_amp2d");
   TH2 *m1 = (TH2 *)objm1;
   TFScaleFactor = 1./m1->GetEntries();
   m1->Scale(TFScaleFactor);
@@ -539,7 +523,7 @@ if (makeTimeDistributions)
   m_4->SetMarkerStyle(markerList[4]);
   m_4->SetMarkerColor(colorList[4]);
   m_4->SetMarkerSize(2);
-  
+  /*
   TFile *file5m = TFile::Open(rootFilesMMG[5]);
   HistDQM = (TList *)file5m->Get("HistDQM");
   TObject *objm5 = HistDQM->FindObject("mmg1_f125_el_amp2d");
@@ -581,7 +565,7 @@ if (makeTimeDistributions)
   m_7->SetMarkerStyle(markerList[7]);
   m_7->SetMarkerColor(colorList[7]);
   m_7->SetMarkerSize(2);
-  /*
+  
   TFile *file8m = TFile::Open(rootFilesMMG[8]);
   HistDQM = (TList *)file8m->Get("HistDQM");
   TObject *objm8 = HistDQM->FindObject("mmg1_f125_el_amp2d");
@@ -672,15 +656,15 @@ if (makeTimeDistributions)
   AlignLeadingEdge(g_0, g_1);
   AlignLeadingEdge(g_0, g_2);
   AlignLeadingEdge(g_0, g_3);
-  //AlignLeadingEdge(g_0, g_4);
+  AlignLeadingEdge(g_0, g_4);
   
   AlignLeadingEdge(m_0, m_1);
   AlignLeadingEdge(m_0, m_2);
   AlignLeadingEdge(m_0, m_3);
   AlignLeadingEdge(m_0, m_4);
-  AlignLeadingEdge(m_0, m_5);
-  AlignLeadingEdge(m_0, m_6);
-  AlignLeadingEdge(m_0, m_7);
+  //AlignLeadingEdge(m_0, m_5);
+  //AlignLeadingEdge(m_0, m_6);
+  //AlignLeadingEdge(m_0, m_7);
   
   AlignLeadingEdge(u_0, u_1);
   AlignLeadingEdge(u_0, u_2);
@@ -691,10 +675,10 @@ if (makeTimeDistributions)
   c31->cd();
   gPad->SetGridy();
   l31->AddEntry(g_0,legendListGEM[0],"lp");
-  l31->AddEntry(g_1,legendListGEM[1],"lp");
+  //l31->AddEntry(g_1,legendListGEM[1],"lp");
   l31->AddEntry(g_2,legendListGEM[2],"lp");
   l31->AddEntry(g_3,legendListGEM[3],"lp");
-  //l31->AddEntry(g_4,legendListGEM[4],"lp");
+  l31->AddEntry(g_4,legendListGEM[4],"lp");
   //l31->AddEntry(g_5,legendListGEM[5],"lp");
   //l31->AddEntry(g_6,legendListGEM[6],"lp");
   //l31->AddEntry(g_7,legendListGEM[7],"lp");
@@ -702,12 +686,10 @@ if (makeTimeDistributions)
   g_0->GetYaxis()->SetTitle("ADC Amplitude (Pulses / numEvents)");
   g_0->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
   g_0->GetYaxis()->SetNdivisions(520);
-  //g_0->GetXaxis()->SetRangeUser(45.,160.);
-  g_0->GetXaxis()->SetRangeUser(25.,130.);
-  //g_0->SetMaximum(g_0->GetMaximum()+35.);
-  g_0->SetMaximum(g_0->GetMaximum()+30.);
-  //g_0->SetTitle("#splitline{Triple-GEM-TRD ADC Response in Time}{for Xe Mixtures with Varied HVs}");
-  g_0->SetTitle("#splitline{Triple-GEM-TRD ADC Response in Time, Xe:ISO 90:10}{DF:1.17kV/cm TF:3.74kV/cm, GEM dV Scan}");
+  g_0->GetXaxis()->SetRangeUser(45.,160.);
+  g_0->SetMaximum(g_0->GetMaximum()+35.);
+  g_0->SetTitle("#splitline{Triple-GEM-TRD ADC Response in Time}{for Xe Mixtures with Varied HVs}");
+  //g_0->SetTitle("#splitline{Triple-GEM-TRD ADC Response in Time, Xe:ISO 90:10}{DF:1.17kV/cm TF:3.74kV/cm, GEM dV Scan}");
   //g_0->SetTitle("#splitline{Triple-GEM-TRD ADC Distributions in Xe:ISO 90:10}{GEM dVs: 450V/425V/390V, Transfer Field Scan}");
   gPad->SetTopMargin(0.135);
   g_0->GetXaxis()->SetTitleSize(0.045);
@@ -715,67 +697,64 @@ if (makeTimeDistributions)
   g_0->GetYaxis()->SetTitleSize(0.044);
   g_0->GetYaxis()->SetLabelSize(0.042);
   g_0->Draw("LP same");
-  g_1->Draw("LP same");
+  //g_1->Draw("LP same");
   g_2->Draw("LP same");
   g_3->Draw("LP same");
-  //g_4->Draw("LP same");
+  g_4->Draw("LP same");
   //g_5->Draw("LP same");
   //g_6->Draw("LP same");
   //g_7->Draw("LP same");
   //g_8->Draw("LP same");
   //l31->SetHeader("Transfer Fields","C");
-  l31->SetHeader("GEM dVs","C");
   //l31->SetNColumns(2);
   l31->SetTextSize(0.042);
   l31->Draw();
   gPad->Modified();
   gPad->Update();
-  c31->SaveAs("GEMTRD_Time_Xe_Comparison_v3.C");
-  c31->SaveAs("GEMTRD_Time_Xe_Comparison_v3.pdf");
+  c31->SaveAs("GEMTRD_Time_Xe_Comparison_v6.C");
+  c31->SaveAs("GEMTRD_Time_Xe_Comparison_v6.pdf");
   
   TCanvas *c4 = new TCanvas("c4","MMG1-TRD Timing Distributions at Varied HV in Xe", 1600, 1000);
   c4->cd();
   gPad->SetGridy();
   l4->AddEntry(m_0,legendListMMG[0],"lp");
-  l4->AddEntry(m_1,legendListMMG[1],"lp");
+  //l4->AddEntry(m_1,legendListMMG[1],"lp");
   l4->AddEntry(m_2,legendListMMG[2],"lp");
   l4->AddEntry(m_3,legendListMMG[3],"lp");
   l4->AddEntry(m_4,legendListMMG[4],"lp");
-  l4->AddEntry(m_5,legendListMMG[5],"lp");
-  l4->AddEntry(m_6,legendListMMG[6],"lp");
-  l4->AddEntry(m_7,legendListMMG[7],"lp");
+  //l4->AddEntry(m_5,legendListMMG[5],"lp");
+  //l4->AddEntry(m_6,legendListMMG[6],"lp");
+  //l4->AddEntry(m_7,legendListMMG[7],"lp");
   //l4->AddEntry(m_8,legendListMMG[8],"lp");
   m_0->GetYaxis()->SetTitle("ADC Amplitude (Pulses / numEvents)");
   m_0->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
   m_0->GetYaxis()->SetNdivisions(520);
-  //m_0->GetXaxis()->SetRangeUser(25.,200.);
-  m_0->GetXaxis()->SetRangeUser(15.,155.);
-  //m_0->SetMaximum(m_0->GetMaximum()+32.);
-  m_0->SetMaximum(m_0->GetMaximum()+25.);
-  //m_0->SetTitle("#splitline{MMG1-TRD ADC Response in Time}{for Xe Mixtures with Varied HVs}");
-  m_0->SetTitle("#splitline{MMG1-TRD ADC Response in Time, Xe:ISO 90:10}{DF:1.35kV/cm, Amplification HV Scan}");
+  m_0->GetXaxis()->SetRangeUser(25.,200.);
+  m_0->SetMaximum(m_0->GetMaximum()+32.);
+  m_0->SetTitle("#splitline{MMG1-TRD ADC Response in Time}{for Xe Mixtures with Varied HVs}");
+  //m_0->SetTitle("#splitline{MMG1-TRD ADC Response in Time, Xe:ISO 90:10}{DF:1.35kV/cm, Amplification HV Scan}");
   gPad->SetTopMargin(0.135);
   m_0->GetXaxis()->SetTitleSize(0.045);
   m_0->GetXaxis()->SetLabelSize(0.042);
   m_0->GetYaxis()->SetTitleSize(0.044);
   m_0->GetYaxis()->SetLabelSize(0.042);
   m_0->Draw("PL");
-  m_1->Draw("PL same");
+  //m_1->Draw("PL same");
   m_2->Draw("PL same");
   m_3->Draw("PL same");
   m_4->Draw("PL same");
-  m_5->Draw("PL same");
-  m_6->Draw("PL same");
-  m_7->Draw("PL same");
+  //m_5->Draw("PL same");
+  //m_6->Draw("PL same");
+  //m_7->Draw("PL same");
   //m_8->Draw("PL same");
   l4->SetTextSize(0.042);
-  l4->SetHeader("Divider V_{in}","C");
-  l4->SetNColumns(8);
+  //l4->SetHeader("Divider V_{in}","C");
+  //l4->SetNColumns(8);
   l4->Draw();
   gPad->Modified();
   gPad->Update();
-  c4->SaveAs("MMG1TRD_Time_Xe_Comparison_v2.C");
-  c4->SaveAs("MMG1TRD_Time_Xe_Comparison_v2.pdf");
+  c4->SaveAs("MMG1TRD_Time_Xe_Comparison_v6.C");
+  c4->SaveAs("MMG1TRD_Time_Xe_Comparison_v6.pdf");
   
   
   TCanvas *c5 = new TCanvas("c5","uRWell-TRD Timing Distributions at Varied HV in Xe", 1600, 1000);
@@ -794,16 +773,11 @@ if (makeTimeDistributions)
   u_0->GetYaxis()->SetTitle("ADC Amplitude (Pulses / numEvents)");
   u_0->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
   u_0->GetYaxis()->SetNdivisions(520);
-  //u_0->GetXaxis()->SetRangeUser(15.,145.);
-  //u_0->GetXaxis()->SetRangeUser(35.,160.);
-  u_0->GetXaxis()->SetRangeUser(15.,140.);
-  //u_0->SetMaximum(u_0->GetMaximum()+25.);
-  u_0->SetMaximum(u_0->GetMaximum()+10.);
-  //u_0->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Response in Time, Xe:ISO 90:10}{DF:1.35kV/cm TF:2.35kV/cm WELL:525V, GEM dV Scan}");
+  u_0->GetXaxis()->SetRangeUser(35.,160.);
+  u_0->SetMaximum(u_0->GetMaximum()+20.);
   //u_0->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Response in Time, Xe:ISO 90:10}{DF:1.35kV/cm GEM dV:410V WELL:525V, TF Scan}");
-  u_0->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Response in Time, Xe:ISO 90:10}{DF:1.35kV/cm GEM dV:405V WELL:530V, TF Scan}");
   //u_0->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Response in Time, Xe:ISO 90:10}{DF:1.35kV/cm TF 2.35kV/cm GEM dV:400V, WELL Scan}");
-  //u_0->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Response in Time}{for Xe Mixtures with Varied HVs}");
+  u_0->SetTitle("#splitline{Hybrid #muRWELL-TRD ADC Response in Time}{for Xe Mixtures with Varied HVs}");
   u_0->GetXaxis()->SetTitleSize(0.045);
   u_0->GetXaxis()->SetLabelSize(0.042);
   u_0->GetYaxis()->SetTitleSize(0.044);
@@ -815,14 +789,12 @@ if (makeTimeDistributions)
   //u_4->Draw("PL same");
   l5->SetTextSize(0.042);
   //l5->SetHeader("Resistive WELL","C");
-  //l5->SetHeader("GEM dV","C");
-  l5->SetHeader("Transfer Field","C");
   //l5->SetNColumns(2);
   l5->Draw();
   gPad->Modified();
   gPad->Update(); 
-  c5->SaveAs("URWTRD_Time_Xe_Comparison_v5.C");
-  c5->SaveAs("URWTRD_Time_Xe_Comparison_v5.pdf");
+  c5->SaveAs("URWTRD_Time_Xe_Comparison_v6.C");
+  c5->SaveAs("URWTRD_Time_Xe_Comparison_v6.pdf");
   
   }  
 }
