@@ -8,40 +8,71 @@
 #include <fstream>
 #include <iostream>
 
+
+int FindLeadingEdge(TH1 *h, double frac=0.05) {
+  double thresh = frac*h->GetMaximum();
+  for (int i=1;i<=h->GetNbinsX();i++) {
+    if (h->GetBinContent(i) >= thresh) return i;
+  }
+  return 1;
+}
+void ShiftHistogram(TH1 *h, int shift) {
+  int nx = h->GetNbinsX();
+  std::vector<double> content(nx+2,0.);
+  std::vector<double> error(nx+2,0.);
+  for (int x=1;x<=nx;x++) {
+    int j = x-shift;
+    if (j>=1 && j<=nx) {
+      content[j]=h->GetBinContent(x);
+      error[j]=h->GetBinError(x);
+    }
+  }
+  for (int x=1;x<=nx;x++) {
+    h->SetBinContent(x,content[x]);
+    h->SetBinError(x,error[x]);
+  }
+}
+
+void AlignLeadingEdge(TH1 *reference, TH1 *h) {
+  int ref = FindLeadingEdge(reference);
+  int cur = FindLeadingEdge(h);
+  ShiftHistogram(h, cur-ref);
+}
+
 void timeResponseXe() {
 	
 	TList *HistDQM;
 	double TFScaleFactor = -1.;
-	double DFScaleFactor = -1.;
-	double dVScaleFactor = -1.;
-  double IFScaleFactor = -1.;
-	int colorList[] = {94,2,209,4,7,1,6,51};
+	int colorList[] = {1,2,209,6,4,94,7,51,28};
+  int markerList[] = {3,4,25,27,46,42,30,44,35};
   
 	//=======================================
-	//uRWell-TRD Varied TF
+	//PS25 With Radiator (Highest HV Settings)
 	
-	TFile *file0 = TFile::Open("RootOutput/ps25/Run_006296_Output.root");
+	TFile *file0 = TFile::Open("RootOutput/ps25/Run_006385_Output.root");
 	HistDQM = (TList *)file0->Get("HistDQM");
-	TObject *obj0 = HistDQM->FindObject("urw_f125_x_amp2d");
-	TH2 *tf0 = (TH2 *)obj0;
-	TFScaleFactor = 1./tf0->GetEntries();
-  tf0->Scale(TFScaleFactor);
-	tf0->RebinX(4);
-	TH1D *tf_0 = tf0->ProjectionX("LG RAD",45,105);
-  tf_0->SetLineColor(colorList[0]);
-  tf_0->SetMarkerStyle(20); //filled circle
-  tf_0->SetMarkerSize(2);
-  tf_0->SetMarkerColor(colorList[0]);
-  tf_0->SetDirectory(0);
+	TObject *obju0 = HistDQM->FindObject("urw_f125_x_amp2d");
+	TH2 *u0 = (TH2 *)obju0;
+	TFScaleFactor = 1./u0->GetEntries();
+  u0->Scale(TFScaleFactor);
+	u0->RebinX(4);
+	//TH1D *u_0 = u0->ProjectionX("u_0",30,110);
+	TH1D *u_0 = u0->ProjectionX("u_0");
+  u_0->SetLineColor(colorList[0]);
+  u_0->SetMarkerStyle(markerList[0]);
+  u_0->SetMarkerSize(2);
+  u_0->SetMarkerColor(colorList[0]);
+  u_0->SetDirectory(0);
   
-  TObject *objg0 = HistDQM->FindObject("f125_el_amp2ds");
+  TObject *objg0 = HistDQM->FindObject("f125_el_amp2d");
   TH2 *g0 = (TH2 *)objg0;
   TFScaleFactor = 1./g0->GetEntries();
   g0->Scale(TFScaleFactor);
   g0->RebinX(4);
-  TH1D *g_0 = g0->ProjectionX("LG CU RAD",55,180);
+  //TH1D *g_0 = g0->ProjectionX("g_0",70,200);
+  TH1D *g_0 = g0->ProjectionX("g_0");
   g_0->SetLineColor(colorList[0]);
-  g_0->SetMarkerStyle(20); //filled circle
+  g_0->SetMarkerStyle(markerList[0]);
   g_0->SetMarkerSize(2);
   g_0->SetMarkerColor(colorList[0]);
   g_0->SetDirectory(0);
@@ -51,36 +82,39 @@ void timeResponseXe() {
   TFScaleFactor = 1./m0->GetEntries();
   m0->Scale(TFScaleFactor);
   m0->RebinX(4);
-  TH1D *m_0 = m0->ProjectionX("LG CU RAD",30,130);
+  //TH1D *m_0 = m0->ProjectionX("m_0",30,160);
+  TH1D *m_0 = m0->ProjectionX("m_0");
   m_0->SetLineColor(colorList[0]);
-  m_0->SetMarkerStyle(20); //filled circle
+  m_0->SetMarkerStyle(markerList[0]);
   m_0->SetMarkerColor(colorList[0]);
   m_0->SetMarkerSize(2);
   m_0->SetDirectory(0);
   
-  
-  TFile *file1 = TFile::Open("RootOutput/ps25/Run_006317_Output.root");
+  //PS25 Without Radiator (Highest HV Settings)
+  TFile *file1 = TFile::Open("RootOutput/ps25/Run_006392_Output.root");
   HistDQM = (TList *)file1->Get("HistDQM");
-  TObject *obj1 = HistDQM->FindObject("urw_f125_x_amp2d");
-  TH2 *tf1 = (TH2 *)obj1;
-  TFScaleFactor = 1./tf1->GetEntries();
-  tf1->Scale(TFScaleFactor);
-  tf1->RebinX(4);
-  TH1D *tf_1 = tf1->ProjectionX("LG NORAD",45,105);
-  tf_1->SetLineColor(colorList[1]);
-  tf_1->SetMarkerStyle(20); //filled circle
-  tf_1->SetMarkerColor(colorList[1]);
-  tf_1->SetMarkerSize(2);
-  tf_1->SetDirectory(0);
+  TObject *obju1 = HistDQM->FindObject("urw_f125_x_amp2d");
+  TH2 *u1 = (TH2 *)obju1;
+  TFScaleFactor = 1./u1->GetEntries();
+  u1->Scale(TFScaleFactor);
+  u1->RebinX(4);
+  //TH1D *u_1 = u1->ProjectionX("u_1",30,110);
+  TH1D *u_1 = u1->ProjectionX("u_1");
+  u_1->SetLineColor(colorList[1]);
+  u_1->SetMarkerStyle(markerList[1]);
+  u_1->SetMarkerColor(colorList[1]);
+  u_1->SetMarkerSize(2);
+  u_1->SetDirectory(0);
   
   TObject *objg1 = HistDQM->FindObject("f125_el_amp2d");
   TH2 *g1 = (TH2 *)objg1;
   TFScaleFactor = 1./g1->GetEntries();
   g1->Scale(TFScaleFactor);
   g1->RebinX(4);
-  TH1D *g_1 = g1->ProjectionX("LG CU NORAD",55,180);
+  //TH1D *g_1 = g1->ProjectionX("g_1",70,200);
+  TH1D *g_1 = g1->ProjectionX("g_1");
   g_1->SetLineColor(colorList[1]);
-  g_1->SetMarkerStyle(20); //filled circle
+  g_1->SetMarkerStyle(markerList[1]);
   g_1->SetMarkerColor(colorList[1]);
   g_1->SetMarkerSize(2);
   g_1->SetDirectory(0);
@@ -90,37 +124,37 @@ void timeResponseXe() {
   TFScaleFactor = 1./m1->GetEntries();
   m1->Scale(TFScaleFactor);
   m1->RebinX(4);
-  TH1D *m_1 = m1->ProjectionX("LG CU NORAD",30,130);
+  //TH1D *m_1 = m1->ProjectionX("m_1",30,160);
+  TH1D *m_1 = m1->ProjectionX("m_1");
   m_1->SetLineColor(colorList[1]);
-  m_1->SetMarkerStyle(20); //filled circle
+  m_1->SetMarkerStyle(markerList[1]);
   m_1->SetMarkerColor(colorList[1]);
   m_1->SetMarkerSize(2);
   m_1->SetDirectory(0);
   
-  
-  TFile *file2 = TFile::Open("RootOutput/ps25/Run_006303_Output.root");
-  //TFile *file2 = TFile::Open("RootOutput/ps25/Run_006304_Output.root");
+  //PS26 With Radiator (Highest HV Settings)
+  TFile *file2 = TFile::Open("RootOutput/ps26/Run_008257_Output.root");
   HistDQM = (TList *)file2->Get("HistDQM");
-  TObject *obj2 = HistDQM->FindObject("urw_f125_x_amp2d");
-  TH2 *tf2 = (TH2 *)obj2;
-  TFScaleFactor = 1./tf2->GetEntries();
-  tf2->Scale(TFScaleFactor);
-  tf2->RebinX(4);
-  TH1D *tf_2 = tf2->ProjectionX("HG RAD",45,105);
-  tf_2->SetLineColor(colorList[2]);
-  tf_2->SetMarkerStyle(20); //filled circle
-  tf_2->SetMarkerColor(colorList[2]);
-  tf_2->SetMarkerSize(2);
-  tf_2->SetDirectory(0);
+  TObject *obju2 = HistDQM->FindObject("urw_f125_x_amp2d");
+  TH2 *u2 = (TH2 *)obju2;
+  TFScaleFactor = 1./u2->GetEntries();
+  u2->Scale(TFScaleFactor);
+  u2->RebinX(4);
+  TH1D *u_2 = u2->ProjectionX("u_2");
+  u_2->SetLineColor(colorList[2]);
+  u_2->SetMarkerStyle(markerList[2]);
+  u_2->SetMarkerColor(colorList[2]);
+  u_2->SetMarkerSize(2);
+  u_2->SetDirectory(0);
   
   TObject *objg2 = HistDQM->FindObject("f125_el_amp2d");
   TH2 *g2 = (TH2 *)objg2;
   TFScaleFactor = 1./g2->GetEntries();
   g2->Scale(TFScaleFactor);
   g2->RebinX(4);
-  TH1D *g_2 = g2->ProjectionX("HG CU RAD",55,180);
+  TH1D *g_2 = g2->ProjectionX("g_2");
   g_2->SetLineColor(colorList[2]);
-  g_2->SetMarkerStyle(20); //filled circle
+  g_2->SetMarkerStyle(markerList[2]);
   g_2->SetMarkerColor(colorList[2]);
   g_2->SetMarkerSize(2);
   g_2->SetDirectory(0);
@@ -130,37 +164,36 @@ void timeResponseXe() {
   TFScaleFactor = 1./m2->GetEntries();
   m2->Scale(TFScaleFactor);
   m2->RebinX(4);
-  TH1D *m_2 = m2->ProjectionX("HG CU RAD",30,130);
+  TH1D *m_2 = m2->ProjectionX("m_2");
   m_2->SetLineColor(colorList[2]);
-  m_2->SetMarkerStyle(20); //filled circle
+  m_2->SetMarkerStyle(markerList[2]);
   m_2->SetMarkerColor(colorList[2]);
   m_2->SetMarkerSize(2);
   m_2->SetDirectory(0);
   
-  
-  TFile *file3 = TFile::Open("RootOutput/ps25/Run_006320_Output.root");
-  //TFile *file3 = TFile::Open("RootOutput/ps25/Run_006319_Output.root");
+  //PS26 Without Radiator (Highest HV Settings)
+  TFile *file3 = TFile::Open("RootOutput/ps26/Run_008266_Output.root");
   HistDQM = (TList *)file3->Get("HistDQM");
-  TObject *obj3 = HistDQM->FindObject("urw_f125_x_amp2d");
-  TH2 *tf3 = (TH2 *)obj3;
-  TFScaleFactor = 1./tf3->GetEntries();
-  tf3->Scale(TFScaleFactor);
-  tf3->RebinX(4);
-  TH1D *tf_3 = tf3->ProjectionX("HG NORAD",45,105);
-  tf_3->SetLineColor(colorList[3]);
-  tf_3->SetMarkerStyle(20); //filled circle
-  tf_3->SetMarkerColor(colorList[3]);
-  tf_3->SetMarkerSize(2);
-  tf_3->SetDirectory(0);
+  TObject *obju3 = HistDQM->FindObject("urw_f125_x_amp2d");
+  TH2 *u3 = (TH2 *)obju3;
+  TFScaleFactor = 1./u3->GetEntries();
+  u3->Scale(TFScaleFactor);
+  u3->RebinX(4);
+  TH1D *u_3 = u3->ProjectionX("u_3");
+  u_3->SetLineColor(colorList[3]);
+  u_3->SetMarkerStyle(markerList[3]);
+  u_3->SetMarkerColor(colorList[3]);
+  u_3->SetMarkerSize(2);
+  u_3->SetDirectory(0);
   
   TObject *objg3 = HistDQM->FindObject("f125_el_amp2d");
   TH2 *g3 = (TH2 *)objg3;
   TFScaleFactor = 1./g3->GetEntries();
   g3->Scale(TFScaleFactor);
   g3->RebinX(4);
-  TH1D *g_3 = g3->ProjectionX("HG CU NORAD",55,180);
+  TH1D *g_3 = g3->ProjectionX("g_3");
   g_3->SetLineColor(colorList[3]);
-  g_3->SetMarkerStyle(20); //filled circle
+  g_3->SetMarkerStyle(markerList[3]);
   g_3->SetMarkerColor(colorList[3]);
   g_3->SetMarkerSize(2);
   g_3->SetDirectory(0);
@@ -170,14 +203,14 @@ void timeResponseXe() {
   TFScaleFactor = 1./m3->GetEntries();
   m3->Scale(TFScaleFactor);
   m3->RebinX(4);
-  TH1D *m_3 = m3->ProjectionX("HG CU NORAD",30,130);
+  TH1D *m_3 = m3->ProjectionX("m_3");
   m_3->SetLineColor(colorList[3]);
-  m_3->SetMarkerStyle(20); //filled circle
+  m_3->SetMarkerStyle(markerList[3]);
   m_3->SetMarkerColor(colorList[3]);
   m_3->SetMarkerSize(2);
   m_3->SetDirectory(0);
   
-  
+  /*
   TFile *file4 = TFile::Open("RootOutput/ps25/Run_006382_Output.root");
   HistDQM = (TList *)file4->Get("HistDQM");
   TObject *obj4 = HistDQM->FindObject("urw_f125_x_amp2d");
@@ -334,118 +367,122 @@ void timeResponseXe() {
   m_7->SetMarkerColor(colorList[7]);
   m_7->SetMarkerSize(2);
   m_7->SetDirectory(0);
-  
+  */
   //===============================================================================
   //    Make Plots
   //===============================================================================
   
+  //==== Artificially set leading edges to the same place in time, for all data sets
+  AlignLeadingEdge(u_0, u_1);
+  AlignLeadingEdge(u_0, u_2);
+  AlignLeadingEdge(u_0, u_3);
+  
+  AlignLeadingEdge(g_0, g_1);
+  AlignLeadingEdge(g_0, g_2);
+  AlignLeadingEdge(g_0, g_3);
+  
+  AlignLeadingEdge(m_0, m_1);
+  AlignLeadingEdge(m_0, m_2);
+  AlignLeadingEdge(m_0, m_3);
+  
   //=========== uRWELL Plot =================
-	TCanvas *c0 = new TCanvas("c0","uRWell-TRD ADC Response in Time for XeCO2", 1400, 1000);
+	TCanvas *c0 = new TCanvas("c0","uRWell-TRD ADC Response in Time", 1400, 1000);
 	gStyle->SetOptStat(0);
 	c0->cd();
  	gPad->SetGridy();
-	
-	TLegend *l0 = new TLegend(0.42,0.685,0.9,0.9);
-	//l0->AddEntry(tf_0,"Low TF, 'Low Gain' 20cm Fleece Rad","lp");
-  //l0->AddEntry(tf_1,"Low TF, 'Low Gain' No Rad","lp");
-  l0->AddEntry(tf_2,"'Low TF High Gain' With Rad","lp");
-	l0->AddEntry(tf_3,"'Low TF High Gain' No Rad","lp");
-  //l0->AddEntry(tf_4,"High TF, 'Low Gain' 20cm Fleece Rad","lp");
-  l0->AddEntry(tf_5,"'High TF High Gain' With Rad","lp");
-  l0->AddEntry(tf_6,"'High TF High Gain' No Rad","lp");
-  //l0->AddEntry(tf_7,"High TF, 'Low Gain' No Rad","lp");
+	TLegend *l0 = new TLegend(0.38,0.685,0.9,0.9);
+	l0->AddEntry(u_0,"2025 Xe:CO_{2}, 20cm Fleece Rad","lp");
+  l0->AddEntry(u_1,"2025 Xe:CO_{2}, No Rad","lp");
+  l0->AddEntry(u_2,"2026 Xe:ISO, 20cm Fleece Rad","lp");
+	l0->AddEntry(u_3,"2026 Xe:ISO, No Rad","lp");
+  
+	u_0->GetYaxis()->SetTitle("ADC Amplitude (Pulses / numEvents)");
+	u_0->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
+  //u_0->GetYaxis()->SetNdivisions(520);
+	u_0->GetXaxis()->SetRangeUser(45,155);
+  u_0->SetMaximum(u_0->GetMaximum()+20.);
+	u_0->SetTitle("Hybrid #muRWell-TRD ADC Response in Time");
+  u_0->GetYaxis()->SetTitleSize(0.052);
+  u_0->GetYaxis()->SetLabelSize(0.043);
+  u_0->GetYaxis()->SetTitleOffset(0.85);
+  u_0->GetXaxis()->SetTitleSize(0.052);
+  u_0->GetXaxis()->SetLabelSize(0.043);
+	u_0->Draw("");
+	u_1->Draw("same");
+  u_2->Draw("same");
+  u_3->Draw("same");
   l0->SetTextSize(0.042);
-  
-	tf_5->GetYaxis()->SetTitle("ADC Amplitude (Pulses / nEvents)");
-	tf_5->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
-  //tf_5->GetYaxis()->SetNdivisions(520);
-	tf_5->GetXaxis()->SetRangeUser(40,160);
-  tf_5->SetMaximum(tf_5->GetMaximum()+15.);
-	tf_5->SetTitle("#muRWell+GEM-TRD ADC Response in Time for Xe:CO_{2} 90:10");
-  tf_5->GetYaxis()->SetTitleSize(0.052);
-  tf_5->GetYaxis()->SetLabelSize(0.043);
-  tf_5->GetYaxis()->SetTitleOffset(0.85);
-  tf_5->GetXaxis()->SetTitleSize(0.052);
-  tf_5->GetXaxis()->SetLabelSize(0.043);
-	tf_5->Draw("");
-	//tf_1->Draw("same");
-  tf_2->Draw("same");
-  tf_3->Draw("same");
-  //tf_4->Draw("same");
-  //tf_0->Draw("same");
-  tf_6->Draw("same");
-  //tf_7->Draw("same");
-  
 	l0->Draw();
-	c0->SaveAs("urw_time_Xe_Comparison_Feb26.png");
+	gPad->Modified();
+	gPad->Update();
+	c0->SaveAs("urw_time_Comparison_v1.pdf");
   
-  //=========== uRWELL Ratio Plot =================
+  //=========== uRWELL-TRD Ratio Plot =================
   TCanvas *c0_r = new TCanvas("c0_r","c0_r", 1400, 1000);
 	gStyle->SetOptStat(0);
 	c0_r->cd();
  	gPad->SetGridy();
- 	gPad->SetLeftMargin(0.135); //0.18
+ 	gPad->SetLeftMargin(0.135);
  	gPad->SetBottomMargin(0.135);
- 	
- 	TLegend *l0r = new TLegend(0.25,0.7,0.6,0.9);
+ 	gPad->SetTopMargin(0.135);
+
+ 	TLegend *l0r = new TLegend(0.25,0.7,0.6,0.865);
 	//l0r->SetNColumns(2);
 	
-	tf_2->Divide(tf_3);
-  tf_5->Divide(tf_6);
-  tf_2->GetYaxis()->SetTitle("#splitline{(ADC Response, Radiator) /}{ (ADC Response, No Radiator)}");
-  tf_2->GetYaxis()->SetLabelSize(0.044);
-  tf_2->GetYaxis()->SetTitleSize(0.047);
-	tf_2->GetXaxis()->SetLabelSize(0.044);
-  tf_2->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
-  tf_2->GetXaxis()->SetTitleSize(0.05);
-	tf_2->SetTitle("#muRWELL+GEM (Radiator) / (No Radiator) ADC Response Ratio in Time");
-	tf_2->SetMaximum(4.);
-	tf_2->SetMinimum(0.5);	
-	tf_2->GetXaxis()->SetRangeUser(50,140);
-	tf_2->GetYaxis()->SetNdivisions(520);
-  l0r->AddEntry(tf_2,"Electrons with Low TF","lp");
-	l0r->AddEntry(tf_5,"Electrons with High TF","lp");
-	tf_2->Draw();
-	tf_5->Draw("same");
-	l0r->SetTextSize(0.041);
+	u_0->Divide(u_1);
+  u_2->Divide(u_3);
+  u_2->GetYaxis()->SetTitle("#splitline{(ADC Response, Radiator) /}{ (ADC Response, No Radiator)}");
+  u_2->GetYaxis()->SetLabelSize(0.044);
+  u_2->GetYaxis()->SetTitleSize(0.047);
+	u_2->GetXaxis()->SetLabelSize(0.044);
+  u_2->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
+  u_2->GetXaxis()->SetTitleSize(0.05);
+	u_2->SetTitle("Hybrid #muRWELL-TRD (Radiator) / (No Radiator) ADC Response Ratio in Time");
+	u_2->SetMaximum(5.);
+	u_2->SetMinimum(0.8);
+	u_2->GetXaxis()->SetRangeUser(45,155);
+	//u_2->GetYaxis()->SetNdivisions(520);
+  l0r->AddEntry(u_0,"2025 Xe:CO_{2}","lp");
+	l0r->AddEntry(u_2,"2026 Xe:ISO","lp");
+	u_2->Draw();
+	u_0->Draw("same");
+	l0r->SetTextSize(0.042);
 	l0r->Draw();
-	c0_r->SaveAs("urw_time_Xe_ratios_Feb26.png");
+	gPad->Modified();
+	gPad->Update();
+	c0_r->SaveAs("urw_Xe_ratios_v1.pdf");
   
   //=========== GEM Plot =================
-  TCanvas *c1 = new TCanvas("c1","Triple GEM-TRD ADC Response in Time for XeCO2", 1400, 1000);
+  TCanvas *c1 = new TCanvas("c1","Triple GEM-TRD ADC Response in Time", 1400, 1000);
   gStyle->SetOptStat(0);
   c1->cd();
   gPad->SetGridy();
+  TLegend *l1 = new TLegend(0.38,0.685,0.9,0.9);
+  l1->AddEntry(g_0,"2025 Xe:CO_{2}, 20cm Fleece Rad","lp");
+  l1->AddEntry(g_1,"2025 Xe:CO_{2}, No Rad","lp");
+  l1->AddEntry(g_2,"2026 Xe:ISO, 20cm Fleece Rad","lp");
+  l1->AddEntry(g_3,"2026 Xe:ISO, No Rad","lp");
   
-  TLegend *l1 = new TLegend(0.45,0.685,0.9,0.9);
-  //l1->AddEntry(g_0,"'Low Gain' 5um Cu, 20cm Fleece Rad","lp");
-  //l1->AddEntry(g_1,"'Low Gain' 5um Cu, No Rad","lp");
-  l1->AddEntry(g_2,"'High Gain' Cu, With Rad","lp");
-  l1->AddEntry(g_3,"'High Gain' Cu, No Rad","lp");
-  //l1->AddEntry(g_4,"'Low Gain' 0.1um Al, 20cm Fleece Rad","lp");
-  l1->AddEntry(g_5,"'High Gain' Al, With Rad","lp");
-  l1->AddEntry(g_6,"'High Gain' Al, No Rad","lp");
-  //l1->AddEntry(g_7,"'Low Gain' 0.1um Al, No Rad","lp");
-  l1->SetTextSize(0.042);
-  
-  g_5->GetYaxis()->SetTitle("ADC Amplitude (Pulses / nEvents)");
-  g_5->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
-  //g_5->GetYaxis()->SetNdivisions(520);
-  g_5->GetXaxis()->SetRangeUser(50,160);
-  g_5->SetMaximum(g_5->GetMaximum()+21.);
-  g_5->SetTitle("Triple GEM-TRD ADC Response in Time for Xe:CO_{2} 90:10");
-  g_5->GetYaxis()->SetTitleSize(0.052);
-  g_5->GetYaxis()->SetLabelSize(0.043);
-  g_5->GetYaxis()->SetTitleOffset(0.85);
-  g_5->GetXaxis()->SetTitleSize(0.052);
-  g_5->GetXaxis()->SetLabelSize(0.043);
-  g_5->Draw("");
+  g_0->GetYaxis()->SetTitle("ADC Amplitude (Pulses / nEvents)");
+  g_0->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
+  //g_0->GetYaxis()->SetNdivisions(520);
+  g_0->GetXaxis()->SetRangeUser(60,150);
+  g_0->SetMaximum(g_0->GetMaximum()+25.);
+  g_0->SetTitle("Triple GEM-TRD ADC Response in Time");
+  g_0->GetYaxis()->SetTitleSize(0.052);
+  g_0->GetYaxis()->SetLabelSize(0.043);
+  g_0->GetYaxis()->SetTitleOffset(0.85);
+  g_0->GetXaxis()->SetTitleSize(0.052);
+  g_0->GetXaxis()->SetLabelSize(0.043);
+  g_0->Draw("");
+  g_1->Draw("same");
   g_2->Draw("same");
   g_3->Draw("same");
-  g_6->Draw("same");
-  
+  l1->SetTextSize(0.042);
   l1->Draw();
-  c1->SaveAs("gem_time_Xe_Comparison_Feb26.png");
+  gPad->Modified();
+	gPad->Update();
+  c1->SaveAs("gem_time_Comparison_v1.pdf");
   
   
   //=========== GEM Ratio Plot =================
@@ -453,14 +490,14 @@ void timeResponseXe() {
 	gStyle->SetOptStat(0);
 	c1_r->cd();
  	gPad->SetGridy();
- 	gPad->SetLeftMargin(0.135); //0.18
+ 	gPad->SetLeftMargin(0.135);
  	gPad->SetBottomMargin(0.135);
- 	
- 	TLegend *l1r = new TLegend(0.3,0.7,0.6,0.9);
+ 	gPad->SetTopMargin(0.135);
+ 	TLegend *l1r = new TLegend(0.3,0.7,0.6,0.865);
 	//l1r->SetNColumns(2);
 	
-	g_2->Divide(g_3);
-  g_5->Divide(g_6);
+	g_0->Divide(g_1);
+  g_2->Divide(g_3);
   g_2->GetYaxis()->SetTitle("#splitline{(ADC Response, Radiator) /}{ (ADC Response, No Radiator)}");
   g_2->GetYaxis()->SetLabelSize(0.044);
   g_2->GetYaxis()->SetTitleSize(0.047);
@@ -468,17 +505,19 @@ void timeResponseXe() {
 	g_2->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
   g_2->GetXaxis()->SetTitleSize(0.05);
 	g_2->SetTitle("Triple-GEM (Radiator) / (No Radiator) ADC Response Ratio in Time");
-	g_2->SetMaximum(4.);
-	g_2->SetMinimum(0.5);	
-	g_2->GetXaxis()->SetRangeUser(65,145);
-	g_2->GetYaxis()->SetNdivisions(520);
-  l1r->AddEntry(g_2,"Electrons with Cu","lp");
-	l1r->AddEntry(g_5,"Electrons with Al","lp");
+	g_2->SetMaximum(5.);
+	g_2->SetMinimum(0.8);
+	g_2->GetXaxis()->SetRangeUser(60,150);
+	//g_2->GetYaxis()->SetNdivisions(520);
+  l1r->AddEntry(g_0,"2025 Xe:CO_{2}","lp");
+	l1r->AddEntry(g_2,"2026 Xe:ISO","lp");
 	g_2->Draw();
-	g_5->Draw("same");
-	l1r->SetTextSize(0.041);
+	g_0->Draw("same");
+	l1r->SetTextSize(0.042);
 	l1r->Draw();
-	c1_r->SaveAs("gem_time_Xe_ratios_Feb26.png");
+	gPad->Modified();
+	gPad->Update();
+	c1_r->SaveAs("gem_Xe_ratios_v1.pdf");
 	
 	
   
@@ -487,70 +526,64 @@ void timeResponseXe() {
   gStyle->SetOptStat(0);
   c2->cd();
   gPad->SetGridy();
+  TLegend *l2 = new TLegend(0.38,0.685,0.9,0.9);
+  l2->AddEntry(m_0,"2025 Xe:CO_{2}, 20cm Fleece Rad","lp");
+  l2->AddEntry(m_1,"2025 Xe:CO_{2}, No Rad","lp");
+  l2->AddEntry(m_2,"2026 Xe:ISO, 20cm Fleece Rad","lp");
+  l2->AddEntry(m_3,"2026 Xe:ISO, No Rad","lp");
   
-  TLegend *l2 = new TLegend(0.45,0.685,0.9,0.9);
-  //l2->AddEntry(m_0,"'Low Gain' 5um Cu, 20cm Fleece Rad","lp");
-  //l2->AddEntry(m_1,"'Low Gain' 5um Cu, No Rad","lp");
-  l2->AddEntry(m_2,"'High Gain' Cu, With Rad","lp");
-  l2->AddEntry(m_3,"'High Gain' Cu, No Rad","lp");
-  //l2->AddEntry(m_4,"'Low Gain' 0.1um Al, 20cm Fleece Rad","lp");
-  l2->AddEntry(m_5,"'High Gain' Al, With Rad","lp");
-  l2->AddEntry(m_6,"'High Gain' Al, No Rad","lp");
-  //l2->AddEntry(m_7,"'Low Gain' 0.1um Al, No Rad","lp");
-  l2->SetTextSize(0.042);
-  
-  m_5->GetYaxis()->SetTitle("ADC Amplitude (Pulses / nEvents)");
-  m_5->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
-  //m_5->GetYaxis()->SetNdivisions(520);
-  m_5->GetXaxis()->SetRangeUser(45,170);
-  m_5->SetMaximum(m_5->GetMaximum()+15.);
-  m_5->SetTitle("MMG+GEM-TRD ADC Response in Time for Xe:CO_{2} 90:10");
-  m_5->GetYaxis()->SetTitleSize(0.052);
-  m_5->GetYaxis()->SetLabelSize(0.043);
-  m_5->GetYaxis()->SetTitleOffset(0.85);
-  m_5->GetXaxis()->SetTitleSize(0.052);
-  m_5->GetXaxis()->SetLabelSize(0.043);
-  m_5->Draw("");
-  //m_1->Draw("same");
+  m_0->GetYaxis()->SetTitle("ADC Amplitude (Pulses / nEvents)");
+  m_0->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
+  //m_0->GetYaxis()->SetNdivisions(520);
+  m_0->GetXaxis()->SetRangeUser(50,170);
+  m_0->SetMaximum(m_0->GetMaximum()+25.);
+  m_0->SetTitle("Hybrid MMG-TRD ADC Response in Time");
+  m_0->GetYaxis()->SetTitleSize(0.052);
+  m_0->GetYaxis()->SetLabelSize(0.043);
+  m_0->GetYaxis()->SetTitleOffset(0.85);
+  m_0->GetXaxis()->SetTitleSize(0.052);
+  m_0->GetXaxis()->SetLabelSize(0.043);
+  m_0->Draw("");
+  m_1->Draw("same");
   m_2->Draw("same");
   m_3->Draw("same");
-  //m_4->Draw("same");
-  //m_0->Draw("same");
-  m_6->Draw("same");
-  //m_7->Draw("same");
-  
+  l2->SetTextSize(0.042);
   l2->Draw();
-  c2->SaveAs("mmg_time_Xe_Comparison_Feb26.png");
+  gPad->Modified();
+	gPad->Update();
+  c2->SaveAs("mmg_time_Comparison_v1.pdf");
   
   //=========== MMG Ratio Plot =================
   TCanvas *c2_r = new TCanvas("c2_r","c2_r", 1400, 1000);
 	gStyle->SetOptStat(0);
 	c2_r->cd();
  	gPad->SetGridy();
- 	gPad->SetLeftMargin(0.135); //0.18
+ 	gPad->SetLeftMargin(0.135);
  	gPad->SetBottomMargin(0.135);
- 	
- 	TLegend *l2r = new TLegend(0.3,0.7,0.6,0.9);
+ 	gPad->SetTopMargin(0.135);
+ 	TLegend *l2r = new TLegend(0.3,0.7,0.6,0.865);
 	//l2r->SetNColumns(2);
 	
-	m_2->Divide(m_3);
-  m_5->Divide(m_6);
+	m_0->Divide(m_1);
+  m_2->Divide(m_3);
   m_2->GetYaxis()->SetTitle("#splitline{(ADC Response, Radiator) /}{ (ADC Response, No Radiator)}");
   m_2->GetYaxis()->SetLabelSize(0.044);
   m_2->GetYaxis()->SetTitleSize(0.047);
 	m_2->GetXaxis()->SetLabelSize(0.044);
 	m_2->GetXaxis()->SetTitle("Drift Time (8ns/bin)");
   m_2->GetXaxis()->SetTitleSize(0.05);
-	m_2->SetTitle("MMG+GEM (Radiator) / (No Radiator) ADC Response Ratio in Time");
-	m_2->SetMaximum(4.);
-	m_2->SetMinimum(0.5);	
-	m_2->GetXaxis()->SetRangeUser(54,160);
-	m_2->GetYaxis()->SetNdivisions(520);
-  l2r->AddEntry(m_2,"Electrons with Cu","lp");
-	l2r->AddEntry(m_5,"Electrons with Al","lp");
+	m_2->SetTitle("Hybrid MMG-TRD (Radiator) / (No Radiator) ADC Response Ratio in Time");
+	m_2->SetMaximum(5.);
+	m_2->SetMinimum(0.8);
+	m_2->GetXaxis()->SetRangeUser(50,170);
+	//m_2->GetYaxis()->SetNdivisions(520);
+  l2r->AddEntry(m_0,"2025 Xe:CO_{2}","lp");
+	l2r->AddEntry(m_2,"2026 Xe:ISO","lp");
 	m_2->Draw();
-	m_5->Draw("same");
-	l2r->SetTextSize(0.041);
+	m_0->Draw("same");
+	l2r->SetTextSize(0.042);
 	l2r->Draw();
-	c2_r->SaveAs("mmg_time_Xe_ratios_Feb26.png");
+	gPad->Modified();
+	gPad->Update();
+	c2_r->SaveAs("mmg_Xe_ratios_v1.pdf");
 }
