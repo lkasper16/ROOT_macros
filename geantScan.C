@@ -31,6 +31,7 @@ void geantScan(){
   TString rootFilesTransparentR[] = {"../largeGemSim/transparentR/fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1.root","../largeGemSim/transparentR/fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_1.0Al_TR.root","../largeGemSim/transparentR/fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_1.5Al_TR.root","../largeGemSim/transparentR/fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_2.0Al_TR.root"};
   //TString rootFilesGammaR[] = {"fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_0.1Al_G.root","fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_0.5Al_G.root","fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_1.0Al_G.root","fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_2.0Al_G.root","fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_5.0Al_G.root","fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_10.0Al_G.root","fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_12.0Al_G.root","fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_15.0Al_G.root"};
   TString rootFilesGammaR[] = {"fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_0.1Al_GM_2M.root","fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_1.0Al_GM_2M.root","fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_1.5Al_GM_2M.root","fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_2.0Al_GM_2M.root"};
+  TString rootFilesMaterialScan[] = {"../largeGemSim/transparentR/fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_1.5Al_TR.root","../largeGemSim/transparentR/fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_0.5Cu_TR.root","../largeGemSim/transparentR/fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_0.2Cr_TR.root","../largeGemSim/transparentR/fdc15_e-10000MeV_Xe10CO2_d30:1.5mm_r20cm_m1_0.085Au_TR.root"};
   
   TList *histListRegularR = new TList;
   TList *histListTransparentR = new TList;
@@ -41,6 +42,7 @@ void geantScan(){
   TString nameList[] = {"hist31","hist32","hist33","hist26"};
   //TString titleList[] = {"50um Kapton 0.1um Al","50um Kapton 0.5um Al","50um Kapton 1.0um Al","50um Kapton 2.0um Al","50um Kapton 5.0um Al","50um Kapton 10.0um Al","50um Kapton 12.0um Al","50um Kapton 15.0um Al"};
   TString titleList[] = {"0.1 #mum Al","1.0 #mum Al","1.5 #mum Al","2.0 #mum Al"};
+  TString materialScanTitleList[] = {"1.5 #mum Al","0.5 #mum Cu","0.2 #mum Cr","0.085 #mum Au"};
   
   //TString ratioTitleList[] = {"Spectra Absorbed in Xe: 0.1um Al / 0.1um Al","Spectra Absorbed in Xe: 0.5um Al / 0.1um Al","Spectra Absorbed in Xe: 1.0um Al / 0.1um Al","Spectra Absorbed in Xe: 2.0um Al / 0.1um Al","Spectra Absorbed in Xe: 5.0um Al / 0.1um Al","Spectra Absorbed in Xe: 10.0um Al / 0.1um Al","Spectra Absorbed in Xe: 12.0um Al / 0.1um Al","Spectra Absorbed in Xe: 15.0um Al / 0.1um Al"};
   TString ratioTitleList[] = {"Spectra Absorbed in Xe: 0.1 #mum Al / 0.1 #mum Al","Spectra Absorbed in Xe: 1.0 #mum Al / 0.1 #mum Al","Spectra Absorbed in Xe: 1.5 #mum Al / 0.1 #mum Al","Spectra Absorbed in Xe: 2.0 #mum Al / 0.1 #mum Al"};
@@ -76,7 +78,6 @@ void geantScan(){
   TCanvas *c2d = new TCanvas("c2d","TransparentR Model Integral Plots", 1900, 600);
 	c2d->Divide(4,1);
   
-    
   TCanvas *c3 = new TCanvas("c3","125K e-, 20cm GammaR Rad, 3cm Xe:CO2 90:10", 1900, 650);
   gStyle->SetOptStat(00000);
   c3->Divide(4,1);
@@ -84,6 +85,13 @@ void geantScan(){
   TCanvas *c3r = new TCanvas("c3r","GammaR Model Ratio Plots", 1900, 650);
 	c3r->Divide(4,1);
   c3r->SetTicks(0,1);
+  
+  TCanvas *c4 = new TCanvas("c4","150K e-, 20cm TransparentR Rad, 3cm Xe:CO2 90:10", 1900, 600);
+  gStyle->SetOptStat(00000);
+  c4->Divide(4,1);
+  
+  TCanvas *c4d = new TCanvas("c4d","TransparentR Model Integral Plots", 1900, 600);
+	c4d->Divide(4,1);
   
   //TCanvas *c3gs = new TCanvas("c3gs","GammaR Model Ratio Plots", 1600, 800);
   //c3gs->Divide(2,1);
@@ -129,6 +137,7 @@ void geantScan(){
   //escapeSubtract1g->Scale(scale);
   escapeSubtract1g->SetDirectory(0);
   
+  /*
   //-- RegularR Model
 	for (int i=0; i<sizeof(rootFilesRegularR)/sizeof(rootFilesRegularR[0]); i++) {
 		const TString& rootFile = rootFilesRegularR[i];
@@ -219,7 +228,7 @@ void geantScan(){
     file->Close();
     histListRegularR->Clear();
   } //--END RegularR Model loop
-  
+  */
   //-- TransparentR Model
 	for (int i=0; i<sizeof(rootFilesTransparentR)/sizeof(rootFilesTransparentR[0]); i++) {
 		const TString& rootFile = rootFilesTransparentR[i];
@@ -352,6 +361,113 @@ void geantScan(){
   } //--END TransparentR Model Loop
   
   
+  
+  
+  //-- Material Scan
+	for (int i=0; i<sizeof(rootFilesMaterialScan)/sizeof(rootFilesMaterialScan[0]); i++) {
+		const TString& rootFile = rootFilesMaterialScan[i];
+		TFile *file = TFile::Open(rootFile, "READ");
+    
+    TObject *obj1 = file->Get(nameList[0]);
+    if (obj1) {
+			TH1 *exitRad = (TH1*)obj1;
+      exitRad->SetLineColor(colorList[0]);
+      exitRad->SetLineWidth(2);
+      exitRad->SetDirectory(0);
+      histListTransparentR->Add(exitRad);
+      //if(i==0) l2->AddEntry(exitRad, legendList[0], "l");
+		}
+    TObject *obj2 = file->Get(nameList[1]);
+    if (obj2) {
+			TH1 *exitWin = (TH1*)obj2;
+      exitWin->SetLineColor(colorList[1]);
+      exitWin->SetLineWidth(2);
+      exitWin->SetDirectory(0);
+		}
+    TObject *obj3 = file->Get(nameList[2]);
+    if (obj3) {
+			TH1 *exitCath = (TH1*)obj3;
+      exitCath->SetLineColor(colorList[2]);
+      exitCath->SetLineWidth(2);
+      exitCath->SetFillColor(colorList[2]);
+      exitCath->SetFillStyle(3003);
+      exitCath->SetDirectory(0);
+      histListTransparentR->Add(exitCath);
+      //if(i==0) l2->AddEntry(exitCath, legendList[2], "l");
+		}
+    TObject *obj4 = file->Get(nameList[3]);
+    if (obj4) {
+			TH1 *exitDet = (TH1*)obj4;
+      exitDet->SetLineColor(colorList[3]);
+      exitDet->SetLineWidth(2);
+      exitDet->SetLineStyle(4);
+      exitDet->SetFillColor(10);
+      exitDet->SetFillStyle(1001);
+      exitDet->SetDirectory(0);
+      histListTransparentR->Add(exitDet);
+      //if(i==0) l2->AddEntry(exitDet, legendList[3], "l");
+		}
+  
+    c4->cd(i+1);
+    gStyle->SetOptStat(0000);
+    gPad->SetRightMargin(0.03);
+    gPad->SetLeftMargin(0.18);
+    TH1 *firstHist = (TH1 *)histListTransparentR->First();
+    if (firstHist) {
+      firstHist->GetXaxis()->SetTitle("TR Photon Energy [keV]");
+      firstHist->GetXaxis()->SetLabelSize(0.045);
+      firstHist->GetXaxis()->SetTitleSize(0.05);
+      firstHist->GetYaxis()->SetTitle("Count");
+      firstHist->GetYaxis()->SetLabelSize(0.045);
+      firstHist->GetYaxis()->SetTitleSize(0.05);
+      firstHist->GetYaxis()->SetTitleOffset(1.8);
+      firstHist->GetXaxis()->SetTitleOffset(0.8);
+      firstHist->SetMinimum(0.);
+      firstHist->SetMaximum(20000.);
+      firstHist->SetTitle(materialScanTitleList[i]);
+    }
+    histListTransparentR->Draw("same");
+    gPad->RedrawAxis();
+    gPad->SetRightMargin(0.03);
+    gPad->SetLeftMargin(0.18);
+    l2->SetTextSize(0.052);
+	  l2->SetHeader("#gamma Spectrum","C");
+    l2->Draw();
+    
+    
+    c4d->cd(i+1);
+    gPad->SetRightMargin(0.03);
+    gPad->SetLeftMargin(0.18);
+    gStyle->SetOptStat("mi");
+	  gStyle->SetStatFormat("6.6g");
+	  gStyle->SetStatX(0.7);
+	  gStyle->SetStatY(0.7);
+    
+    TH1 *catHist = (TH1 *)histListTransparentR->FindObject(obj3);
+    TH1 *detHist = (TH1 *)histListTransparentR->FindObject(obj4);
+    TH1D *escapeSubtract2t = new TH1D("escapeSubtract2t"," ; TR Photon Energy [keV]; Count",100,0.,50.);
+	  escapeSubtract2t->Add(catHist,detHist,1,-1);
+    escapeSubtract2t->SetTitle(materialScanTitleList[i]);
+    escapeSubtract2t->SetDirectory(0);
+    escapeSubtract2t->GetXaxis()->SetLabelSize(0.045);
+    escapeSubtract2t->GetXaxis()->SetTitleSize(0.05);
+    escapeSubtract2t->GetYaxis()->SetLabelSize(0.045);
+    escapeSubtract2t->GetYaxis()->SetTitleSize(0.05);
+    escapeSubtract2t->GetYaxis()->SetTitleOffset(1.8);
+    escapeSubtract2t->GetXaxis()->SetTitleOffset(0.8);
+    escapeSubtract2t->SetMinimum(0.);
+    escapeSubtract2t->SetMaximum(18000.);
+    escapeSubtract2t->SetFillColor(colorList[2]);
+    escapeSubtract2t->SetFillStyle(3003);
+    escapeSubtract2t->SetLineWidth(2);
+    escapeSubtract2t->SetLineColor(colorList[2]);
+    escapeSubtract2t->Draw();
+    file->Close();
+    histListTransparentR->Clear();
+  } //--END Material Scan Loop
+  
+  
+  /*
   //-- GammaR Model
 	for (int i=0; i<sizeof(rootFilesGammaR)/sizeof(rootFilesGammaR[0]); i++) {
 		const TString& rootFile = rootFilesGammaR[i];
@@ -443,7 +559,7 @@ void geantScan(){
     rp1g->GetLowYaxis()->SetNdivisions(505);
     rp1g->GetLowerRefGraph()->SetMinimum(0.);
     rp1g->GetLowerRefGraph()->SetMaximum(1.2);
-    /*
+    
     //=====Difference Plots
     cout<<"======== START NEW DIFF PLOT, i="<<i<<" ========= "<<endl;
     c0->cd(i+1);
@@ -461,20 +577,22 @@ void geantScan(){
     hDiff->Draw("");
 
     cout<<"======== END DIFF PLOT FOR i="<<i<<" ========= "<<endl;
-    */
+    
     file->Close();
     histListGammaR->Clear();
   } //--END GammaR Model Loop
-  
+  */
   ////////c1->SaveAs("GEMTRDAluminumScanRegularR.pdf");
   /////////c1r->SaveAs("GEMTRDAluminumScanRegularRRatios.pdf");
   //c1r->SaveAs("GEMTRDAluminumScanRegularRRatios.C");
-  c2->SaveAs("GEMTRDAluminumScanTransparentR_v3.pdf");
-  c2d->SaveAs("GEMTRDAluminumScanTransparentRDiffIntegrals_v3.pdf");
+  //////c2->SaveAs("GEMTRDAluminumScanTransparentR_v3.pdf");
+  //////c2d->SaveAs("GEMTRDAluminumScanTransparentRDiffIntegrals_v3.pdf");
   //////////c2->SaveAs("GEMTRDAluminumScanTransparentR.C");
   //c2r->SaveAs("GEMTRDAluminumScanTransparentRRatios.C");
   //////////c3->SaveAs("GEMTRDAluminumScanGammaR.pdf");
   ///////////c3r->SaveAs("GEMTRDAluminumScanGammaRRatios.pdf");
   //c3r->SaveAs("GEMTRDAluminumScanGammaRRatios.C");
   //c3gs->SaveAs("GEMTRDRatios.C");
+  c4->SaveAs("GeantMaterialScanTransparentR_v1.pdf");
+  c4d->SaveAs("GeantMaterialScanTransparentRDiffIntegrals_v1.pdf");
 }
