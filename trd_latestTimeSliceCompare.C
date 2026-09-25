@@ -41,7 +41,7 @@ void trd_latestTimeSliceCompare(){
   TFScaleFactor = 1./tf_1->GetEntries();
   tf_1->Scale(TFScaleFactor);
   tf_1->SetLineColor(4);
-  tf_1->SetMarkerStyle(21); //filled square
+  tf_1->SetMarkerStyle(33); //filled square
   tf_1->SetMarkerColor(4);
   tf_1->SetMarkerSize(2);
   tf_1->SetDirectory(0);
@@ -62,16 +62,16 @@ void trd_latestTimeSliceCompare(){
   
 	TCanvas *c0 = new TCanvas("c0","GEM-TRD", 1200, 1000);
 	gStyle->SetOptStat(0);
-	gStyle->SetTitleFontSize(0.075);
+	gStyle->SetTitleFontSize(0.065);
 	c0->cd();
 	gPad->SetRightMargin(0.03);
 	gPad->SetLeftMargin(0.15);
 	gPad->SetBottomMargin(0.125);
 	
-	TLegend *l0 = new TLegend(0.72,0.6,0.97,0.9);
-	l0->AddEntry(tf_0,"5#mum Cu","lp");
-  l0->AddEntry(tf_1,"0.1#mum Al","lp");
-  //l0->AddEntry(tf_2,"No Rad","lp");
+	TLegend *l0 = new TLegend(0.675,0.51,0.97,0.9);
+	l0->AddEntry(tf_2,"#splitline{'Pion-like'}{Electrons}","lp");
+	l0->AddEntry(tf_0,"#splitline{Electrons}{(5#mum Cu)}","lp");
+  l0->AddEntry(tf_1,"#splitline{Electrons}{(0.1#mum Al)}","lp");
   
 	tf_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice");
 	tf_0->GetYaxis()->SetTitle("Counts / (No. Track)");
@@ -82,16 +82,17 @@ void trd_latestTimeSliceCompare(){
   tf_0->GetYaxis()->SetLabelSize(0.043);
   tf_0->GetYaxis()->SetTitleSize(0.05);
   tf_0->GetYaxis()->SetTitleOffset(1.2);
-  //tf_0->GetYaxis()->SetRangeUser(0,0.04);
-  tf_0->GetYaxis()->SetRangeUser(0,0.025);
-	tf_0->SetTitle("GEM-TRD");
+  tf_0->GetYaxis()->SetRangeUser(0,0.04);
+  //tf_0->GetYaxis()->SetRangeUser(0,0.025);
+	tf_0->SetTitle("GEM-TRD (JLab '25)");
 	tf_0->Draw("");
 	tf_1->Draw("same");
-  //tf_2->Draw("same");
+  tf_2->Draw("same");
   
-  l0->SetHeader("Cathode","C");
+  //l0->SetHeader("Cathode","C");
+  l0->SetTextSize(0.053);
 	l0->Draw();
-	c0->SaveAs("GEMTRD_CathodeSlice_v1.pdf");
+	c0->SaveAs("GEMTRD_CathodeSlice_v3.pdf");
 	
 	//=======================================
 	//MMG-TRD
@@ -118,7 +119,7 @@ void trd_latestTimeSliceCompare(){
   DFScaleFactor = 1./df_1->GetEntries();
   df_1->Scale(DFScaleFactor);
   df_1->SetLineColor(4);
-  df_1->SetMarkerStyle(21); //filled square
+  df_1->SetMarkerStyle(33); //filled square
   df_1->SetMarkerColor(4);
   df_1->SetMarkerSize(2);
   df_1->SetDirectory(0);
@@ -143,10 +144,10 @@ void trd_latestTimeSliceCompare(){
 	gPad->SetLeftMargin(0.15);
 	gPad->SetBottomMargin(0.125);
 
-  TLegend *l1 = new TLegend(0.72,0.6,0.97,0.9);
-  l1->AddEntry(df_0,"5#mum Cu","lp");
-  l1->AddEntry(df_1,"0.1#mum Al","lp");
-  //l1->AddEntry(df_2,"No Rad","lp");
+  TLegend *l1 = new TLegend(0.675,0.51,0.97,0.9);
+  l1->AddEntry(df_2,"#splitline{'Pion-like'}{Electrons}","lp");
+  l1->AddEntry(df_0,"#splitline{Electrons}{(5#mum Cu)}","lp");
+  l1->AddEntry(df_1,"#splitline{Electrons}{(0.1#mum Al)}","lp");
   
   df_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice");
 	df_0->GetYaxis()->SetTitle("Counts / (No. Track)");
@@ -157,16 +158,17 @@ void trd_latestTimeSliceCompare(){
   df_0->GetYaxis()->SetLabelSize(0.043);
   df_0->GetYaxis()->SetTitleSize(0.05);
   df_0->GetYaxis()->SetTitleOffset(1.2);
-  //df_0->GetYaxis()->SetRangeUser(0,0.04);
-  df_0->GetYaxis()->SetRangeUser(0,0.03);
-	df_0->SetTitle("Hybrid Micromegas-TRD");
+  df_0->GetYaxis()->SetRangeUser(0,0.04);
+  //df_0->GetYaxis()->SetRangeUser(0,0.03);
+	df_0->SetTitle("Hybrid Micromegas-TRD (JLab '25)");
   df_0->Draw("");
   df_1->Draw("same");
-  //df_2->Draw("same");
+  df_2->Draw("same");
   
-  l1->SetHeader("Cathode","C");
+  //l1->SetHeader("Cathode","C");
+  l1->SetTextSize(0.053);
   l1->Draw();
-  c1->SaveAs("MMGTRD_CathodeSlice_v1.pdf");
+  c1->SaveAs("MMGTRD_CathodeSlice_v3.pdf");
 	
 	
 	//=======================================
@@ -227,6 +229,200 @@ void trd_latestTimeSliceCompare(){
   //l2->SetHeader("...","C");
   l2->Draw();
   c2->SaveAs("URWTRD_CathodeSlice_v1.pdf");
+  
+  
+  //====================================================
+  //					CERN 2024
+  //====================================================
+  
+  TFile *filec0 = TFile::Open("../cern24DataAnalysis/2025Revisit/v2/RootOutput/Run_005284_3615629Entries_Output.root");
+  HistDQM = (TList *)filec0->Get("HistDQM");
+  TObject *objc0 = HistDQM->FindObject("f125_pi_max_late");
+  TH2 *cf_0 = (TH2 *)objc0;
+  //cf_0->RebinX(2);
+  IFScaleFactor = 1./cf_0->GetEntries();
+  cf_0->Scale(IFScaleFactor);
+  cf_0->SetLineColor(1);
+  cf_0->SetMarkerStyle(20); //filled circle
+  cf_0->SetMarkerColor(1);
+  cf_0->SetMarkerSize(2);
+  cf_0->SetDirectory(0);
+  
+  TObject *objc1 = HistDQM->FindObject("f125_el_max_late");
+  TH2 *cf_1 = (TH2 *)objc1;
+  //cf_1->RebinX(2);
+  IFScaleFactor = 1./cf_1->GetEntries();
+  cf_1->Scale(IFScaleFactor);
+  cf_1->SetLineColor(94);
+  cf_1->SetMarkerStyle(34); //filled cross
+  cf_1->SetMarkerColor(94);
+  cf_1->SetMarkerSize(2);
+  cf_1->SetDirectory(0);
+  
+  
+  TCanvas *c3 = new TCanvas("c3","GEM-TRD CERN", 1200, 1000);
+	gStyle->SetOptStat(0);
+	gStyle->SetTitleFontSize(0.065);
+	c3->cd();
+	gPad->SetRightMargin(0.03);
+	gPad->SetLeftMargin(0.15);
+	gPad->SetBottomMargin(0.125);
+	
+	TLegend *l3 = new TLegend(0.675,0.6,0.97,0.9);
+	l3->AddEntry(cf_0,"Pions","lp");
+  l3->AddEntry(cf_1,"#splitline{Electrons}{(5#mum Cu)}","lp");
+  
+	cf_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice");
+	cf_0->GetYaxis()->SetTitle("Counts / (No. Track)");
+	//cf_0->GetYaxis()->SetNdivisions(520);
+	cf_0->GetXaxis()->SetRangeUser(210,4100);
+	cf_0->GetXaxis()->SetLabelSize(0.043);
+  cf_0->GetXaxis()->SetTitleSize(0.05);
+  cf_0->GetYaxis()->SetLabelSize(0.043);
+  cf_0->GetYaxis()->SetTitleSize(0.05);
+  cf_0->GetYaxis()->SetTitleOffset(1.2);
+  //cf_0->GetYaxis()->SetRangeUser(0,0.04);
+  //cf_0->GetYaxis()->SetRangeUser(0,0.025);
+	cf_0->SetTitle("GEM-TRD (CERN '24)");
+	cf_0->Draw("");
+	cf_1->Draw("same");
+  
+  //l3->SetHeader("Cathode","C");
+  l3->SetTextSize(0.055);
+	l3->Draw();
+	c3->SaveAs("GEMTRD_CathodeSlice_Cern_v1.pdf");
+  
+  //==================================================================
+  
+  TObject *objcm0 = HistDQM->FindObject("mmg1_f125_pi_max_late");
+  TH2 *cm_0 = (TH2 *)objcm0;
+  //cm_0->RebinX(2);
+  IFScaleFactor = 1./cm_0->GetEntries();
+  cm_0->Scale(IFScaleFactor);
+  cm_0->SetLineColor(1);
+  cm_0->SetMarkerStyle(20); //filled circle
+  cm_0->SetMarkerColor(1);
+  cm_0->SetMarkerSize(2);
+  cm_0->SetDirectory(0);
+  
+  TObject *objcm1 = HistDQM->FindObject("mmg1_f125_el_max_late");
+  TH2 *cm_1 = (TH2 *)objcm1;
+  //cm_1->RebinX(2);
+  IFScaleFactor = 1./cm_1->GetEntries();
+  cm_1->Scale(IFScaleFactor);
+  cm_1->SetLineColor(94);
+  cm_1->SetMarkerStyle(34); //filled cross
+  cm_1->SetMarkerColor(94);
+  cm_1->SetMarkerSize(2);
+  cm_1->SetDirectory(0);
+  
+  
+  TCanvas *c4 = new TCanvas("c4","MMG-TRD CERN", 1200, 1000);
+	gStyle->SetOptStat(0);
+	gStyle->SetTitleFontSize(0.065);
+	c4->cd();
+	gPad->SetRightMargin(0.03);
+	gPad->SetLeftMargin(0.15);
+	gPad->SetBottomMargin(0.125);
+	
+	TLegend *l4 = new TLegend(0.675,0.6,0.97,0.9);
+	l4->AddEntry(cm_0,"Pions","lp");
+  l4->AddEntry(cm_1,"#splitline{Electrons}{(5#mum Cu)}","lp");
+  
+	cm_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice");
+	cm_0->GetYaxis()->SetTitle("Counts / (No. Track)");
+	//cm_0->GetYaxis()->SetNdivisions(520);
+	cm_0->GetXaxis()->SetRangeUser(210,4100);
+	cm_0->GetXaxis()->SetLabelSize(0.043);
+  cm_0->GetXaxis()->SetTitleSize(0.05);
+  cm_0->GetYaxis()->SetLabelSize(0.043);
+  cm_0->GetYaxis()->SetTitleSize(0.05);
+  cm_0->GetYaxis()->SetTitleOffset(1.2);
+  //cm_0->GetYaxis()->SetRangeUser(0,0.04);
+  //cm_0->GetYaxis()->SetRangeUser(0,0.025);
+	cm_0->SetTitle("Hybrid Micromegas-TRD (CERN '24)");
+	cm_0->Draw("");
+	cm_1->Draw("same");
+  
+  //l4->SetHeader("Cathode","C");
+  l4->SetTextSize(0.055);
+	l4->Draw();
+	c4->SaveAs("MMGTRD_CathodeSlice_Cern_v1.pdf");
+  
+  
+  //=================================================================
+  //			Combined plots
+  //=================================================================
+  
+  TCanvas *c5 = new TCanvas("c5","GEM-TRD", 1200, 1000);
+	gStyle->SetOptStat(0);
+	gStyle->SetTitleFontSize(0.065);
+	c5->cd();
+	gPad->SetRightMargin(0.03);
+	gPad->SetLeftMargin(0.15);
+	gPad->SetBottomMargin(0.125);
+	
+	TLegend *l5 = new TLegend(0.45,0.59,0.97,0.9);
+	
+	cf_0->SetMarkerStyle(4); //open circle
+	cf_1->SetMarkerStyle(28); //open cross
+	
+	l5->AddEntry(cf_0,"CERN Pions","lp");
+  l5->AddEntry(cf_1,"#splitline{CERN Electrons}{(5#mum Cu)}","lp");
+  l5->AddEntry(tf_2,"JLab ''Pions''","lp");
+  l5->AddEntry(tf_0,"#splitline{JLab Electrons}{(5#mum Cu)}","lp");
+  l5->AddEntry("","","");
+  l5->AddEntry(tf_1,"#splitline{JLab Electrons}{(0.1#mum Al)}","lp");
+	l5->SetNColumns(2);
+	
+	cf_0->SetTitle("Triple-GEM-TRD");
+	cf_0->Draw("");
+	tf_2->Draw("same");
+	cf_1->Draw("same");
+	tf_0->Draw("same");
+	tf_1->Draw("same");
+	
+	l5->SetTextSize(0.043);
+	l5->Draw();
+	
+	c5->SaveAs("GEMTRD_CathodeSlice_Combined_v1.pdf");
+	
+	//======================================================
+	// MMG-TRD
+	
+	TCanvas *c6 = new TCanvas("c6","MMG-TRD", 1200, 1000);
+	gStyle->SetOptStat(0);
+	gStyle->SetTitleFontSize(0.065);
+	c6->cd();
+	gPad->SetRightMargin(0.03);
+	gPad->SetLeftMargin(0.15);
+	gPad->SetBottomMargin(0.125);
+	
+	TLegend *l6 = new TLegend(0.45,0.59,0.97,0.9);
+	
+	cm_0->SetMarkerStyle(4); //open circle
+	cm_1->SetMarkerStyle(28); //open cross
+	
+	l6->AddEntry(cm_0,"CERN Pions","lp");
+  l6->AddEntry(cm_1,"#splitline{CERN Electrons}{(5#mum Cu)}","lp");
+  l6->AddEntry(df_2,"JLab ''Pions''","lp");
+  l6->AddEntry(df_0,"#splitline{JLab Electrons}{(5#mum Cu)}","lp");
+  l6->AddEntry("","","");
+  l6->AddEntry(df_1,"#splitline{JLab Electrons}{(0.1#mum Al)}","lp");
+	l6->SetNColumns(2);
+	
+	cm_0->SetTitle("Hybrid Micromegas-TRD");
+	cm_0->Draw("");
+	df_2->Draw("same");
+	cm_1->Draw("same");
+	df_0->Draw("same");
+	df_1->Draw("same");
+	
+	l6->SetTextSize(0.043);
+	l6->Draw();
+	
+	c6->SaveAs("MMGTRD_CathodeSlice_Combined_v1.pdf");
+	
 	
 	
 }
