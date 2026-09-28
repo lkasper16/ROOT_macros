@@ -73,12 +73,12 @@ void trd_latestTimeSliceCompare(){
 	l0->AddEntry(tf_0,"#splitline{Electrons}{(5#mum Cu)}","lp");
   l0->AddEntry(tf_1,"#splitline{Electrons}{(0.1#mum Al)}","lp");
   
-	tf_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice");
+	tf_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice [ADC units]");
 	tf_0->GetYaxis()->SetTitle("Counts / (No. Track)");
 	//tf_0->GetYaxis()->SetNdivisions(520);
 	tf_0->GetXaxis()->SetRangeUser(210,4100);
 	tf_0->GetXaxis()->SetLabelSize(0.043);
-  tf_0->GetXaxis()->SetTitleSize(0.05);
+  tf_0->GetXaxis()->SetTitleSize(0.048);
   tf_0->GetYaxis()->SetLabelSize(0.043);
   tf_0->GetYaxis()->SetTitleSize(0.05);
   tf_0->GetYaxis()->SetTitleOffset(1.2);
@@ -149,12 +149,12 @@ void trd_latestTimeSliceCompare(){
   l1->AddEntry(df_0,"#splitline{Electrons}{(5#mum Cu)}","lp");
   l1->AddEntry(df_1,"#splitline{Electrons}{(0.1#mum Al)}","lp");
   
-  df_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice");
+  df_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice [ADC units]");
 	df_0->GetYaxis()->SetTitle("Counts / (No. Track)");
 	//df_0->GetYaxis()->SetNdivisions(520);
 	df_0->GetXaxis()->SetRangeUser(200,4100);
 	df_0->GetXaxis()->SetLabelSize(0.043);
-  df_0->GetXaxis()->SetTitleSize(0.05);
+  df_0->GetXaxis()->SetTitleSize(0.048);
   df_0->GetYaxis()->SetLabelSize(0.043);
   df_0->GetYaxis()->SetTitleSize(0.05);
   df_0->GetYaxis()->SetTitleOffset(1.2);
@@ -212,12 +212,12 @@ void trd_latestTimeSliceCompare(){
   l2->AddEntry(if_0,"No Rad","lp");
   l2->AddEntry(if_1,"With Rad","lp");
 
-  if_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice");
+  if_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice [ADC units]");
 	if_0->GetYaxis()->SetTitle("Counts / (No. Track)");
 	//if_0->GetYaxis()->SetNdivisions(520);
 	if_0->GetXaxis()->SetRangeUser(0,2800);
 	if_0->GetXaxis()->SetLabelSize(0.043);
-  if_0->GetXaxis()->SetTitleSize(0.05);
+  if_0->GetXaxis()->SetTitleSize(0.048);
   if_0->GetYaxis()->SetTitleSize(0.05);
   if_0->GetYaxis()->SetTitleOffset(1.1);
   if_0->GetYaxis()->SetLabelSize(0.043);
@@ -272,12 +272,12 @@ void trd_latestTimeSliceCompare(){
 	l3->AddEntry(cf_0,"Pions","lp");
   l3->AddEntry(cf_1,"#splitline{Electrons}{(5#mum Cu)}","lp");
   
-	cf_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice");
+	cf_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice [ADC units]");
 	cf_0->GetYaxis()->SetTitle("Counts / (No. Track)");
 	//cf_0->GetYaxis()->SetNdivisions(520);
 	cf_0->GetXaxis()->SetRangeUser(210,4100);
 	cf_0->GetXaxis()->SetLabelSize(0.043);
-  cf_0->GetXaxis()->SetTitleSize(0.05);
+  cf_0->GetXaxis()->SetTitleSize(0.048);
   cf_0->GetYaxis()->SetLabelSize(0.043);
   cf_0->GetYaxis()->SetTitleSize(0.05);
   cf_0->GetYaxis()->SetTitleOffset(1.2);
@@ -329,12 +329,12 @@ void trd_latestTimeSliceCompare(){
 	l4->AddEntry(cm_0,"Pions","lp");
   l4->AddEntry(cm_1,"#splitline{Electrons}{(5#mum Cu)}","lp");
   
-	cm_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice");
+	cm_0->GetXaxis()->SetTitle("Max ADC Amplitude in Latest Time Slice [ADC units]");
 	cm_0->GetYaxis()->SetTitle("Counts / (No. Track)");
 	//cm_0->GetYaxis()->SetNdivisions(520);
 	cm_0->GetXaxis()->SetRangeUser(210,4100);
 	cm_0->GetXaxis()->SetLabelSize(0.043);
-  cm_0->GetXaxis()->SetTitleSize(0.05);
+  cm_0->GetXaxis()->SetTitleSize(0.048);
   cm_0->GetYaxis()->SetLabelSize(0.043);
   cm_0->GetYaxis()->SetTitleSize(0.05);
   cm_0->GetYaxis()->SetTitleOffset(1.2);
@@ -354,6 +354,9 @@ void trd_latestTimeSliceCompare(){
   //			Combined plots
   //=================================================================
   
+  //======================================================
+	// GEM-TRD
+	
   TCanvas *c5 = new TCanvas("c5","GEM-TRD", 1200, 1000);
 	gStyle->SetOptStat(0);
 	gStyle->SetTitleFontSize(0.065);
@@ -362,17 +365,17 @@ void trd_latestTimeSliceCompare(){
 	gPad->SetLeftMargin(0.15);
 	gPad->SetBottomMargin(0.125);
 	
-	TLegend *l5 = new TLegend(0.45,0.59,0.97,0.9);
+	TLegend *l5 = new TLegend(0.43,0.59,0.97,0.9);
 	
 	cf_0->SetMarkerStyle(4); //open circle
 	cf_1->SetMarkerStyle(28); //open cross
 	
-	l5->AddEntry(cf_0,"CERN Pions","lp");
-  l5->AddEntry(cf_1,"#splitline{CERN Electrons}{(5#mum Cu)}","lp");
-  l5->AddEntry(tf_2,"JLab ''Pions''","lp");
-  l5->AddEntry(tf_0,"#splitline{JLab Electrons}{(5#mum Cu)}","lp");
-  l5->AddEntry("","","");
-  l5->AddEntry(tf_1,"#splitline{JLab Electrons}{(0.1#mum Al)}","lp");
+	l5->AddEntry(cf_0,"20#scale[0.85]{GeV} pions","lp");
+	l5->AddEntry(cf_1,"#splitline{20#scale[0.85]{GeV} electrons}{(5#scale[0.85]{#mum} Cu)}","lp");
+  l5->AddEntry(tf_2,"#splitline{3-6#scale[0.85]{GeV} ''pion-}{like'' electrons}","lp");
+  l5->AddEntry(tf_0,"#splitline{3-6#scale[0.85]{GeV} electrons}{(5#scale[0.85]{#mum} Cu)}","lp");
+ 	l5->AddEntry("","","");
+  l5->AddEntry(tf_1,"#splitline{3-6#scale[0.85]{GeV} electrons}{(0.1#scale[0.85]{#mum} Al)}","lp");
 	l5->SetNColumns(2);
 	
 	cf_0->SetTitle("Triple-GEM-TRD");
@@ -382,10 +385,10 @@ void trd_latestTimeSliceCompare(){
 	tf_0->Draw("same");
 	tf_1->Draw("same");
 	
-	l5->SetTextSize(0.043);
+	l5->SetTextSize(0.041);
 	l5->Draw();
 	
-	c5->SaveAs("GEMTRD_CathodeSlice_Combined_v1.pdf");
+	c5->SaveAs("GEMTRD_CathodeSlice_Combined_v3.pdf");
 	
 	//======================================================
 	// MMG-TRD
@@ -398,17 +401,17 @@ void trd_latestTimeSliceCompare(){
 	gPad->SetLeftMargin(0.15);
 	gPad->SetBottomMargin(0.125);
 	
-	TLegend *l6 = new TLegend(0.45,0.59,0.97,0.9);
+	TLegend *l6 = new TLegend(0.43,0.59,0.97,0.9);
 	
 	cm_0->SetMarkerStyle(4); //open circle
 	cm_1->SetMarkerStyle(28); //open cross
 	
-	l6->AddEntry(cm_0,"CERN Pions","lp");
-  l6->AddEntry(cm_1,"#splitline{CERN Electrons}{(5#mum Cu)}","lp");
-  l6->AddEntry(df_2,"JLab ''Pions''","lp");
-  l6->AddEntry(df_0,"#splitline{JLab Electrons}{(5#mum Cu)}","lp");
+	l6->AddEntry(cm_0,"20#scale[0.85]{GeV} pions","lp");
+  l6->AddEntry(cm_1,"#splitline{20#scale[0.85]{GeV} electrons}{(5#scale[0.85]{#mum} Cu)}","lp");
+  l6->AddEntry(df_2,"#splitline{3-6#scale[0.85]{GeV} ''pion-}{like'' electrons}","lp");
+  l6->AddEntry(df_0,"#splitline{3-6#scale[0.85]{GeV} electrons}{(5#scale[0.85]{#mum} Cu)}","lp");
   l6->AddEntry("","","");
-  l6->AddEntry(df_1,"#splitline{JLab Electrons}{(0.1#mum Al)}","lp");
+  l6->AddEntry(df_1,"#splitline{3-6#scale[0.85]{GeV} electrons}{(0.1#scale[0.85]{#mum} Al)}","lp");
 	l6->SetNColumns(2);
 	
 	cm_0->SetTitle("Hybrid Micromegas-TRD");
@@ -418,10 +421,10 @@ void trd_latestTimeSliceCompare(){
 	df_0->Draw("same");
 	df_1->Draw("same");
 	
-	l6->SetTextSize(0.043);
+	l6->SetTextSize(0.041);
 	l6->Draw();
 	
-	c6->SaveAs("MMGTRD_CathodeSlice_Combined_v1.pdf");
+	c6->SaveAs("MMGTRD_CathodeSlice_Combined_v3.pdf");
 	
 	
 	
