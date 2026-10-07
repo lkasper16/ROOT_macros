@@ -219,13 +219,13 @@ void draw_combined_efficiency_plots() {
   // ------------------------------------------------------------------
   // Runs 8265-8266 were taken at 50 CCPM; runs 8267-8270 at 25 CCPM.
   // Draw them as separate graph objects so the gas-flow change is explicit.
-  auto *tg_time_50 = makeGraph({8265,8266},
-      {0.774,0.763}, {0.0006,0.0006}, kBlue+1,20,"tg_time_50");
-  auto *tg_time_25 = makeGraph({8267,8268,8269,8270},
-      {0.755,0.749,0.743,0.732}, {0.0020,0.0021,0.0023,0.0022}, kRed+1,21,"tg_time_25");
-  drawGraphs("c_tgem_time", "Triple-GEM_v3: No Radiator, nPulse #geq 6",
-             "Run Number", {tg_time_50,tg_time_25}, {"50 CCPM","25 CCPM"},
-             "tgem_productivity_run.pdf", 0.70,1.001);
+  auto *tg_time_50 = makeGraph({8265,8266}, {0.774,0.763}, {0.0006,0.0006}, kBlue+1,47,"tg_time_50");
+  auto *tg_time_25 = makeGraph({8267,8268,8269,8270}, {0.755,0.749,0.743,0.732}, {0.0020,0.0021,0.0023,0.0022}, kRed+1,47,"tg_time_25");
+  auto *tg_time_50_8 = makeGraph({8265,8266}, {0.544,0.528}, {0.0007,0.0007}, kBlue+1,21,"tg_time_50_8");
+  auto *tg_time_25_8 = makeGraph({8267,8268,8269,8270}, {0.535,0.523,0.522,0.504}, {0.0024,0.0024,0.0026,0.0025}, kRed+1,21,"tg_time_25_8");
+  drawGraphs("c_tgem_time", "Triple-GEM_v3: No Radiator, Low Gas Flow",
+             "Run Number", {tg_time_50,tg_time_25,tg_time_50_8,tg_time_25_8}, {"50 CCPM, nPulse #geq 6","25 CCPM, nPulse #geq 6","50 CCPM, nPulse #geq 8","25 CCPM, nPulse #geq 8"},
+             "tgem_lowFlow_run.pdf", 0.45,1.005);
 
   // ------------------------------------------------------------------
   // 5) Hybrid Micromegas combined divider V_in (HV) scan.
@@ -261,11 +261,12 @@ void draw_combined_efficiency_plots() {
   // 7) Hybrid Micromegas low-flow-over-time productivity plot (nPulse >= 10).
   // ------------------------------------------------------------------
   // Runs 8265-8266 were taken at 50 CCPM; runs 8267-8270 at 25 CCPM.
-  auto *mmg_time_50 = makeGraph({8265,8266},
-      {0.911,0.907}, {0.0003,0.0003}, kBlue+1,20,"mmg_time_50");
-  auto *mmg_time_25 = makeGraph({8267,8268,8269,8270},
-      {0.902,0.904,0.904,0.897}, {0.0012,0.0013,0.0014,0.0014}, kRed+1,21,"mmg_time_25");
-  drawGraphs("c_mmg_time", "Hybrid Micromegas_v2: No Radiator, nPulse #geq 10",
-             "Run Number", {mmg_time_50,mmg_time_25}, {"50 CCPM","25 CCPM"},
-             "mmg_productivity_run.pdf", 0.88,1.001);
+  auto *mmg_time_50 = makeGraph({8265,8266},{0.911,0.907}, {0.0003,0.0003}, kBlue+1,47,"mmg_time_50");
+  auto *mmg_time_25 = makeGraph({8267,8268,8269,8270},{0.902,0.904,0.904,0.897}, {0.0012,0.0013,0.0014,0.0014}, kRed+1,47,"mmg_time_25");
+  auto *mmg_time_50_8 = makeGraph({8265,8266},{0.971,0.970}, {0.0002,0.0002}, kBlue+1,21,"mmg_time_50_8");
+  auto *mmg_time_25_8 = makeGraph({8267,8268,8269,8270},{0.961,0.962,0.963,0.957}, {0.0009,0.0009,0.0010,0.0010}, kRed+1,21,"mmg_time_25_8");
+  
+  drawGraphs("c_mmg_time", "Hybrid Micromegas_v2: No Radiator, Low Gas Flow",
+             "Run Number", {mmg_time_50,mmg_time_25,mmg_time_50_8,mmg_time_25_8}, {"50 CCPM, nPulse #geq 10","25 CCPM, nPulse #geq 10","50 CCPM, nPulse #geq 8","25 CCPM, nPulse #geq 8"},
+             "mmg_lowFlow_run.pdf", 0.70,1.005);
 }
