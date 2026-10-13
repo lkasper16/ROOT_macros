@@ -23,7 +23,7 @@ static TGraphErrors* makeGraph(const vector<double>& x, const vector<double>& y,
   g->SetMarkerColor(color);
   g->SetLineColor(color);
   g->SetMarkerStyle(marker);
-  g->SetMarkerSize(1.15);
+  g->SetMarkerSize(1.6);
   g->SetLineWidth(2);
   return g;
 }
@@ -32,7 +32,7 @@ static void drawGraphs(const char* cname, const char* title,
                        const char* xtitle, const vector<TGraphErrors*>& graphs,
                        const vector<TString>& labels, const char* outfile,
                        double ymin = -1.0, double ymax = -1.0) {
-  auto *c = new TCanvas(cname, title, 900, 650);
+  auto *c = new TCanvas(cname, title, 1000, 750);
   c->SetGrid(1,1);
   c->SetLeftMargin(0.12);
   c->SetBottomMargin(0.12);
@@ -62,6 +62,7 @@ static void drawGraphs(const char* cname, const char* title,
   frame->GetYaxis()->SetTitleSize(0.045);
   frame->GetXaxis()->SetTitleSize(0.045);
   frame->GetYaxis()->SetLabelSize(0.04);
+  frame->GetYaxis()->SetNdivisions(520);
   frame->GetYaxis()->SetTitleOffset(0.95);
   frame->GetXaxis()->SetLabelSize(0.039);
   //frame->GetXaxis()->CenterTitle();
@@ -82,7 +83,7 @@ static void drawCategorical(const char* cname, const char* title,
                             const vector<TString>& labels,
                             const vector<TString>& categories,
                             const char* outfile, double ymin, double ymax) {
-  auto *c = new TCanvas(cname, title, 900, 650);
+  auto *c = new TCanvas(cname, title, 1000, 750);
   c->SetGrid(1,1); c->SetLeftMargin(0.12); c->SetBottomMargin(0.15);
   const int ncat = (int)categories.size();
   auto *frame = c->DrawFrame(0.5, ymin, ncat+0.5, ymax);
@@ -91,6 +92,7 @@ static void drawCategorical(const char* cname, const char* title,
   frame->GetYaxis()->SetTitle("Efficiency");
   frame->GetYaxis()->SetTitleSize(0.045);
   frame->GetXaxis()->SetTitleSize(0.042);
+  frame->GetYaxis()->SetNdivisions(520);
   frame->GetXaxis()->SetLabelSize(0.039);
   frame->GetYaxis()->SetTitleOffset(0.95);
   frame->GetYaxis()->SetLabelSize(0.04);
@@ -125,12 +127,12 @@ void draw_combined_efficiency_plots() {
   auto *tg_amp_n8 = makeGraph(tgem_amp_x,
       {0.942,0.966,0.976,0.988}, {0.0022,0.0012,0.0013,0.0010}, kRed+1,21,"tg_amp_n8");
   auto *tg_amp_n6 = makeGraph(tgem_amp_x,
-      {0.969,0.984,0.989,0.995}, {0.0017,0.0009,0.0010,0.0008}, kBlue+1,47,"tg_amp_n6");
+      {0.969,0.984,0.989,0.995}, {0.0017,0.0009,0.0010,0.0008}, kBlue+1,33,"tg_amp_n6");
   drawCategorical("c_tgem_amp", "Triple-GEM_v3: GEM dV Scan",
                   {tg_amp_nocut,tg_amp_n6,tg_amp_n8},
                   {"No nPulse cut","nPulse #geq 6","nPulse #geq 8"},
                   {"448/411/374","450/415/380","450/420/385","450/425/390"},
-                  "tgem_combined_gem_dv.pdf", 0.92,1.001);
+                  "tgem_combined_gem_dv.pdf", 0.9,1.001);
 
   // ------------------------------------------------------------------
   // 2) Triple-GEM combined transfer/induction-field scan.
@@ -141,22 +143,23 @@ void draw_combined_efficiency_plots() {
   auto *tg_tf_n8 = makeGraph(tgem_tf_x,
       {0.944,0.948,0.958,0.968,0.981}, {0.0029,0.0014,0.0014,0.0013,0.0014}, kRed+1,21,"tg_tf_n8");
   auto *tg_tf_n6 = makeGraph(tgem_tf_x,
-      {0.972,0.974,0.980,0.984,0.991}, {0.0023,0.0011,0.0011,0.0010,0.0011}, kBlue+1,47,"tg_tf_n6");
+      {0.972,0.974,0.980,0.984,0.991}, {0.0023,0.0011,0.0011,0.0010,0.0011}, kBlue+1,33,"tg_tf_n6");
   // Custom draw for the TF scan: bottom axis is field [kV/cm], while the
   // top axis carries the corresponding spreadsheet Transfer Field [dV]
   // values: 550, 600, 650, 700, 747 V.
   {
-    auto *c = new TCanvas("c_tgem_tf", "Triple-GEM Tracking Efficiency (TF Scan)", 900, 650);
+    auto *c = new TCanvas("c_tgem_tf", "Triple-GEM Tracking Efficiency (TF Scan)", 1000, 750);
     c->SetGrid(1,1);
     c->SetLeftMargin(0.12);
     c->SetBottomMargin(0.12);
     c->SetTopMargin(0.13);
 
     const double xmin = 2.65, xmax = 3.84;
-    auto *frame = c->DrawFrame(xmin, 0.92, xmax, 1.001);
+    auto *frame = c->DrawFrame(xmin, 0.9, xmax, 1.001);
     frame->SetTitle("Triple-GEM_v3: Transfer Field Scan");
     frame->GetXaxis()->SetTitle("Transfer/Induction Field [kV/cm]");
     frame->GetYaxis()->SetTitle("Efficiency");
+    frame->GetYaxis()->SetNdivisions(520);
     frame->GetYaxis()->SetTitleSize(0.045);
     frame->GetXaxis()->SetTitleSize(0.042);
     frame->GetXaxis()->SetLabelSize(0.039);
@@ -194,7 +197,7 @@ void draw_combined_efficiency_plots() {
     latex.SetTextFont(42);
     latex.SetTextSize(0.039);
     for (int i=0; i<5; ++i)
-      latex.DrawLatex(tgem_tf_x[i], 1.0044, dvLabels[i]);
+      latex.DrawLatex(tgem_tf_x[i], 1.0045, dvLabels[i]);
 
     c->SaveAs("tgem_combined_tf.pdf");
   }
@@ -207,11 +210,13 @@ void draw_combined_efficiency_plots() {
   auto *tg_env_nocut = makeGraph(settings_x,
       {0.992,0.994,0.996}, {0.0007,0.0004,0.0004}, kBlack,20,"tg_env_nocut");
   auto *tg_env_n6 = makeGraph(settings_x,
-      {0.732,0.774,0.982}, {0.0022,0.0006,0.0007}, kBlue+1,47,"tg_env_n6");
+      {0.732,0.774,0.982}, {0.0022,0.0006,0.0007}, kBlue+1,33,"tg_env_n6");
   auto *tg_env_n8 = makeGraph(settings_x,
       {0.504,0.567,0.961}, {0.0025,0.0017,0.0010}, kRed+1,21,"tg_env_n8");
+  auto *tg_env_n4 = makeGraph(settings_x,
+      {0.913,0.935,0.992}, {0.0015,0.0004,0.0006}, kMagenta+1,29,"tg_env_n4");
   drawCategorical("c_tgem_env", "Triple-GEM_v3: ''Production''' HV Settings",
-                  {tg_env_nocut,tg_env_n6,tg_env_n8}, {"No nPulse cut","nPulse #geq 6","nPulse #geq 8"},
+                  {tg_env_nocut,tg_env_n4,tg_env_n6,tg_env_n8}, {"No nPulse cut","nPulse #geq 4","nPulse #geq 6","nPulse #geq 8"},
                   settings, "tgem_productivity_hv_settings.pdf", 0.45,1.01);
 
   // ------------------------------------------------------------------
@@ -219,13 +224,20 @@ void draw_combined_efficiency_plots() {
   // ------------------------------------------------------------------
   // Runs 8265-8266 were taken at 50 CCPM; runs 8267-8270 at 25 CCPM.
   // Draw them as separate graph objects so the gas-flow change is explicit.
-  auto *tg_time_50 = makeGraph({8265,8266}, {0.774,0.763}, {0.0006,0.0006}, kBlue+1,47,"tg_time_50");
-  auto *tg_time_25 = makeGraph({8267,8268,8269,8270}, {0.755,0.749,0.743,0.732}, {0.0020,0.0021,0.0023,0.0022}, kRed+1,47,"tg_time_25");
-  auto *tg_time_50_8 = makeGraph({8265,8266}, {0.544,0.528}, {0.0007,0.0007}, kBlue+1,21,"tg_time_50_8");
-  auto *tg_time_25_8 = makeGraph({8267,8268,8269,8270}, {0.535,0.523,0.522,0.504}, {0.0024,0.0024,0.0026,0.0025}, kRed+1,21,"tg_time_25_8");
+  auto *tg_time_50 = makeGraph({8265,8266}, {0.774,0.763}, {0.0006,0.0006}, kBlue+1,33,"tg_time_50");
+  auto *tg_time_25 = makeGraph({8267,8268,8269,8270}, {0.755,0.749,0.743,0.732}, {0.0020,0.0021,0.0023,0.0022}, kRed+1,33,"tg_time_25");
+  //auto *tg_time_50_8 = makeGraph({8265,8266}, {0.544,0.528}, {0.0007,0.0007}, kBlue+1,21,"tg_time_50_8");
+  //auto *tg_time_25_8 = makeGraph({8267,8268,8269,8270}, {0.535,0.523,0.522,0.504}, {0.0024,0.0024,0.0026,0.0025}, kRed+1,21,"tg_time_25_8");
+  auto *tg_time_50_4 = makeGraph({8265,8266}, {0.935,0.930}, {0.0004,0.0004}, kBlue+1,29,"tg_time_50_4");
+  auto *tg_time_25_4 = makeGraph({8267,8268,8269,8270}, {0.923,0.917,0.915,0.913}, {0.0014,0.0014,0.0016,0.0015}, kRed+1,29,"tg_time_25_4");
+  /*
   drawGraphs("c_tgem_time", "Triple-GEM_v3: No Radiator, Low Gas Flow",
-             "Run Number", {tg_time_50,tg_time_25,tg_time_50_8,tg_time_25_8}, {"50 CCPM, nPulse #geq 6","25 CCPM, nPulse #geq 6","50 CCPM, nPulse #geq 8","25 CCPM, nPulse #geq 8"},
-             "tgem_lowFlow_run.pdf", 0.45,1.005);
+             "Run Number", {tg_time_50_4,tg_time_25_4,tg_time_50,tg_time_25,tg_time_50_8,tg_time_25_8}, {"50CCPM, nPulse #geq 4","25CCPM, nPulse #geq 4","50CCPM, nPulse #geq 6","25CCPM, nPulse #geq 6","50CCPM, nPulse #geq 8","25CCPM, nPulse #geq 8"},
+             "tgem_lowFlow_noRad.pdf", 0.45,1.005);
+  */
+   drawGraphs("c_tgem_time", "Triple-GEM_v3: No Radiator, Low Gas Flow",
+             "Run Number", {tg_time_50_4,tg_time_25_4,tg_time_50,tg_time_25}, {"50CCPM, nPulse #geq 4","25CCPM, nPulse #geq 4","50CCPM, nPulse #geq 6","25CCPM, nPulse #geq 6"},
+             "tgem_lowFlow_noRad.pdf", 0.7,1.005);
 
   // ------------------------------------------------------------------
   // 5) Hybrid Micromegas combined divider V_in (HV) scan.
@@ -233,13 +245,13 @@ void draw_combined_efficiency_plots() {
   vector<double> mmg_hv_x = {1675,1685,1695,1700,1710,1720,1730,1735};
   auto *mmg_nocut = makeGraph(mmg_hv_x,
       {0.997,0.998,0.998,0.998,0.997,0.998,0.998,0.998},
-      {0.0007,0.0004,0.0006,0.0005,0.0007,0.0006,0.0006,0.0011}, kBlack,20,"mmg_nocut");
+      {0.0007,0.0004,0.0006,0.0005,0.0007,0.0006,0.0006,0.0011}, kBlack,24,"mmg_nocut");
   auto *mmg_n8 = makeGraph(mmg_hv_x,
       {0.971,0.982,0.986,0.987,0.989,0.993,0.995,0.994},
-      {0.0015,0.0009,0.0010,0.0010,0.0010,0.0010,0.0008,0.0015}, kRed+1,21,"mmg_n8");
+      {0.0015,0.0009,0.0010,0.0010,0.0010,0.0010,0.0008,0.0015}, kRed+1,25,"mmg_n8");
   auto *mmg_n10 = makeGraph(mmg_hv_x,
       {0.939,0.955,0.963,0.972,0.978,0.986,0.991,0.990},
-      {0.0020,0.0012,0.0015,0.0013,0.0013,0.0012,0.0011,0.0016}, kGreen+2,47,"mmg_n10");
+      {0.0020,0.0012,0.0015,0.0013,0.0013,0.0012,0.0011,0.0016}, kGreen+2,46,"mmg_n10");
   drawGraphs("c_mmg_hv", "Hybrid Micromegas_v2: HV Scan",
              "Voltage Divider V_{in} [V]", {mmg_nocut,mmg_n8,mmg_n10},
              {"No nPulse cut","nPulse #geq 8","nPulse #geq 10"}, "mmg_combined_hv.pdf", 0.92,1.001);
@@ -248,25 +260,40 @@ void draw_combined_efficiency_plots() {
   // 6) Hybrid Micromegas productivity/environment comparison at fixed HV.
   // ------------------------------------------------------------------
   auto *mmg_env_nocut = makeGraph(settings_x,
-      {0.994,0.995,0.997}, {0.0006,0.0003,0.0004}, kBlack,20,"mmg_env_nocut");
+      {0.994,0.995,0.997}, {0.0006,0.0003,0.0004}, kBlack,24,"mmg_env_nocut");
   auto *mmg_env_n8 = makeGraph(settings_x,
-      {0.957,0.965,0.991}, {0.0010,0.0006,0.0005}, kRed+1,21,"mmg_env_n8");
+      {0.957,0.965,0.991}, {0.0010,0.0006,0.0005}, kRed+1,25,"mmg_env_n8");
   auto *mmg_env_n10 = makeGraph(settings_x,
-      {0.897,0.911,0.986}, {0.0014,0.0003,0.0006}, kGreen+2,47,"mmg_env_n10");
+      {0.897,0.911,0.986}, {0.0014,0.0003,0.0006}, kGreen+2,46,"mmg_env_n10");
+  auto *mmg_env_n6 = makeGraph(settings_x,
+      {0.980,0.991,0.994}, {0.0008,0.0001,0.0005}, kBlue+1,27,"mmg_env_n6");
   drawCategorical("c_mmg_env", "Hybrid Micromegas_v2: ''Production''' HV Settings",
-                  {mmg_env_nocut,mmg_env_n8,mmg_env_n10}, {"No nPulse cut","nPulse #geq 8","nPulse #geq 10"},
+                  {mmg_env_nocut,mmg_env_n6,mmg_env_n8,mmg_env_n10}, {"No nPulse cut","nPulse #geq 6","nPulse #geq 8","nPulse #geq 10"},
                   settings, "mmg_productivity_hv_settings.pdf", 0.86,1.001);
 
   // ------------------------------------------------------------------
   // 7) Hybrid Micromegas low-flow-over-time productivity plot (nPulse >= 10).
   // ------------------------------------------------------------------
   // Runs 8265-8266 were taken at 50 CCPM; runs 8267-8270 at 25 CCPM.
-  auto *mmg_time_50 = makeGraph({8265,8266},{0.911,0.907}, {0.0003,0.0003}, kBlue+1,47,"mmg_time_50");
-  auto *mmg_time_25 = makeGraph({8267,8268,8269,8270},{0.902,0.904,0.904,0.897}, {0.0012,0.0013,0.0014,0.0014}, kRed+1,47,"mmg_time_25");
-  auto *mmg_time_50_8 = makeGraph({8265,8266},{0.971,0.970}, {0.0002,0.0002}, kBlue+1,21,"mmg_time_50_8");
-  auto *mmg_time_25_8 = makeGraph({8267,8268,8269,8270},{0.961,0.962,0.963,0.957}, {0.0009,0.0009,0.0010,0.0010}, kRed+1,21,"mmg_time_25_8");
-  
+  auto *mmg_time_50 = makeGraph({8265,8266},{0.911,0.907}, {0.0003,0.0003}, kBlue+1,46,"mmg_time_50");
+  auto *mmg_time_25 = makeGraph({8267,8268,8269,8270},{0.902,0.904,0.904,0.897}, {0.0012,0.0013,0.0014,0.0014}, kRed+1,46,"mmg_time_25");
+  auto *mmg_time_50_8 = makeGraph({8265,8266},{0.971,0.970}, {0.0002,0.0002}, kBlue+1,25,"mmg_time_50_8");
+  auto *mmg_time_25_8 = makeGraph({8267,8268,8269,8270},{0.961,0.962,0.963,0.957}, {0.0009,0.0009,0.0010,0.0010}, kRed+1,25,"mmg_time_25_8");
+  auto *mmg_time_50_6 = makeGraph({8265,8266},{0.991,0.991}, {0.0001,0.0001}, kBlue+1,27,"mmg_time_50_6");
+  auto *mmg_time_25_6 = makeGraph({8267,8268,8269,8270},{0.980,0.981,0.981,0.980}, {0.0007,0.0007,0.0008,0.0008}, kRed+1,27,"mmg_time_25_6");
   drawGraphs("c_mmg_time", "Hybrid Micromegas_v2: No Radiator, Low Gas Flow",
-             "Run Number", {mmg_time_50,mmg_time_25,mmg_time_50_8,mmg_time_25_8}, {"50 CCPM, nPulse #geq 10","25 CCPM, nPulse #geq 10","50 CCPM, nPulse #geq 8","25 CCPM, nPulse #geq 8"},
-             "mmg_lowFlow_run.pdf", 0.70,1.005);
+             "Run Number", {mmg_time_50_6,mmg_time_25_6,mmg_time_50_8,mmg_time_25_8,mmg_time_50,mmg_time_25}, {"50CCPM, nPulse #geq 6","25CCPM, nPulse #geq 6","50CCPM, nPulse #geq 8","25CCPM, nPulse #geq 8","50CCPM, nPulse #geq 10","25CCPM, nPulse #geq 10"},
+             "mmg_lowFlow_noRad.pdf", 0.70,1.005);
+             
+    
+  // ------------------------------------------------------------------
+  // 8) Hybrid Micromegas 50CCPM flow-over-time plot with radiator (nPulse >= 12).
+  // ------------------------------------------------------------------
+  auto *mmg_time_rad = makeGraph({8258,8259,8260,8262,8263,8264},{0.970,0.970,0.969,0.973,0.975,0.978,0.975}, {0.0012,0.0008,0.0008,0.0006,0.0004,0.0003,0.0004}, kMagenta+1,26,"mmg_time_rad");
+  auto *gem_time_rad = makeGraph({8258,8259,8260,8262,8263,8264},{0.925,0.924,0.928,0.934,0.932,0.933,0.931}, {0.0018,0.0018,0.0013,0.0010,0.0007,0.0005,0.0007}, kGreen+2,47,"gem_time_rad");
+  
+  drawGraphs("c_mmg_time_rad", "With Radiator, Xe:i-C_{4}H_{10} 50CCPM Gas Flow",
+             "Run Number", {gem_time_rad,mmg_time_rad}, {"Triple-GEM_v3, nPulse #geq 10","Hybrid Micromegas_v2, nPulse #geq 12"},
+             "mmg_lowFlow_withRad.pdf", 0.86,1.001);
+    
 }
